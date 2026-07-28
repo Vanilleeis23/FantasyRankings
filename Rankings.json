@@ -1,0 +1,7 @@
+[
+  { "id": "1", "name": "Christian McCaffrey", "position": "RB", "team": "SF" },
+  { "id": "2", "name": "CeeDee Lamb", "position": "WR", "team": "DAL" },
+  { "id": "3", "name": "Josh Allen", "position": "QB", "team": "BUF" },
+  { "id": "4", "name": "Justin Jefferson", "position": "WR", "team": "MIN" },
+  { "id": "5", "name": "Breece Hall", "position": "RB", "team": "NYJ" }
+]
