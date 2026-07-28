@@ -1,0 +1,250 @@
+[
+  {
+    "team_name": "Arizona Cardinals",
+    "team_code": "ARI",
+    "slots_1900": 4,
+    "slots_2200": 12,
+    "primetime": 0,
+    "playoffs_schedule": "NYJ || @NO || LV"
+  },
+  {
+    "team_name": "Atlanta Falcons",
+    "team_code": "ATL",
+    "slots_1900": 11,
+    "slots_2200": 0,
+    "primetime": 4,
+    "playoffs_schedule": "@WAS || TB || NO"
+  },
+  {
+    "team_name": "Baltimore Ravens",
+    "team_code": "BAL",
+    "slots_1900": 11,
+    "slots_2200": 1,
+    "primetime": 4,
+    "playoffs_schedule": "@PIT || CLE || @CIN"
+  },
+  {
+    "team_name": "Buffalo Bills",
+    "team_code": "BUF",
+    "slots_1900": 7,
+    "slots_2200": 3,
+    "primetime": 6,
+    "playoffs_schedule": "CHI || @DEN || @MIA"
+  },
+  {
+    "team_name": "Carolina Panthers",
+    "team_code": "CAR",
+    "slots_1900": 11,
+    "slots_2200": 1,
+    "primetime": 3,
+    "playoffs_schedule": "CIN || PIT || SEA"
+  },
+  {
+    "team_name": "Chicago Bears",
+    "team_code": "CHI",
+    "slots_1900": 8,
+    "slots_2200": 2,
+    "primetime": 6,
+    "playoffs_schedule": "@BUF || GB || DET"
+  },
+  {
+    "team_name": "Cincinnati Bengals",
+    "team_code": "CIN",
+    "slots_1900": 10,
+    "slots_2200": 1,
+    "primetime": 4,
+    "playoffs_schedule": "@CAR || @IND || BAL"
+  },
+  {
+    "team_name": "Cleveland Browns",
+    "team_code": "CLE",
+    "slots_1900": 15,
+    "slots_2200": 0,
+    "primetime": 1,
+    "playoffs_schedule": "@NYG || @BAL || IND"
+  },
+  {
+    "team_name": "Dallas Cowboys",
+    "team_code": "DAL",
+    "slots_1900": 5,
+    "slots_2200": 4,
+    "primetime": 7,
+    "playoffs_schedule": "@LAR || JAX || NYG"
+  },
+  {
+    "team_name": "Denver Broncos",
+    "team_code": "DEN",
+    "slots_1900": 2,
+    "slots_2200": 9,
+    "primetime": 5,
+    "playoffs_schedule": "@LV || BUF || @NE"
+  },
+  {
+    "team_name": "Detroit Lions",
+    "team_code": "DET",
+    "slots_1900": 7,
+    "slots_2200": 3,
+    "primetime": 6,
+    "playoffs_schedule": "@MIN || NYG || @CHI"
+  },
+  {
+    "team_name": "Green Bay Packers",
+    "team_code": "GB",
+    "slots_1900": 5,
+    "slots_2200": 4,
+    "primetime": 7,
+    "playoffs_schedule": "MIA || @CHI || HOU"
+  },
+  {
+    "team_name": "Houston Texans",
+    "team_code": "HOU",
+    "slots_1900": 10,
+    "slots_2200": 1,
+    "primetime": 5,
+    "playoffs_schedule": "JAX || @PHI || @GB"
+  },
+  {
+    "team_name": "Indianapolis Colts",
+    "team_code": "IND",
+    "slots_1900": 12,
+    "slots_2200": 0,
+    "primetime": 3,
+    "playoffs_schedule": "@TEN || CIN || @CLE"
+  },
+  {
+    "team_name": "Jacksonville Jaguars",
+    "team_code": "JAX",
+    "slots_1900": 8,
+    "slots_2200": 2,
+    "primetime": 5,
+    "playoffs_schedule": "@HOU || @DAL || WAS"
+  },
+  {
+    "team_name": "Kansas City Chiefs",
+    "team_code": "KC",
+    "slots_1900": 4,
+    "slots_2200": 5,
+    "primetime": 6,
+    "playoffs_schedule": "NE || SF || @LAC"
+  },
+  {
+    "team_name": "Las Vegas Raiders",
+    "team_code": "LV",
+    "slots_1900": 3,
+    "slots_2200": 13,
+    "primetime": 0,
+    "playoffs_schedule": "DEN || TEN || @ARI"
+  },
+  {
+    "team_name": "Los Angeles Chargers",
+    "team_code": "LAC",
+    "slots_1900": 3,
+    "slots_2200": 9,
+    "primetime": 3,
+    "playoffs_schedule": "SF || @MIA || KAN"
+  },
+  {
+    "team_name": "Los Angeles Rams",
+    "team_code": "LAR",
+    "slots_1900": 2,
+    "slots_2200": 6,
+    "primetime": 7,
+    "playoffs_schedule": "DAL || @SEA @TB"
+  },
+  {
+    "team_name": "Miami Dolphins",
+    "team_code": "MIA",
+    "slots_1900": 11,
+    "slots_2200": 5,
+    "primetime": 0,
+    "playoffs_schedule": "@GB || LAC || BUF"
+  },
+  {
+    "team_name": "Minnesota Vikings",
+    "team_code": "MIN",
+    "slots_1900": 7,
+    "slots_2200": 4,
+    "primetime": 4,
+    "playoffs_schedule": "DET || WAS || @NYJ"
+  },
+  {
+    "team_name": "New England Patriots",
+    "team_code": "NE",
+    "slots_1900": 6,
+    "slots_2200": 3,
+    "primetime": 6,
+    "playoffs_schedule": "@KC || @NYJ || DEN"
+  },
+  {
+    "team_name": "New Orleans Saints",
+    "team_code": "NO",
+    "slots_1900": 13,
+    "slots_2200": 1,
+    "primetime": 2,
+    "playoffs_schedule": "@TB || ARI || @ATL"
+  },
+  {
+    "team_name": "New York Giants",
+    "team_code": "NYG",
+    "slots_1900": 11,
+    "slots_2200": 1,
+    "primetime": 4,
+    "playoffs_schedule": "CLE || @DET || @DAL"
+  },
+  {
+    "team_name": "New York Jets",
+    "team_code": "NYJ",
+    "slots_1900": 14,
+    "slots_2200": 2,
+    "primetime": 0,
+    "playoffs_schedule": "@ARI || NE || MIN"
+  },
+  {
+    "team_name": "Philadelphia Eagles",
+    "team_code": "PHI",
+    "slots_1900": 5,
+    "slots_2200": 3,
+    "primetime": 8,
+    "playoffs_schedule": "SEA || HOU || @SF"
+  },
+  {
+    "team_name": "Pittsburgh Steelers",
+    "team_code": "PIT",
+    "slots_1900": 8,
+    "slots_2200": 1,
+    "primetime": 6,
+    "playoffs_schedule": "BAL || CAR || @TEN"
+  },
+  {
+    "team_name": "San Francisco 49ers",
+    "team_code": "SF",
+    "slots_1900": 2,
+    "slots_2200": 9,
+    "primetime": 5,
+    "playoffs_schedule": "@LAC || @KC || PHI"
+  },
+  {
+    "team_name": "Seattle Seahawks",
+    "team_code": "SE",
+    "slots_1900": 2,
+    "slots_2200": 7,
+    "primetime": 7,
+    "playoffs_schedule": "@PHI || LAR || @CAR"
+  },
+  {
+    "team_name": "Tampa Bay Buccaneers",
+    "team_code": "TB",
+    "slots_1900": 10,
+    "slots_2200": 1,
+    "primetime": 3,
+    "playoffs_schedule": "NO || @ATL || LAR"
+  },
+  {
+    "team_name": "Tennessee Titans",
+    "team_code": "TEN",
+    "slots_1900": 14,
+    "slots_2200": 2,
+    "primetime": 0,
+    "playoffs_schedule": "IND || @LV || PIT"
+  }
+]
