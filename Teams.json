@@ -5,7 +5,7 @@
     "slots_1900": 4,
     "slots_2200": 12,
     "primetime": 0,
-    "playoffs_schedule": "NYJ || @NO || LV"
+    "playoffs_schedule": "NYJ  •  @NO  •  LV"
   },
   {
     "team_name": "Atlanta Falcons",
@@ -13,7 +13,7 @@
     "slots_1900": 11,
     "slots_2200": 0,
     "primetime": 4,
-    "playoffs_schedule": "@WAS || TB || NO"
+    "playoffs_schedule": "@WAS  •  TB  •  NO"
   },
   {
     "team_name": "Baltimore Ravens",
@@ -21,7 +21,7 @@
     "slots_1900": 11,
     "slots_2200": 1,
     "primetime": 4,
-    "playoffs_schedule": "@PIT || CLE || @CIN"
+    "playoffs_schedule": "@PIT  •  CLE  •  @CIN"
   },
   {
     "team_name": "Buffalo Bills",
@@ -29,7 +29,7 @@
     "slots_1900": 7,
     "slots_2200": 3,
     "primetime": 6,
-    "playoffs_schedule": "CHI || @DEN || @MIA"
+    "playoffs_schedule": "CHI  •  @DEN  •  @MIA"
   },
   {
     "team_name": "Carolina Panthers",
@@ -37,7 +37,7 @@
     "slots_1900": 11,
     "slots_2200": 1,
     "primetime": 3,
-    "playoffs_schedule": "CIN || PIT || SEA"
+    "playoffs_schedule": "CIN  •  PIT  •  SEA"
   },
   {
     "team_name": "Chicago Bears",
@@ -45,7 +45,7 @@
     "slots_1900": 8,
     "slots_2200": 2,
     "primetime": 6,
-    "playoffs_schedule": "@BUF || GB || DET"
+    "playoffs_schedule": "@BUF  •  GB  •  DET"
   },
   {
     "team_name": "Cincinnati Bengals",
@@ -53,7 +53,7 @@
     "slots_1900": 10,
     "slots_2200": 1,
     "primetime": 4,
-    "playoffs_schedule": "@CAR || @IND || BAL"
+    "playoffs_schedule": "@CAR  •  @IND  •  BAL"
   },
   {
     "team_name": "Cleveland Browns",
@@ -61,7 +61,7 @@
     "slots_1900": 15,
     "slots_2200": 0,
     "primetime": 1,
-    "playoffs_schedule": "@NYG || @BAL || IND"
+    "playoffs_schedule": "@NYG  •  @BAL  •  IND"
   },
   {
     "team_name": "Dallas Cowboys",
@@ -69,7 +69,7 @@
     "slots_1900": 5,
     "slots_2200": 4,
     "primetime": 7,
-    "playoffs_schedule": "@LAR || JAX || NYG"
+    "playoffs_schedule": "@LAR  •  JAX  •  NYG"
   },
   {
     "team_name": "Denver Broncos",
@@ -77,7 +77,7 @@
     "slots_1900": 2,
     "slots_2200": 9,
     "primetime": 5,
-    "playoffs_schedule": "@LV || BUF || @NE"
+    "playoffs_schedule": "@LV  •  BUF  •  @NE"
   },
   {
     "team_name": "Detroit Lions",
@@ -85,7 +85,7 @@
     "slots_1900": 7,
     "slots_2200": 3,
     "primetime": 6,
-    "playoffs_schedule": "@MIN || NYG || @CHI"
+    "playoffs_schedule": "@MIN  •  NYG  •  @CHI"
   },
   {
     "team_name": "Green Bay Packers",
@@ -93,7 +93,7 @@
     "slots_1900": 5,
     "slots_2200": 4,
     "primetime": 7,
-    "playoffs_schedule": "MIA || @CHI || HOU"
+    "playoffs_schedule": "MIA  •  @CHI  •  HOU"
   },
   {
     "team_name": "Houston Texans",
@@ -101,7 +101,7 @@
     "slots_1900": 10,
     "slots_2200": 1,
     "primetime": 5,
-    "playoffs_schedule": "JAX || @PHI || @GB"
+    "playoffs_schedule": "JAX  •  @PHI  •  @GB"
   },
   {
     "team_name": "Indianapolis Colts",
@@ -109,7 +109,7 @@
     "slots_1900": 12,
     "slots_2200": 0,
     "primetime": 3,
-    "playoffs_schedule": "@TEN || CIN || @CLE"
+    "playoffs_schedule": "@TEN  •  CIN  •  @CLE"
   },
   {
     "team_name": "Jacksonville Jaguars",
@@ -117,7 +117,7 @@
     "slots_1900": 8,
     "slots_2200": 2,
     "primetime": 5,
-    "playoffs_schedule": "@HOU || @DAL || WAS"
+    "playoffs_schedule": "@HOU  •  @DAL  •  WAS"
   },
   {
     "team_name": "Kansas City Chiefs",
@@ -125,7 +125,7 @@
     "slots_1900": 4,
     "slots_2200": 5,
     "primetime": 6,
-    "playoffs_schedule": "NE || SF || @LAC"
+    "playoffs_schedule": "NE  •  SF  •  @LAC"
   },
   {
     "team_name": "Las Vegas Raiders",
@@ -133,7 +133,7 @@
     "slots_1900": 3,
     "slots_2200": 13,
     "primetime": 0,
-    "playoffs_schedule": "DEN || TEN || @ARI"
+    "playoffs_schedule": "DEN  •  TEN  •  @ARI"
   },
   {
     "team_name": "Los Angeles Chargers",
@@ -141,7 +141,7 @@
     "slots_1900": 3,
     "slots_2200": 9,
     "primetime": 3,
-    "playoffs_schedule": "SF || @MIA || KAN"
+    "playoffs_schedule": "SF  •  @MIA  •  KAN"
   },
   {
     "team_name": "Los Angeles Rams",
@@ -149,7 +149,7 @@
     "slots_1900": 2,
     "slots_2200": 6,
     "primetime": 7,
-    "playoffs_schedule": "DAL || @SEA @TB"
+    "playoffs_schedule": "DAL  •  @SEA @TB"
   },
   {
     "team_name": "Miami Dolphins",
@@ -157,7 +157,7 @@
     "slots_1900": 11,
     "slots_2200": 5,
     "primetime": 0,
-    "playoffs_schedule": "@GB || LAC || BUF"
+    "playoffs_schedule": "@GB  •  LAC  •  BUF"
   },
   {
     "team_name": "Minnesota Vikings",
@@ -165,7 +165,7 @@
     "slots_1900": 7,
     "slots_2200": 4,
     "primetime": 4,
-    "playoffs_schedule": "DET || WAS || @NYJ"
+    "playoffs_schedule": "DET  •  WAS  •  @NYJ"
   },
   {
     "team_name": "New England Patriots",
@@ -173,7 +173,7 @@
     "slots_1900": 6,
     "slots_2200": 3,
     "primetime": 6,
-    "playoffs_schedule": "@KC || @NYJ || DEN"
+    "playoffs_schedule": "@KC  •  @NYJ  •  DEN"
   },
   {
     "team_name": "New Orleans Saints",
@@ -181,7 +181,7 @@
     "slots_1900": 13,
     "slots_2200": 1,
     "primetime": 2,
-    "playoffs_schedule": "@TB || ARI || @ATL"
+    "playoffs_schedule": "@TB  •  ARI  •  @ATL"
   },
   {
     "team_name": "New York Giants",
@@ -189,7 +189,7 @@
     "slots_1900": 11,
     "slots_2200": 1,
     "primetime": 4,
-    "playoffs_schedule": "CLE || @DET || @DAL"
+    "playoffs_schedule": "CLE  •  @DET  •  @DAL"
   },
   {
     "team_name": "New York Jets",
@@ -197,7 +197,7 @@
     "slots_1900": 14,
     "slots_2200": 2,
     "primetime": 0,
-    "playoffs_schedule": "@ARI || NE || MIN"
+    "playoffs_schedule": "@ARI  •  NE  •  MIN"
   },
   {
     "team_name": "Philadelphia Eagles",
@@ -205,7 +205,7 @@
     "slots_1900": 5,
     "slots_2200": 3,
     "primetime": 8,
-    "playoffs_schedule": "SEA || HOU || @SF"
+    "playoffs_schedule": "SEA  •  HOU  •  @SF"
   },
   {
     "team_name": "Pittsburgh Steelers",
@@ -213,7 +213,7 @@
     "slots_1900": 8,
     "slots_2200": 1,
     "primetime": 6,
-    "playoffs_schedule": "BAL || CAR || @TEN"
+    "playoffs_schedule": "BAL  •  CAR  •  @TEN"
   },
   {
     "team_name": "San Francisco 49ers",
@@ -221,7 +221,7 @@
     "slots_1900": 2,
     "slots_2200": 9,
     "primetime": 5,
-    "playoffs_schedule": "@LAC || @KC || PHI"
+    "playoffs_schedule": "@LAC  •  @KC  •  PHI"
   },
   {
     "team_name": "Seattle Seahawks",
@@ -229,7 +229,7 @@
     "slots_1900": 2,
     "slots_2200": 7,
     "primetime": 7,
-    "playoffs_schedule": "@PHI || LAR || @CAR"
+    "playoffs_schedule": "@PHI  •  LAR  •  @CAR"
   },
   {
     "team_name": "Tampa Bay Buccaneers",
@@ -237,7 +237,7 @@
     "slots_1900": 10,
     "slots_2200": 1,
     "primetime": 3,
-    "playoffs_schedule": "NO || @ATL || LAR"
+    "playoffs_schedule": "NO  •  @ATL  •  LAR"
   },
   {
     "team_name": "Tennessee Titans",
@@ -245,6 +245,6 @@
     "slots_1900": 14,
     "slots_2200": 2,
     "primetime": 0,
-    "playoffs_schedule": "IND || @LV || PIT"
+    "playoffs_schedule": "IND  •  @LV  •  PIT"
   }
 ]

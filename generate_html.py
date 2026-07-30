@@ -20,13 +20,24 @@ def generate_html():
     with open('players.json', 'r', encoding='utf-8') as f:
         players = json.load(f)
 
+    # --- PRINT-LOGIK FÜR TEs MIT FPTS ODER XFP GLEICH 0 ---
+    print("--- RBs mit fpts oder xfp == 0 ---")
+    for player in players:
+        if player.get('position') == 'TE':
+            fpts = player.get('fpts', 0)
+            xfp = player.get('xfp', 0)
+            
+            if fpts == 0 or xfp == 0:
+                print(f"Spieler: {player.get('name')} ({player.get('team')}) | fpts: {fpts} | xfp: {xfp}")
+    print("---------------------------------------")
+
     with open('teams.json', 'r', encoding='utf-8') as f:
         teams = json.load(f)
 
     teams_dict = {team['team_code']: team for team in teams}
 
-    # Initialisiere Struktur für 8 Tiers und 9 Spalten
-    # Struktur: tiers_data[tier_num][col_id] = [spieler]
+    players_json_str = json.dumps(players, ensure_ascii=False)
+
     tiers_data = {t: {c: [] for c in range(9)} for t in range(1, 9)}
 
     columns_config = [
@@ -36,7 +47,6 @@ def generate_html():
         (8, 'TE', 0, '#9b59b6')
     ]
     
-    # Helfer, um schnell die Spalten-ID anhand von Position und internem Split zu finden
     def get_column_id(pos, current_count):
         if pos == 'QB': return 0 if current_count % 2 == 0 else 1
         if pos == 'RB': return 2 + (current_count % 3)
@@ -44,9 +54,6 @@ def generate_html():
         if pos == 'TE': return 8
         return 0
 
-    # Spieler einsortieren
-    # Wenn ein Spieler bereits ein gespeichertes "tier" hat, nutzen wir das.
-    # Ansonsten verteilen wir sie wie gewohnt mathematisch als Startwert.
     pos_counters = {'QB': 0, 'RB': 0, 'WR': 0, 'TE': 0}
     
     for player in players:
@@ -57,35 +64,30 @@ def generate_html():
         saved_tier = player.get('tier')
         
         if saved_tier and 1 <= int(saved_tier) <= 8:
-            # Wenn bereits manuell verschoben und gespeichert, behalte die Spalten-Zuweisung bei
-            # Falls keine Spalten-ID gespeichert ist, berechnen wir sie temporär
             col_id = player.get('column_id', get_column_id(pos, pos_counters[pos]))
             tiers_data[int(saved_tier)][int(col_id)].append(player)
         else:
-            # Mathematische Erstverteilung auf die 8 Tiers
             c_id = get_column_id(pos, pos_counters[pos])
-            # Bestimme ein Pseudo-Tier basierend auf der Position in der Liste
             pseudo_tier = min(8, max(1, (pos_counters[pos] // 4) + 1))
             tiers_data[pseudo_tier][c_id].append(player)
             
         pos_counters[pos] += 1
 
-    # HTML Generierung
-    html_content = """<!DOCTYPE html>
+    html_content = f"""<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fantasy Football Board</title>
     <style>
-        body {
+        body {{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f2f5;
             margin: 0;
             padding: 10px;
             color: #333;
-        }
-        .top-bar {
+        }}
+        .top-bar {{
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -94,11 +96,10 @@ def generate_html():
             padding: 10px 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        h1 { margin: 0; font-size: 1.6em; color: #2c3e50; }
+        }}
+        h1 {{ margin: 0; font-size: 1.6em; color: #2c3e50; }}
         
-        /* Speicher Button Styling */
-        .save-btn {
+        .save-btn {{
             background-color: #2563eb;
             color: white;
             border: none;
@@ -109,47 +110,85 @@ def generate_html():
             cursor: pointer;
             transition: background 0.2s;
             box-shadow: 0 2px 4px rgba(37,99,235,0.2);
-        }
-        .save-btn:hover { background-color: #1d4ed8; }
-        .save-btn:active { transform: scale(0.98); }
+        }}
+        .save-btn:hover {{ background-color: #1d4ed8; }}
+        .save-btn:active {{ transform: scale(0.98); }}
 
-        .board-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; }
-        .position-header-cell {
+        .board-grid {{ display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; }}
+        .position-header-cell {{
             font-size: 1.1em; font-weight: bold; text-align: center; color: #fff;
             padding: 8px 2px; border-radius: 6px; text-transform: uppercase;
             letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.06); margin-bottom: 8px;
-        }
-        .tier-row-header {
+        }}
+        .tier-row-header {{
             grid-column: span 9; background: #2c3e50; color: #fff; font-size: 0.75em;
             font-weight: bold; text-align: center; padding: 5px 12px; border-radius: 4px;
             margin-top: 10px; margin-bottom: 4px; letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .player-list-box {
+        }}
+        .player-list-box {{
             background-color: #e2e8f0; border-radius: 6px; padding: 4px; min-height: 60px;
             list-style: none; margin: 0;
-        }
-        .player-list-box.drag-over { background-color: #cbd5e1; border: 1px dashed #94a3b8; }
+        }}
+        .player-list-box.drag-over {{ background-color: #cbd5e1; border: 1px dashed #94a3b8; }}
         
-        .player-card { background: #fff; border-radius: 4px; margin-bottom: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); border-left: 3px solid #ccc; overflow: hidden; }
-        .player-card.dragging { opacity: 0.4; background: #94a3b8; }
-        .card-summary { display: flex; align-items: center; padding: 5px 6px; cursor: grab; user-select: none; }
-        .player-name { font-weight: 600; color: #1e293b; flex-grow: 1; font-size: 0.8em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .bye-tag { font-size: 0.7em; background: #f1f5f9; color: #64748b; padding: 1px 3px; border-radius: 3px; font-weight: bold; margin-left: 4px; }
-        .card-details { display: none; padding: 8px; background: #f8fafc; border-top: 1px solid #f1f5f9; font-size: 0.75em; color: #475569; }
-        .player-card.expanded .card-details { display: block; }
-        .full-name-title { font-weight: bold; color: #0f172a; margin-bottom: 2px; font-size: 1.05em; }
-        .team-title { color: #475569; margin-bottom: 6px; font-style: italic;}
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: #fff; padding: 4px; border-radius: 3px; border: 1px solid #e2e8f0; margin-bottom: 5px; }
-        .slots-info { font-size: 0.9em; color: #64748b; margin-bottom: 5px; }
-        .schedule-box { border-top: 1px dashed #cbd5e1; padding-top: 4px; color: #d97706; }
-        .pos-dif { color: #16a34a; font-weight: bold; }
-        .neg-dif { color: #dc2626; font-weight: bold; }
+        .player-card {{ 
+            background: #fff; 
+            border-radius: 4px; 
+            margin-bottom: 4px; 
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04); 
+            border-left: 3px solid #ccc; 
+            overflow: hidden; 
+            font-size: 11px; 
+            text-align: center;
+        }}
+        .player-card.dragging {{ opacity: 0.4; background: #94a3b8; }}
+        .card-summary {{ display: flex; align-items: center; padding: 5px 6px; cursor: grab; user-select: none; }}
+        .player-name {{ font-weight: 600; color: #1e293b; flex-grow: 1; font-size: 1em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
+        .bye-tag {{ font-size: 1em; background: #f1f5f9; color: #64748b; padding: 1px 3px; border-radius: 3px; font-weight: bold; margin-left: 4px; }}
+        
+        .card-details {{ display: none; padding: 8px; background: #f8fafc; border-top: 1px solid #f1f5f9; font-size: 1em; color: #475569; }}
+        .player-card.expanded .card-details {{ display: block; }}
+        
+        .full-name-title {{ font-weight: bold; color: #0f172a; margin-bottom: 2px; font-size: 1em; }}
+        .team-title {{ color: #475569; margin-bottom: 6px; font-style: italic; font-size: 1em; }}
+        
+        .card-divider {{
+            border: 0;
+            border-top: 1px dashed #cbd5e1;
+            margin: 6px 0;
+        }}
+
+        .stats-grid {{ 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 4px; 
+            background: transparent; 
+            padding: 0; 
+            border: none; 
+            margin-bottom: 5px; 
+            text-align: center;
+        }}
+        .stats-grid div {{ font-size: 1em; }}
+        
+        /* Neue Farblogik für die Differenz */
+        .pos-dif {{ color: #dc2626; font-weight: bold; }} /* Rot bei > 1 */
+        .neg-dif {{ color: #16a34a; font-weight: bold; }} /* Grün bei <= -1 */
+        .neutral-dif {{ color: #333333; font-weight: bold; }} /* Schwarz sonst */
+
+        .centered-section {{
+            text-align: center;
+            margin-bottom: 4px;
+        }}
+        .centered-section strong {{
+            display: block;
+            margin-bottom: 2px;
+        }}
     </style>
 </head>
 <body>
     <div class="top-bar">
         <h1>Fantasy Football Board</h1>
-        <button class="save-btn" onclick="saveBoardLayout()">Layout speichern</button>
+        <button class="save-btn" onclick="handleSave()">Layout speichern</button>
     </div>
     
     <div class="board-grid">
@@ -177,9 +216,16 @@ def generate_html():
                 t_code = player.get('team')
                 team_info = teams_dict.get(t_code, {})
                 
+                # Dynamische Ermittlung der CSS-Klasse basierend auf dem DIF-Wert
                 dif = player.get('dif', 0.0)
-                dif_class = "pos-dif" if dif >= 0 else "neg-dif"
-                dif_prefix = "+" if dif >= 0 else ""
+                if dif <= -1.0:
+                    dif_class = "neg-dif" # Grün
+                elif dif >= 1.0:
+                    dif_class = "pos-dif" # Rot
+                else:
+                    dif_class = "neutral-dif" # Schwarz
+                
+                dif_prefix = "+" if dif > 0 else ""
 
                 html_content += f"""
             <li class="player-card" draggable="true" style="border-left-color: {color};" data-id="{player['name']}">
@@ -190,49 +236,62 @@ def generate_html():
                 <div class="card-details">
                     <div class="full-name-title">{full_name} ({player['position']})</div>
                     <div class="team-title">{team_info.get('team_name', player['team'])} ({t_code})</div>
+                    
+                    <hr class="card-divider">
+                    
                     <div class="stats-grid">
-                        <div><strong>FPTS:</strong> {player['fpts']}</div>
-                        <div><strong>XFP:</strong> {player['xfp']}</div>
-                        <div><strong>DIF:</strong> <span class="{dif_class}">{dif_prefix}{dif}</span></div>
+                        <div><strong>FPTS</strong><br>{player['fpts']}</div>
+                        <div><strong>XFP</strong><br>{player['xfp']}</div>
+                        <div><strong>DIF</strong><br><span class="{dif_class}">{dif_prefix}{dif}</span></div>
                     </div>
-                    <div class="slots-info">
-                        <strong>Slots:</strong> 19h ({team_info.get('slots_1900', '-')}) • 22h ({team_info.get('slots_2200', '-')}) • Prime ({team_info.get('primetime', '-')})
+                    
+                    <hr class="card-divider">
+                    
+                    <div class="centered-section">
+                        <strong>Slots</strong>
+                        <span>19h ({team_info.get('slots_1900', '-')}) • 22h ({team_info.get('slots_2200', '-')}) • Prime ({team_info.get('primetime', '-')})</span>
                     </div>
-                    <div class="schedule-box">
-                        <strong>Playoffs:</strong> {team_info.get('playoffs_schedule', 'Kein Spielplan')}
+                    
+                    <hr class="card-divider">
+                    
+                    <div class="centered-section">
+                        <strong>Playoffs</strong>
+                        <span>{team_info.get('playoffs_schedule', 'Kein Spielplan')}</span>
                     </div>
                 </div>
             </li>
                 """
             html_content += "</ul>"
 
-    # JavaScript inkl. Speicherfunktion
-    html_content += """
+    # JavaScript
+    html_content += f"""
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            setupDragAndDrop();
-        });
+        const originalPlayers = {players_json_str};
 
-        function setupDragAndDrop() {
+        document.addEventListener('DOMContentLoaded', () => {{
+            setupDragAndDrop();
+        }});
+
+        function setupDragAndDrop() {{
             const grid = document.querySelector('.board-grid');
 
-            grid.addEventListener('dragstart', (e) => {
-                if (e.target.classList.contains('player-card')) {
+            grid.addEventListener('dragstart', (e) => {{
+                if (e.target.classList.contains('player-card')) {{
                     e.target.classList.add('dragging');
                     e.dataTransfer.setData('text/plain', '');
-                }
-            });
+                }}
+            }});
 
-            grid.addEventListener('dragend', (e) => {
-                if (e.target.classList.contains('player-card')) {
+            grid.addEventListener('dragend', (e) => {{
+                if (e.target.classList.contains('player-card')) {{
                     e.target.classList.remove('dragging');
                     document.querySelectorAll('.player-list-box').forEach(b => b.classList.remove('drag-over'));
-                }
-            });
+                }}
+            }});
 
-            grid.addEventListener('click', (e) => {
+            grid.addEventListener('click', (e) => {{
                 const summary = e.target.closest('.card-summary');
                 if (!summary) return;
                 const card = summary.parentElement;
@@ -241,67 +300,118 @@ def generate_html():
                 const isExpanded = card.classList.contains('expanded');
                 card.parentElement.querySelectorAll('.player-card').forEach(c => c.classList.remove('expanded'));
                 if (!isExpanded) card.classList.add('expanded');
-            });
+            }});
 
             const boxes = document.querySelectorAll('.player-list-box');
-            boxes.forEach(box => {
-                box.addEventListener('dragover', (e) => {
+            boxes.forEach(box => {{
+                box.addEventListener('dragover', (e) => {{
                     e.preventDefault();
                     box.classList.add('drag-over');
                     const draggingItem = document.querySelector('.dragging');
                     if (!draggingItem) return;
 
                     const siblings = [...box.querySelectorAll('.player-card:not(.dragging)')];
-                    const nextSibling = siblings.find(sibling => {
+                    const nextSibling = siblings.find(sibling => {{
                         const r = sibling.getBoundingClientRect();
                         return e.clientY <= r.top + r.height / 2;
-                    });
+                    }});
                     box.insertBefore(draggingItem, nextSibling);
-                });
+                }});
 
-                box.addEventListener('dragleave', () => {
+                box.addEventListener('dragleave', () => {{
                     box.classList.remove('drag-over');
-                });
-            });
-        }
+                }});
+            }});
+        }}
 
-        // Sendet die neue Struktur via POST-Request an den Python Server
-        async function saveBoardLayout() {
+        function handleSave() {{
             const boxes = document.querySelectorAll('.player-list-box');
-            const payload = [];
+            const currentLayout = {{}};
 
-            boxes.forEach(box => {
+            boxes.forEach(box => {{
                 const tier = parseInt(box.getAttribute('data-tier'));
                 const columnId = parseInt(box.getAttribute('data-column'));
                 const cards = box.querySelectorAll('.player-card');
 
-                cards.forEach((card, index) => {
-                    payload.push({
-                        name: card.getAttribute('data-id'),
+                cards.forEach((card, index) => {{
+                    const pName = card.getAttribute('data-id');
+                    currentLayout[pName] = {{
                         tier: tier,
                         column_id: columnId,
                         sort_order: index
-                    });
-                });
-            });
+                    }};
+                }});
+            }});
 
-            try {
-                const response = await fetch('/save-layout', {
+            const updatedPlayers = originalPlayers.map(player => {{
+                const name = player.name;
+                if (currentLayout[name]) {{
+                    return {{
+                        ...player,
+                        tier: currentLayout[name].tier,
+                        column_id: currentLayout[name].column_id,
+                        sort_order: currentLayout[name].sort_order
+                    }};
+                }}
+                return player;
+            }});
+
+            updatedPlayers.sort((a, b) => {{
+                if ((a.tier || 9) !== (b.tier || 9)) return (a.tier || 9) - (b.tier || 9);
+                return (a.sort_order || 0) - (b.sort_order || 0);
+            }});
+
+            const isGitHubPages = window.location.hostname.includes('github.io');
+
+            if (isGitHubPages) {{
+                saveToBrowserFileSystem(updatedPlayers);
+            }} else {{
+                saveToServerWithFallback(updatedPlayers);
+            }}
+        }}
+
+        async function saveToServerWithFallback(payload) {{
+            try {{
+                const response = await fetch('http://localhost:8000/save-layout', {{
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {{ 'Content-Type': 'application/json' }},
                     body: JSON.stringify(payload)
-                });
+                }});
                 
-                if (response.ok) {
-                    alert('Reihenfolge und Tiers erfolgreich dauerhaft gespeichert!');
-                } else {
-                    alert('Fehler beim Speichern auf dem Server.');
-                }
-            } catch (err) {
-                console.error(err);
-                alert('Server nicht erreichbar. Hast du main.py gestartet?');
-            }
-        }
+                if (response.ok) {{
+                    alert('Erfolgreich im Hintergrund in deiner lokalen players.json gespeichert!');
+                }} else {{
+                    saveToBrowserFileSystem(payload);
+                }}
+            }} catch (err) {{
+                console.log('Lokaler Server-Sync nicht möglich, öffne Browser-Speicherdialog...');
+                saveToBrowserFileSystem(payload);
+            }}
+        }}
+
+        async function saveToBrowserFileSystem(payload) {{
+            try {{
+                const options = {{
+                    suggestedName: 'players.json',
+                    types: [{{
+                        description: 'JSON Files',
+                        accept: {{ 'application/json': ['.json'] }}
+                    }}]
+                }};
+                
+                const handle = await window.showSaveFilePicker(options);
+                const writable = await handle.createWritable();
+                await writable.write(JSON.stringify(payload, null, 4));
+                await writable.close();
+                
+                alert('Erfolgreich gespeichert!');
+            }} catch (err) {{
+                if (err.name !== 'AbortError') {{
+                    console.error(err);
+                    alert('Fehler beim Speichern: ' + err.message);
+                }}
+            }}
+        }}
     </script>
 </body>
 </html>
