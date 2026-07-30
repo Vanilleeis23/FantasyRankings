@@ -14,9 +14,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Write Payload to players.json
+      - name: Save payload to file
         run: |
-          echo '${{ json.encode(github.event.client_payload.players_data) }}' > players.json
+          cat << 'EOF' > players.json
+          ${{ toJson(github.event.client_payload.players_data) }}
+          EOF
 
       - name: Formatiere JSON sauber (optional, verhindert Einzeiler-JSON)
         run: |
