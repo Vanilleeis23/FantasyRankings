@@ -263,7 +263,7 @@ def generate_html():
                 """
             html_content += "</ul>"
 
-    # JavaScript
+    # JavaScript (Aktualisiert für den GitHub Actions Trigger)
     html_content += f"""
     </div>
 
@@ -361,55 +361,45 @@ def generate_html():
                 return (a.sort_order || 0) - (b.sort_order || 0);
             }});
 
-            const isGitHubPages = window.location.hostname.includes('github.io');
-
-            if (isGitHubPages) {{
-                saveToBrowserFileSystem(updatedPlayers);
-            }} else {{
-                saveToServerWithFallback(updatedPlayers);
-            }}
+            // Trigger den GitHub Actions Workflow via Repository Dispatch Event
+            saveToGitHub(updatedPlayers);
         }}
 
-        async function saveToServerWithFallback(payload) {{
+        async function saveToGitHub(payload) {{
+            // Platzhalter für deine echten Daten im Browser-Code
+            const GITHUB_REPO = "DEIN_GITHUB_NAME/DEIN_REPO_NAME"; 
+            const GITHUB_TOKEN = "DEIN_PERSONAL_ACCESS_TOKEN";
+
+            if (GITHUB_TOKEN === "DEIN_PERSONAL_ACCESS_TOKEN") {{
+                alert("Bitte hinterlege zuerst deinen GitHub-Token und Repository-Namen im JavaScript-Code!");
+                return;
+            }}
+
             try {{
-                const response = await fetch('http://localhost:8000/save-layout', {{
+                const response = await fetch(`https://api.github.com/repos/${{GITHUB_REPO}}/dispatches`, {{
                     method: 'POST',
-                    headers: {{ 'Content-Type': 'application/json' }},
-                    body: JSON.stringify(payload)
+                    headers: {{
+                        'Authorization': `Bearer ${{GITHUB_TOKEN}}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    }},
+                    body: JSON.stringify({{
+                        event_type: 'save_layout',
+                        client_payload: {{
+                            players_data: payload
+                        }}
+                    }})
                 }});
-                
-                if (response.ok) {{
-                    alert('Erfolgreich im Hintergrund in deiner lokalen players.json gespeichert!');
-                }} else {{
-                    saveToBrowserFileSystem(payload);
-                }}
-            }} catch (err) {{
-                console.log('Lokaler Server-Sync nicht möglich, öffne Browser-Speicherdialog...');
-                saveToBrowserFileSystem(payload);
-            }}
-        }}
 
-        async function saveToBrowserFileSystem(payload) {{
-            try {{
-                const options = {{
-                    suggestedName: 'players.json',
-                    types: [{{
-                        description: 'JSON Files',
-                        accept: {{ 'application/json': ['.json'] }}
-                    }}]
-                }};
-                
-                const handle = await window.showSaveFilePicker(options);
-                const writable = await handle.createWritable();
-                await writable.write(JSON.stringify(payload, null, 4));
-                await writable.close();
-                
-                alert('Erfolgreich gespeichert!');
-            }} catch (err) {{
-                if (err.name !== 'AbortError') {{
-                    console.error(err);
-                    alert('Fehler beim Speichern: ' + err.message);
+                if (response.status === 204) {{
+                    alert('Speichervorgang auf GitHub erfolgreich gestartet! Das Board aktualisiert sich in Kürze.');
+                }} else {{
+                    const errText = await response.text();
+                    alert(`Fehler beim Speichern (Status ${{response.status}}): ${{errText}}`);
                 }}
+            }} catch (err) {{
+                console.error(err);
+                alert('Netzwerkfehler beim Kommunizieren mit der GitHub API.');
             }}
         }}
     </script>
