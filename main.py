@@ -1,6 +1,11 @@
 import sys
 import json
-from fastapi import FastAPI, HTTPException, Request
+try:
+    from fastapi import FastAPI, HTTPException, Request
+    import uvicorn
+    HAS_SERVER_LIBS = True
+except ImportError:
+    HAS_SERVER_LIBS = False
 from fastapi.middleware.cors import CORSMiddleware
 from generate_html import generate_html
 
