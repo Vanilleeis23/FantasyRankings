@@ -4,8 +4,10 @@ on:
   repository_dispatch:
     types: [save_layout]
 
+# DIESEN BLOCK HINZUFÜGEN:
 permissions:
   contents: write
+  actions: write
 
 jobs:
   save-json:
