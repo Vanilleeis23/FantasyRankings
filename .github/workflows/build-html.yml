@@ -14,6 +14,7 @@ on:
     types:
       - completed
   workflow_dispatch: # Ermöglicht es dir, das Builden jederzeit manuell per Button zu starten
+  workflow_call: # DIESE ZEILE HINZUFÜGEN (erlaubt den direkten Aufruf)
 
 jobs:
   build:
