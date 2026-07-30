@@ -72,6 +72,18 @@
         "xfp": 24.4
     },
     {
+        "bye": 13,
+        "column_id": 8,
+        "dif": 1.4,
+        "fpts": 14.5,
+        "name": "Brock Bowers",
+        "position": "TE",
+        "sort_order": 0,
+        "team": "LV",
+        "tier": 1,
+        "xfp": 13.1
+    },
+    {
         "bye": 6,
         "column_id": 5,
         "dif": 0.3,
@@ -82,18 +94,6 @@
         "team": "DET",
         "tier": 1,
         "xfp": 18.3
-    },
-    {
-        "bye": 13,
-        "column_id": 2,
-        "dif": 3.9,
-        "fpts": 22.2,
-        "name": "Jonathan Taylor",
-        "position": "RB",
-        "sort_order": 1,
-        "team": "IND",
-        "tier": 1,
-        "xfp": 18.4
     },
     {
         "bye": 14,
@@ -120,6 +120,18 @@
         "xfp": 15
     },
     {
+        "bye": 14,
+        "column_id": 8,
+        "dif": 0.9,
+        "fpts": 18.9,
+        "name": "Trey McBride",
+        "position": "TE",
+        "sort_order": 1,
+        "team": "ARI",
+        "tier": 1,
+        "xfp": 18
+    },
+    {
         "bye": 7,
         "column_id": 4,
         "dif": 3.3,
@@ -133,15 +145,15 @@
     },
     {
         "bye": 13,
-        "column_id": 8,
-        "dif": 1.4,
-        "fpts": 14.5,
-        "name": "Brock Bowers",
-        "position": "TE",
+        "column_id": 3,
+        "dif": -0.5,
+        "fpts": 14.6,
+        "name": "Ashton Jeanty",
+        "position": "RB",
         "sort_order": 0,
         "team": "LV",
         "tier": 2,
-        "xfp": 13.1
+        "xfp": 15.1
     },
     {
         "bye": 7,
@@ -192,18 +204,6 @@
         "xfp": 16.7
     },
     {
-        "bye": 6,
-        "column_id": 3,
-        "dif": -0.3,
-        "fpts": 16.4,
-        "name": "Chase Brown",
-        "position": "RB",
-        "sort_order": 0,
-        "team": "CIN",
-        "tier": 2,
-        "xfp": 16.6
-    },
-    {
         "bye": 11,
         "column_id": 6,
         "dif": -0.1,
@@ -217,27 +217,27 @@
     },
     {
         "bye": 13,
-        "column_id": 3,
-        "dif": -0.5,
-        "fpts": 14.6,
-        "name": "Ashton Jeanty",
+        "column_id": 2,
+        "dif": 3.9,
+        "fpts": 22.2,
+        "name": "Jonathan Taylor",
         "position": "RB",
         "sort_order": 1,
-        "team": "LV",
+        "team": "IND",
         "tier": 2,
-        "xfp": 15.1
+        "xfp": 18.4
     },
     {
-        "bye": 14,
-        "column_id": 8,
-        "dif": 0.9,
-        "fpts": 18.9,
-        "name": "Trey McBride",
-        "position": "TE",
+        "bye": 6,
+        "column_id": 3,
+        "dif": -0.3,
+        "fpts": 16.4,
+        "name": "Chase Brown",
+        "position": "RB",
         "sort_order": 1,
-        "team": "ARI",
+        "team": "CIN",
         "tier": 2,
-        "xfp": 18
+        "xfp": 16.6
     },
     {
         "bye": 7,
