@@ -365,47 +365,47 @@ def generate_html():
             saveToGitHub(updatedPlayers);
         }}
 
-        async function saveToGitHub(payload) { // <-- Nur EINE Klammer
+       async function saveToGitHub(payload) {{
             const GITHUB_REPO = "Vanilleeis23/FantasyRankings"; 
             
             let GITHUB_TOKEN = localStorage.getItem('github_token');
             
-            if (!GITHUB_TOKEN) { // <-- Nur EINE Klammer
+            if (!GITHUB_TOKEN) {{
                 GITHUB_TOKEN = prompt("Bitte gib deinen GitHub Personal Access Token ein (wird nur lokal im Browser gespeichert):");
                 if (!GITHUB_TOKEN) return;
                 localStorage.setItem('github_token', GITHUB_TOKEN);
-            } // <-- Nur EINE Klammer
+            }}
 
-            try { // <-- Nur EINE Klammer
-                const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/dispatches`, { // <-- Nur EINE Klammer bei repos/ und dispatches,
+            try {{
+                const response = await fetch(`https://api.github.com/repos/${{GITHUB_REPO}}/dispatches`, {{
                     method: 'POST',
-                    headers: { // <-- Nur EINE Klammer
-                        'Authorization': `Bearer ${GITHUB_TOKEN}`, // <-- Nur EINE Klammer bei GITHUB_TOKEN
+                    headers: {{
+                        'Authorization': `Bearer ${{GITHUB_TOKEN}}`,
                         'Accept': 'application/vnd.github.v3+json',
                         'Content-Type': 'application/json'
-                    }, // <-- Nur EINE Klammer
-                    body: JSON.stringify({ // <-- Nur EINE Klammer
+                    }},
+                    body: JSON.stringify({{
                         event_type: 'save_layout',
-                        client_payload: { // <-- Nur EINE Klammer
+                        client_payload: {{
                             players_data: payload
-                        } // <-- Nur EINE Klammer
-                    }) // <-- Nur EINE Klammer
-                });
+                        }}
+                    }})
+                }});
 
-                if (response.status === 204) { // <-- Nur EINE Klammer
+                if (response.status === 204) {{
                     alert('Speichervorgang auf GitHub erfolgreich gestartet!');
-                } else if (response.status === 401 || response.status === 403) { // <-- Nur EINE Klammer
+                }} else if (response.status === 401 || response.status === 403) {{
                     alert('Fehler: Token ist ungültig oder abgelaufen. Er wird zurückgesetzt.');
                     localStorage.removeItem('github_token');
-                } else { // <-- Nur EINE Klammer
+                }} else {{
                     const errText = await response.text();
-                    alert(`Fehler beim Speichern (Status ${response.status}): ${errText}`); // <-- Nur EINE Klammer bei response.status
-                } // <-- Nur EINE Klammer
-            } catch (err) { // <-- Nur EINE Klammer
+                    alert(`Fehler beim Speichern (Status ${{response.status}}): ${{errText}}`);
+                }}
+            }} catch (err) {{
                 console.error(err);
                 alert('Netzwerkfehler beim Kommunizieren mit der GitHub API.');
-            } // <-- Nur EINE Klammer
-        } // <-- Nur EINE Klammer
+            }}
+        }}
     </script>
 </body>
 </html>
