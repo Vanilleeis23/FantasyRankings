@@ -1,0 +1,40 @@
+name: Build and Deploy HTML Board
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'players.json'
+      - 'teams.json'
+  workflow_run:
+    workflows: ["Save Player Layout"]
+    types:
+      - completed
+  workflow_dispatch: # Ermöglicht es dir, das Builden jederzeit manuell per Button zu starten
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run Python Script to generate HTML
+        run: |
+          python main.py
+        # HINWEIS: Falls dein Python-Skript nicht "main.py" heißt, 
+        # ändere den Namen hier in den echten Namen deiner Datei!
+
+      - name: Commit and Push generated HTML
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Render: index.html aktualisiert [skip ci]" || exit 0
+          git push
