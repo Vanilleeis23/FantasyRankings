@@ -9,8 +9,21 @@ except ImportError:
 from fastapi.middleware.cors import CORSMiddleware
 from generate_html import generate_html
 
-# 1. Erstelle die FastAPI App
-app = FastAPI()
+if HAS_SERVER_LIBS:
+    app = FastAPI()
+    
+    # ... hier folgen deine Pfade wie @app.post() etc. ...
+
+    if __name__ == "__main__":
+        uvicorn.run(app, host="127.0.0.1", port=8000)
+else:
+    # Wenn wir auf GitHub sind, führen wir beim Direktstart 
+    # nur die HTML-Generierung aus
+    if __name__ == "__main__":
+        from generate_html import generate_html
+        # Hier eventuell den Funktionsaufruf platzieren, falls nötig:
+        # generate_html()
+        print("HTML erfolgreich generiert (ohne FastAPI Server).")
 
 # 2. CORS-Konfiguration für Variante A einfügen (Erlaubt file:// Doppelklick-Zugriff)
 app.add_middleware(
