@@ -11,13 +11,15 @@ permissions:
 jobs:
   save:
     runs-on: ubuntu-latest
+    # Hier definieren wir den Ausgangswert für den nächsten Job
+    outputs:
+      changed: ${{ steps.git_push.outputs.changed }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           ref: main
 
-       Tarjeta data schreiben
       - name: Write payload to players.json
         run: |
           cat << 'EOF' > players.json
@@ -41,10 +43,7 @@ jobs:
             echo "changed=false" >> $GITHUB_OUTPUT
           fi
 
-  # DIESEN NEUEN JOB HINZUFÜGEN:
-  # Er startet automatisch nach dem 'save'-Job und ruft die build-html auf
   trigger-build:
     needs: save
-    # Nur ausführen, wenn oben auch wirklich neue Daten gepusht wurden
-    if: ${{ needs.save.outputs.changed != 'false' }}
-    uses: ./.github/workflows/build-html.yml@main
+    if: ${{ needs.save.outputs.changed == 'true' }}
+    uses: ./.github/workflows/build-html.yml  # <-- Das "@main" wurde hier entfernt!
