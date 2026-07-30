@@ -25,6 +25,10 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Install dependencies
+        run: |
+          pip install fastapi uvicorn
+
       - name: Run Python Script to generate HTML
         run: |
           python main.py
