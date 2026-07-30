@@ -1,0 +1,3464 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Football Board</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 10px;
+            color: #333;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        h1 { margin: 0; font-size: 1.6em; color: #2c3e50; }
+        
+        /* Speicher Button Styling */
+        .save-btn {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 2px 4px rgba(37,99,235,0.2);
+        }
+        .save-btn:hover { background-color: #1d4ed8; }
+        .save-btn:active { transform: scale(0.98); }
+
+        .board-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; }
+        .position-header-cell {
+            font-size: 1.1em; font-weight: bold; text-align: center; color: #fff;
+            padding: 8px 2px; border-radius: 6px; text-transform: uppercase;
+            letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.06); margin-bottom: 8px;
+        }
+        .tier-row-header {
+            grid-column: span 9; background: #2c3e50; color: #fff; font-size: 0.75em;
+            font-weight: bold; text-align: center; padding: 5px 12px; border-radius: 4px;
+            margin-top: 10px; margin-bottom: 4px; letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .player-list-box {
+            background-color: #e2e8f0; border-radius: 6px; padding: 4px; min-height: 60px;
+            list-style: none; margin: 0;
+        }
+        .player-list-box.drag-over { background-color: #cbd5e1; border: 1px dashed #94a3b8; }
+        
+        .player-card { background: #fff; border-radius: 4px; margin-bottom: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); border-left: 3px solid #ccc; overflow: hidden; }
+        .player-card.dragging { opacity: 0.4; background: #94a3b8; }
+        .card-summary { display: flex; align-items: center; padding: 5px 6px; cursor: grab; user-select: none; }
+        .player-name { font-weight: 600; color: #1e293b; flex-grow: 1; font-size: 0.8em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .bye-tag { font-size: 0.7em; background: #f1f5f9; color: #64748b; padding: 1px 3px; border-radius: 3px; font-weight: bold; margin-left: 4px; }
+        .card-details { display: none; padding: 8px; background: #f8fafc; border-top: 1px solid #f1f5f9; font-size: 0.75em; color: #475569; }
+        .player-card.expanded .card-details { display: block; }
+        .full-name-title { font-weight: bold; color: #0f172a; margin-bottom: 2px; font-size: 1.05em; }
+        .team-title { color: #475569; margin-bottom: 6px; font-style: italic;}
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: #fff; padding: 4px; border-radius: 3px; border: 1px solid #e2e8f0; margin-bottom: 5px; }
+        .slots-info { font-size: 0.9em; color: #64748b; margin-bottom: 5px; }
+        .schedule-box { border-top: 1px dashed #cbd5e1; padding-top: 4px; color: #d97706; }
+        .pos-dif { color: #16a34a; font-weight: bold; }
+        .neg-dif { color: #dc2626; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <h1>Fantasy Football Board</h1>
+        <button class="save-btn" onclick="saveBoardLayout()">Layout speichern</button>
+    </div>
+    
+    <div class="board-grid">
+    
+        <div class="position-header-cell" style="background-color: #2ecc71; grid-column: span 2;">QB</div>
+        <div class="position-header-cell" style="background-color: #e74c3c; grid-column: span 3;">RB</div>
+        <div class="position-header-cell" style="background-color: #3498db; grid-column: span 3;">WR</div>
+        <div class="position-header-cell" style="background-color: #9b59b6; grid-column: span 1;">TE</div>
+    <div class="tier-row-header">TIER 1</div><ul class="player-list-box" data-tier="1" data-column="0">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Josh Allen">
+                <div class="card-summary">
+                    <div class="player-name">Allen</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Josh Allen (QB)</div>
+                    <div class="team-title">Buffalo Bills (BUF)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CHI || @DEN || @MIA
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Drake Maye">
+                <div class="card-summary">
+                    <div class="player-name">Maye</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Drake Maye (QB)</div>
+                    <div class="team-title">New England Patriots (NE)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (6) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @KC || @NYJ || DEN
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="1" data-column="1">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Lamar Jackson">
+                <div class="card-summary">
+                    <div class="player-name">Jackson</div>
+                    <div class="bye-tag">13</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Lamar Jackson (QB)</div>
+                    <div class="team-title">Baltimore Ravens (BAL)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (1) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @PIT || CLE || @CIN
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Joe Burrow">
+                <div class="card-summary">
+                    <div class="player-name">Burrow</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Joe Burrow (QB)</div>
+                    <div class="team-title">Cincinnati Bengals (CIN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @CAR || @IND || BAL
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="1" data-column="2">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Bijan Robinson">
+                <div class="card-summary">
+                    <div class="player-name">Robinson</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Bijan Robinson (RB)</div>
+                    <div class="team-title">Atlanta Falcons (ATL)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 22.8</div>
+                        <div><strong>XFP:</strong> 19.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+3.8</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (0) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @WAS || TB || NO
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jonathan Taylor">
+                <div class="card-summary">
+                    <div class="player-name">Taylor</div>
+                    <div class="bye-tag">13</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jonathan Taylor (RB)</div>
+                    <div class="team-title">Indianapolis Colts (IND)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 22.2</div>
+                        <div><strong>XFP:</strong> 18.4</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+3.9</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (12) • 22h (0) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @TEN || CIN || @CLE
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="1" data-column="3">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jahmyr Gibbs">
+                <div class="card-summary">
+                    <div class="player-name">Gibbs</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jahmyr Gibbs (RB)</div>
+                    <div class="team-title">Detroit Lions (DET)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 21.7</div>
+                        <div><strong>XFP:</strong> 16.9</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+4.9</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @MIN || NYG || @CHI
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="1" data-column="4">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Christian McCaffrey">
+                <div class="card-summary">
+                    <div class="player-name">McCaffrey</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Christian McCaffrey (RB)</div>
+                    <div class="team-title">San Francisco 49ers (SF)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 25.3</div>
+                        <div><strong>XFP:</strong> 24.4</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.9</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (9) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LAC || @KC || PHI
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="1" data-column="5">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Ja'Marr Chase">
+                <div class="card-summary">
+                    <div class="player-name">Chase</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Ja'Marr Chase (WR)</div>
+                    <div class="team-title">Cincinnati Bengals (CIN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 19.4</div>
+                        <div><strong>XFP:</strong> 20.3</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-0.9</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @CAR || @IND || BAL
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Amon-Ra St. Brown">
+                <div class="card-summary">
+                    <div class="player-name">Brown</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Amon-Ra St. Brown (WR)</div>
+                    <div class="team-title">Detroit Lions (DET)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 18.7</div>
+                        <div><strong>XFP:</strong> 18.3</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.3</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @MIN || NYG || @CHI
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="1" data-column="6">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Puka Nacua">
+                <div class="card-summary">
+                    <div class="player-name">Nacua</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Puka Nacua (WR)</div>
+                    <div class="team-title">Los Angeles Rams (LAR)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 23.3</div>
+                        <div><strong>XFP:</strong> 17.8</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+5.6</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (6) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> DAL || @SEA @TB
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="1" data-column="7">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jaxon Smith-Njigba">
+                <div class="card-summary">
+                    <div class="player-name">Smith-Njigba</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jaxon Smith-Njigba (WR)</div>
+                    <div class="team-title">Seattle Seahawks (SEA)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 21.7</div>
+                        <div><strong>XFP:</strong> 17.7</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+3.9</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (7) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @PHI || LAR || @CAR
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="1" data-column="8">
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Brock Bowers">
+                <div class="card-summary">
+                    <div class="player-name">Bowers</div>
+                    <div class="bye-tag">13</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Brock Bowers (TE)</div>
+                    <div class="team-title">Las Vegas Raiders (LV)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 14.5</div>
+                        <div><strong>XFP:</strong> 13.1</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+1.4</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (3) • 22h (13) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> DEN || TEN || @ARI
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Trey McBride">
+                <div class="card-summary">
+                    <div class="player-name">McBride</div>
+                    <div class="bye-tag">14</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Trey McBride (TE)</div>
+                    <div class="team-title">Arizona Cardinals (ARI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 18.9</div>
+                        <div><strong>XFP:</strong> 18.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.9</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (4) • 22h (12) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NYJ || @NO || LV
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Colston Loveland">
+                <div class="card-summary">
+                    <div class="player-name">Loveland</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Colston Loveland (TE)</div>
+                    <div class="team-title">Chicago Bears (CHI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (8) • 22h (2) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @BUF || GB || DET
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Tyler Warren">
+                <div class="card-summary">
+                    <div class="player-name">Warren</div>
+                    <div class="bye-tag">13</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Tyler Warren (TE)</div>
+                    <div class="team-title">Indianapolis Colts (IND)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (12) • 22h (0) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @TEN || CIN || @CLE
+                    </div>
+                </div>
+            </li>
+                </ul><div class="tier-row-header">TIER 2</div><ul class="player-list-box" data-tier="2" data-column="0">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jayden Daniels">
+                <div class="card-summary">
+                    <div class="player-name">Daniels</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jayden Daniels (QB)</div>
+                    <div class="team-title">WAS (WAS)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (-) • 22h (-) • Prime (-)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> Kein Spielplan
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Caleb Williams">
+                <div class="card-summary">
+                    <div class="player-name">Williams</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Caleb Williams (QB)</div>
+                    <div class="team-title">Chicago Bears (CHI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (8) • 22h (2) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @BUF || GB || DET
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="2" data-column="1">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jalen Hurts">
+                <div class="card-summary">
+                    <div class="player-name">Hurts</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jalen Hurts (QB)</div>
+                    <div class="team-title">Philadelphia Eagles (PHI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (3) • Prime (8)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> SEA || HOU || @SF
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Justin Herbert">
+                <div class="card-summary">
+                    <div class="player-name">Herbert</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Justin Herbert (QB)</div>
+                    <div class="team-title">Los Angeles Chargers (LAC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (3) • 22h (9) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> SF || @MIA || KAN
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="2" data-column="2">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="De'Von Achane">
+                <div class="card-summary">
+                    <div class="player-name">Achane</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">De'Von Achane (RB)</div>
+                    <div class="team-title">Miami Dolphins (MIA)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 20.2</div>
+                        <div><strong>XFP:</strong> 16.7</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+3.5</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (5) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @GB || LAC || BUF
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="2" data-column="3">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="James Cook III">
+                <div class="card-summary">
+                    <div class="player-name">Cook III</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">James Cook III (RB)</div>
+                    <div class="team-title">Buffalo Bills (BUF)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 19.0</div>
+                        <div><strong>XFP:</strong> 15.7</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+3.3</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CHI || @DEN || @MIA
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Chase Brown">
+                <div class="card-summary">
+                    <div class="player-name">Brown</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Chase Brown (RB)</div>
+                    <div class="team-title">Cincinnati Bengals (CIN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 16.4</div>
+                        <div><strong>XFP:</strong> 16.6</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-0.3</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @CAR || @IND || BAL
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="2" data-column="4">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Ashton Jeanty">
+                <div class="card-summary">
+                    <div class="player-name">Jeanty</div>
+                    <div class="bye-tag">13</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Ashton Jeanty (RB)</div>
+                    <div class="team-title">Las Vegas Raiders (LV)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 14.6</div>
+                        <div><strong>XFP:</strong> 15.1</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-0.5</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (3) • 22h (13) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> DEN || TEN || @ARI
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="2" data-column="5">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Drake London">
+                <div class="card-summary">
+                    <div class="player-name">London</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Drake London (WR)</div>
+                    <div class="team-title">Atlanta Falcons (ATL)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 16.6</div>
+                        <div><strong>XFP:</strong> 16.6</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.1</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (0) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @WAS || TB || NO
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="2" data-column="6">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="CeeDee Lamb">
+                <div class="card-summary">
+                    <div class="player-name">Lamb</div>
+                    <div class="bye-tag">14</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">CeeDee Lamb (WR)</div>
+                    <div class="team-title">Dallas Cowboys (DAL)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 15.3</div>
+                        <div><strong>XFP:</strong> 18.1</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-2.8</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (4) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LAR || JAX || NYG
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="A.J. Brown">
+                <div class="card-summary">
+                    <div class="player-name">Brown</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">A.J. Brown (WR)</div>
+                    <div class="team-title">New England Patriots (NE)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 14.7</div>
+                        <div><strong>XFP:</strong> 14.8</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-0.1</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (6) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @KC || @NYJ || DEN
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="2" data-column="7">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Justin Jefferson">
+                <div class="card-summary">
+                    <div class="player-name">Jefferson</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Justin Jefferson (WR)</div>
+                    <div class="team-title">Minnesota Vikings (MIN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (4) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> DET || WAS || @NYJ
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="2" data-column="8">
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Tucker Kraft">
+                <div class="card-summary">
+                    <div class="player-name">Kraft</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Tucker Kraft (TE)</div>
+                    <div class="team-title">Green Bay Packers (GB)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 14.7</div>
+                        <div><strong>XFP:</strong> 9.4</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+5.3</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (4) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> MIA || @CHI || HOU
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Harold Fannin Jr.">
+                <div class="card-summary">
+                    <div class="player-name">Fannin Jr.</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Harold Fannin Jr. (TE)</div>
+                    <div class="team-title">Cleveland Browns (CLE)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (15) • 22h (0) • Prime (1)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @NYG || @BAL || IND
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Kyle Pitts Sr.">
+                <div class="card-summary">
+                    <div class="player-name">Pitts Sr.</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Kyle Pitts Sr. (TE)</div>
+                    <div class="team-title">Atlanta Falcons (ATL)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 12.4</div>
+                        <div><strong>XFP:</strong> 11.5</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+1.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (0) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @WAS || TB || NO
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Sam LaPorta">
+                <div class="card-summary">
+                    <div class="player-name">LaPorta</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Sam LaPorta (TE)</div>
+                    <div class="team-title">Detroit Lions (DET)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @MIN || NYG || @CHI
+                    </div>
+                </div>
+            </li>
+                </ul><div class="tier-row-header">TIER 3</div><ul class="player-list-box" data-tier="3" data-column="0">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Trevor Lawrence">
+                <div class="card-summary">
+                    <div class="player-name">Lawrence</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Trevor Lawrence (QB)</div>
+                    <div class="team-title">JAC (JAC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (-) • 22h (-) • Prime (-)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> Kein Spielplan
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jaxson Dart">
+                <div class="card-summary">
+                    <div class="player-name">Dart</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jaxson Dart (QB)</div>
+                    <div class="team-title">New York Giants (NYG)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (1) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CLE || @DET || @DAL
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="3" data-column="1">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Dak Prescott">
+                <div class="card-summary">
+                    <div class="player-name">Prescott</div>
+                    <div class="bye-tag">14</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Dak Prescott (QB)</div>
+                    <div class="team-title">Dallas Cowboys (DAL)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (4) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LAR || JAX || NYG
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Brock Purdy">
+                <div class="card-summary">
+                    <div class="player-name">Purdy</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Brock Purdy (QB)</div>
+                    <div class="team-title">San Francisco 49ers (SF)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (9) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LAC || @KC || PHI
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="3" data-column="2">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Derrick Henry">
+                <div class="card-summary">
+                    <div class="player-name">Henry</div>
+                    <div class="bye-tag">13</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Derrick Henry (RB)</div>
+                    <div class="team-title">Baltimore Ravens (BAL)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 16.9</div>
+                        <div><strong>XFP:</strong> 14.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+2.9</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (1) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @PIT || CLE || @CIN
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="3" data-column="3">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Kenneth Walker III">
+                <div class="card-summary">
+                    <div class="player-name">Walker III</div>
+                    <div class="bye-tag">5</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Kenneth Walker III (RB)</div>
+                    <div class="team-title">Kansas City Chiefs (KC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (4) • 22h (5) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NE || SF || @LAC
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="3" data-column="4">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Omarion Hampton">
+                <div class="card-summary">
+                    <div class="player-name">Hampton</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Omarion Hampton (RB)</div>
+                    <div class="team-title">Los Angeles Chargers (LAC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 14.9</div>
+                        <div><strong>XFP:</strong> 14.1</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.8</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (3) • 22h (9) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> SF || @MIA || KAN
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jeremiyah Love">
+                <div class="card-summary">
+                    <div class="player-name">Love</div>
+                    <div class="bye-tag">14</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jeremiyah Love (RB)</div>
+                    <div class="team-title">Arizona Cardinals (ARI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (4) • 22h (12) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NYJ || @NO || LV
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="3" data-column="5">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="George Pickens">
+                <div class="card-summary">
+                    <div class="player-name">Pickens</div>
+                    <div class="bye-tag">14</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">George Pickens (WR)</div>
+                    <div class="team-title">Dallas Cowboys (DAL)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 18.0</div>
+                        <div><strong>XFP:</strong> 16.3</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+1.7</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (4) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LAR || JAX || NYG
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="3" data-column="6">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Rashee Rice">
+                <div class="card-summary">
+                    <div class="player-name">Rice</div>
+                    <div class="bye-tag">5</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Rashee Rice (WR)</div>
+                    <div class="team-title">Kansas City Chiefs (KC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 18.5</div>
+                        <div><strong>XFP:</strong> 18.4</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.1</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (4) • 22h (5) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NE || SF || @LAC
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="3" data-column="7">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Nico Collins">
+                <div class="card-summary">
+                    <div class="player-name">Collins</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Nico Collins (WR)</div>
+                    <div class="team-title">Houston Texans (HOU)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 15.0</div>
+                        <div><strong>XFP:</strong> 15.8</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-0.8</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> JAX || @PHI || @GB
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Chris Olave">
+                <div class="card-summary">
+                    <div class="player-name">Olave</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Chris Olave (WR)</div>
+                    <div class="team-title">New Orleans Saints (NO)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 16.9</div>
+                        <div><strong>XFP:</strong> 17.8</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-1.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (13) • 22h (1) • Prime (2)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @TB || ARI || @ATL
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="3" data-column="8">
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="George Kittle">
+                <div class="card-summary">
+                    <div class="player-name">Kittle</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">George Kittle (TE)</div>
+                    <div class="team-title">San Francisco 49ers (SF)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 15.4</div>
+                        <div><strong>XFP:</strong> 11.2</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+4.2</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (9) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LAC || @KC || PHI
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Travis Kelce">
+                <div class="card-summary">
+                    <div class="player-name">Kelce</div>
+                    <div class="bye-tag">5</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Travis Kelce (TE)</div>
+                    <div class="team-title">Kansas City Chiefs (KC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (4) • 22h (5) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NE || SF || @LAC
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Dalton Kincaid">
+                <div class="card-summary">
+                    <div class="player-name">Kincaid</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Dalton Kincaid (TE)</div>
+                    <div class="team-title">Buffalo Bills (BUF)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CHI || @DEN || @MIA
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Jake Ferguson">
+                <div class="card-summary">
+                    <div class="player-name">Ferguson</div>
+                    <div class="bye-tag">14</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jake Ferguson (TE)</div>
+                    <div class="team-title">Dallas Cowboys (DAL)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (4) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LAR || JAX || NYG
+                    </div>
+                </div>
+            </li>
+                </ul><div class="tier-row-header">TIER 4</div><ul class="player-list-box" data-tier="4" data-column="0">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Patrick Mahomes II">
+                <div class="card-summary">
+                    <div class="player-name">Mahomes II</div>
+                    <div class="bye-tag">5</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Patrick Mahomes II (QB)</div>
+                    <div class="team-title">Kansas City Chiefs (KC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (4) • 22h (5) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NE || SF || @LAC
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Matthew Stafford">
+                <div class="card-summary">
+                    <div class="player-name">Stafford</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Matthew Stafford (QB)</div>
+                    <div class="team-title">Los Angeles Rams (LAR)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (6) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> DAL || @SEA @TB
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="4" data-column="1">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Bo Nix">
+                <div class="card-summary">
+                    <div class="player-name">Nix</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Bo Nix (QB)</div>
+                    <div class="team-title">Denver Broncos (DEN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (9) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LV || BUF || @NE
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jared Goff">
+                <div class="card-summary">
+                    <div class="player-name">Goff</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jared Goff (QB)</div>
+                    <div class="team-title">Detroit Lions (DET)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @MIN || NYG || @CHI
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="4" data-column="2">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Kyren Williams">
+                <div class="card-summary">
+                    <div class="player-name">Williams</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Kyren Williams (RB)</div>
+                    <div class="team-title">Los Angeles Rams (LAR)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 15.9</div>
+                        <div><strong>XFP:</strong> 14.2</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+1.7</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (6) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> DAL || @SEA @TB
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Javonte Williams">
+                <div class="card-summary">
+                    <div class="player-name">Williams</div>
+                    <div class="bye-tag">14</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Javonte Williams (RB)</div>
+                    <div class="team-title">Dallas Cowboys (DAL)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 15.3</div>
+                        <div><strong>XFP:</strong> 15.8</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-0.5</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (4) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LAR || JAX || NYG
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="4" data-column="3">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Josh Jacobs">
+                <div class="card-summary">
+                    <div class="player-name">Jacobs</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Josh Jacobs (RB)</div>
+                    <div class="team-title">Green Bay Packers (GB)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 15.9</div>
+                        <div><strong>XFP:</strong> 14.8</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+1.1</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (4) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> MIA || @CHI || HOU
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="4" data-column="4">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Breece Hall">
+                <div class="card-summary">
+                    <div class="player-name">Hall</div>
+                    <div class="bye-tag">13</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Breece Hall (RB)</div>
+                    <div class="team-title">New York Jets (NYJ)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 12.8</div>
+                        <div><strong>XFP:</strong> 11.8</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+1.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (14) • 22h (2) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @ARI || NE || MIN
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="4" data-column="5">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="DeVonta Smith">
+                <div class="card-summary">
+                    <div class="player-name">Smith</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">DeVonta Smith (WR)</div>
+                    <div class="team-title">Philadelphia Eagles (PHI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (3) • Prime (8)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> SEA || HOU || @SF
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Tetairoa McMillan">
+                <div class="card-summary">
+                    <div class="player-name">McMillan</div>
+                    <div class="bye-tag">5</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Tetairoa McMillan (WR)</div>
+                    <div class="team-title">Carolina Panthers (CAR)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 12.6</div>
+                        <div><strong>XFP:</strong> 12.8</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-0.2</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (1) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CIN || PIT || SEA
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="4" data-column="6">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Zay Flowers">
+                <div class="card-summary">
+                    <div class="player-name">Flowers</div>
+                    <div class="bye-tag">13</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Zay Flowers (WR)</div>
+                    <div class="team-title">Baltimore Ravens (BAL)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 13.5</div>
+                        <div><strong>XFP:</strong> 12.7</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.9</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (1) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @PIT || CLE || @CIN
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="4" data-column="7">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Tee Higgins">
+                <div class="card-summary">
+                    <div class="player-name">Higgins</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Tee Higgins (WR)</div>
+                    <div class="team-title">Cincinnati Bengals (CIN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 13.6</div>
+                        <div><strong>XFP:</strong> 11.9</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+1.8</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @CAR || @IND || BAL
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="4" data-column="8">
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Dallas Goedert">
+                <div class="card-summary">
+                    <div class="player-name">Goedert</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Dallas Goedert (TE)</div>
+                    <div class="team-title">Philadelphia Eagles (PHI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 12.3</div>
+                        <div><strong>XFP:</strong> 9.9</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+2.4</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (3) • Prime (8)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> SEA || HOU || @SF
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Isaiah Likely">
+                <div class="card-summary">
+                    <div class="player-name">Likely</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Isaiah Likely (TE)</div>
+                    <div class="team-title">New York Giants (NYG)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (1) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CLE || @DET || @DAL
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Mark Andrews">
+                <div class="card-summary">
+                    <div class="player-name">Andrews</div>
+                    <div class="bye-tag">13</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Mark Andrews (TE)</div>
+                    <div class="team-title">Baltimore Ravens (BAL)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (1) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @PIT || CLE || @CIN
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Brenton Strange">
+                <div class="card-summary">
+                    <div class="player-name">Strange</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Brenton Strange (TE)</div>
+                    <div class="team-title">JAC (JAC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (-) • 22h (-) • Prime (-)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> Kein Spielplan
+                    </div>
+                </div>
+            </li>
+                </ul><div class="tier-row-header">TIER 5</div><ul class="player-list-box" data-tier="5" data-column="0">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Kyler Murray">
+                <div class="card-summary">
+                    <div class="player-name">Murray</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Kyler Murray (QB)</div>
+                    <div class="team-title">Minnesota Vikings (MIN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (4) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> DET || WAS || @NYJ
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jordan Love">
+                <div class="card-summary">
+                    <div class="player-name">Love</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jordan Love (QB)</div>
+                    <div class="team-title">Green Bay Packers (GB)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (4) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> MIA || @CHI || HOU
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="5" data-column="1">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Baker Mayfield">
+                <div class="card-summary">
+                    <div class="player-name">Mayfield</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Baker Mayfield (QB)</div>
+                    <div class="team-title">Tampa Bay Buccaneers (TB)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NO || @ATL || LAR
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Tyler Shough">
+                <div class="card-summary">
+                    <div class="player-name">Shough</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Tyler Shough (QB)</div>
+                    <div class="team-title">New Orleans Saints (NO)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (13) • 22h (1) • Prime (2)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @TB || ARI || @ATL
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="5" data-column="2">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Bucky Irving">
+                <div class="card-summary">
+                    <div class="player-name">Irving</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Bucky Irving (RB)</div>
+                    <div class="team-title">Tampa Bay Buccaneers (TB)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 14.3</div>
+                        <div><strong>XFP:</strong> 14.8</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-0.5</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NO || @ATL || LAR
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="5" data-column="3">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Travis Etienne Jr.">
+                <div class="card-summary">
+                    <div class="player-name">Etienne Jr.</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Travis Etienne Jr. (RB)</div>
+                    <div class="team-title">New Orleans Saints (NO)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 15.6</div>
+                        <div><strong>XFP:</strong> 14.3</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+1.3</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (13) • 22h (1) • Prime (2)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @TB || ARI || @ATL
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Quinshon Judkins">
+                <div class="card-summary">
+                    <div class="player-name">Judkins</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Quinshon Judkins (RB)</div>
+                    <div class="team-title">Cleveland Browns (CLE)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (15) • 22h (0) • Prime (1)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @NYG || @BAL || IND
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="5" data-column="4">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Cam Skattebo">
+                <div class="card-summary">
+                    <div class="player-name">Skattebo</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Cam Skattebo (RB)</div>
+                    <div class="team-title">New York Giants (NYG)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 15.8</div>
+                        <div><strong>XFP:</strong> 14.9</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.9</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (1) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CLE || @DET || @DAL
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="5" data-column="5">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Ladd McConkey">
+                <div class="card-summary">
+                    <div class="player-name">McConkey</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Ladd McConkey (WR)</div>
+                    <div class="team-title">Los Angeles Chargers (LAC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (3) • 22h (9) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> SF || @MIA || KAN
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="5" data-column="6">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Garrett Wilson">
+                <div class="card-summary">
+                    <div class="player-name">Wilson</div>
+                    <div class="bye-tag">13</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Garrett Wilson (WR)</div>
+                    <div class="team-title">New York Jets (NYJ)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 14.2</div>
+                        <div><strong>XFP:</strong> 14.3</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-0.1</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (14) • 22h (2) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @ARI || NE || MIN
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jaylen Waddle">
+                <div class="card-summary">
+                    <div class="player-name">Waddle</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jaylen Waddle (WR)</div>
+                    <div class="team-title">Denver Broncos (DEN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (9) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LV || BUF || @NE
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="5" data-column="7">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Emeka Egbuka">
+                <div class="card-summary">
+                    <div class="player-name">Egbuka</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Emeka Egbuka (WR)</div>
+                    <div class="team-title">Tampa Bay Buccaneers (TB)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NO || @ATL || LAR
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="5" data-column="8">
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Juwan Johnson">
+                <div class="card-summary">
+                    <div class="player-name">Johnson</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Juwan Johnson (TE)</div>
+                    <div class="team-title">New Orleans Saints (NO)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (13) • 22h (1) • Prime (2)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @TB || ARI || @ATL
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Hunter Henry">
+                <div class="card-summary">
+                    <div class="player-name">Henry</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Hunter Henry (TE)</div>
+                    <div class="team-title">New England Patriots (NE)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (6) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @KC || @NYJ || DEN
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Oronde Gadsden II">
+                <div class="card-summary">
+                    <div class="player-name">Gadsden II</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Oronde Gadsden II (TE)</div>
+                    <div class="team-title">Los Angeles Chargers (LAC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (3) • 22h (9) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> SF || @MIA || KAN
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Chig Okonkwo">
+                <div class="card-summary">
+                    <div class="player-name">Okonkwo</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Chig Okonkwo (TE)</div>
+                    <div class="team-title">WAS (WAS)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (-) • 22h (-) • Prime (-)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> Kein Spielplan
+                    </div>
+                </div>
+            </li>
+                </ul><div class="tier-row-header">TIER 6</div><ul class="player-list-box" data-tier="6" data-column="0">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Malik Willis">
+                <div class="card-summary">
+                    <div class="player-name">Willis</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Malik Willis (QB)</div>
+                    <div class="team-title">Miami Dolphins (MIA)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (5) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @GB || LAC || BUF
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Sam Darnold">
+                <div class="card-summary">
+                    <div class="player-name">Darnold</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Sam Darnold (QB)</div>
+                    <div class="team-title">Seattle Seahawks (SEA)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (7) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @PHI || LAR || @CAR
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="6" data-column="1">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="C.J. Stroud">
+                <div class="card-summary">
+                    <div class="player-name">Stroud</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">C.J. Stroud (QB)</div>
+                    <div class="team-title">Houston Texans (HOU)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> JAX || @PHI || @GB
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="6" data-column="2">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="TreVeyon Henderson">
+                <div class="card-summary">
+                    <div class="player-name">Henderson</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">TreVeyon Henderson (RB)</div>
+                    <div class="team-title">New England Patriots (NE)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (6) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @KC || @NYJ || DEN
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="6" data-column="3">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="David Montgomery">
+                <div class="card-summary">
+                    <div class="player-name">Montgomery</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">David Montgomery (RB)</div>
+                    <div class="team-title">Houston Texans (HOU)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> JAX || @PHI || @GB
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="6" data-column="4">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="D'Andre Swift">
+                <div class="card-summary">
+                    <div class="player-name">Swift</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">D'Andre Swift (RB)</div>
+                    <div class="team-title">Chicago Bears (CHI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 15.0</div>
+                        <div><strong>XFP:</strong> 13.4</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+1.6</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (8) • 22h (2) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @BUF || GB || DET
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Bhayshul Tuten">
+                <div class="card-summary">
+                    <div class="player-name">Tuten</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Bhayshul Tuten (RB)</div>
+                    <div class="team-title">JAC (JAC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (-) • 22h (-) • Prime (-)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> Kein Spielplan
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="6" data-column="5">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Terry McLaurin">
+                <div class="card-summary">
+                    <div class="player-name">McLaurin</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Terry McLaurin (WR)</div>
+                    <div class="team-title">WAS (WAS)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (-) • 22h (-) • Prime (-)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> Kein Spielplan
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="6" data-column="6">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Davante Adams">
+                <div class="card-summary">
+                    <div class="player-name">Adams</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Davante Adams (WR)</div>
+                    <div class="team-title">Los Angeles Rams (LAR)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 15.9</div>
+                        <div><strong>XFP:</strong> 17.7</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-1.8</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (6) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> DAL || @SEA @TB
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="6" data-column="7">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Malik Nabers">
+                <div class="card-summary">
+                    <div class="player-name">Nabers</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Malik Nabers (WR)</div>
+                    <div class="team-title">New York Giants (NYG)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 14.3</div>
+                        <div><strong>XFP:</strong> 17.6</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-3.3</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (1) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CLE || @DET || @DAL
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Luther Burden III">
+                <div class="card-summary">
+                    <div class="player-name">Burden III</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Luther Burden III (WR)</div>
+                    <div class="team-title">Chicago Bears (CHI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (8) • 22h (2) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @BUF || GB || DET
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="6" data-column="8"></ul><div class="tier-row-header">TIER 7</div><ul class="player-list-box" data-tier="7" data-column="0"></ul><ul class="player-list-box" data-tier="7" data-column="1"></ul><ul class="player-list-box" data-tier="7" data-column="2">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jadarian Price">
+                <div class="card-summary">
+                    <div class="player-name">Price</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jadarian Price (RB)</div>
+                    <div class="team-title">Seattle Seahawks (SEA)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (7) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @PHI || LAR || @CAR
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Rhamondre Stevenson">
+                <div class="card-summary">
+                    <div class="player-name">Stevenson</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Rhamondre Stevenson (RB)</div>
+                    <div class="team-title">New England Patriots (NE)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (6) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @KC || @NYJ || DEN
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="7" data-column="3">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jaylen Warren">
+                <div class="card-summary">
+                    <div class="player-name">Warren</div>
+                    <div class="bye-tag">9</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jaylen Warren (RB)</div>
+                    <div class="team-title">Pittsburgh Steelers (PIT)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 13.5</div>
+                        <div><strong>XFP:</strong> 12.3</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+1.2</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (8) • 22h (1) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> BAL || CAR || @TEN
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="7" data-column="4">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Tony Pollard">
+                <div class="card-summary">
+                    <div class="player-name">Pollard</div>
+                    <div class="bye-tag">9</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Tony Pollard (RB)</div>
+                    <div class="team-title">Tennessee Titans (TEN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (14) • 22h (2) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> IND || @LV || PIT
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="7" data-column="5">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Mike Evans">
+                <div class="card-summary">
+                    <div class="player-name">Evans</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Mike Evans (WR)</div>
+                    <div class="team-title">San Francisco 49ers (SF)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (9) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LAC || @KC || PHI
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="DJ Moore">
+                <div class="card-summary">
+                    <div class="player-name">Moore</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">DJ Moore (WR)</div>
+                    <div class="team-title">Buffalo Bills (BUF)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CHI || @DEN || @MIA
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="7" data-column="6">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jameson Williams">
+                <div class="card-summary">
+                    <div class="player-name">Williams</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jameson Williams (WR)</div>
+                    <div class="team-title">Detroit Lions (DET)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 12.9</div>
+                        <div><strong>XFP:</strong> 10.4</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+2.5</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @MIN || NYG || @CHI
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="7" data-column="7">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Christian Watson">
+                <div class="card-summary">
+                    <div class="player-name">Watson</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Christian Watson (WR)</div>
+                    <div class="team-title">Green Bay Packers (GB)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 13.2</div>
+                        <div><strong>XFP:</strong> 10.6</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+2.6</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (4) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> MIA || @CHI || HOU
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="7" data-column="8"></ul><div class="tier-row-header">TIER 8</div><ul class="player-list-box" data-tier="8" data-column="0"></ul><ul class="player-list-box" data-tier="8" data-column="1"></ul><ul class="player-list-box" data-tier="8" data-column="2">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="RJ Harvey">
+                <div class="card-summary">
+                    <div class="player-name">Harvey</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">RJ Harvey (RB)</div>
+                    <div class="team-title">Denver Broncos (DEN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 12.7</div>
+                        <div><strong>XFP:</strong> 10.8</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+1.9</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (9) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LV || BUF || @NE
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Blake Corum">
+                <div class="card-summary">
+                    <div class="player-name">Corum</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Blake Corum (RB)</div>
+                    <div class="team-title">Los Angeles Rams (LAR)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (6) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> DAL || @SEA @TB
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Aaron Jones Sr.">
+                <div class="card-summary">
+                    <div class="player-name">Jones Sr.</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Aaron Jones Sr. (RB)</div>
+                    <div class="team-title">Minnesota Vikings (MIN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (4) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> DET || WAS || @NYJ
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jordan Mason">
+                <div class="card-summary">
+                    <div class="player-name">Mason</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jordan Mason (RB)</div>
+                    <div class="team-title">Minnesota Vikings (MIN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (4) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> DET || WAS || @NYJ
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Tyler Allgeier">
+                <div class="card-summary">
+                    <div class="player-name">Allgeier</div>
+                    <div class="bye-tag">14</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Tyler Allgeier (RB)</div>
+                    <div class="team-title">Arizona Cardinals (ARI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (4) • 22h (12) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NYJ || @NO || LV
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Isiah Pacheco">
+                <div class="card-summary">
+                    <div class="player-name">Pacheco</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Isiah Pacheco (RB)</div>
+                    <div class="team-title">Detroit Lions (DET)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @MIN || NYG || @CHI
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Dylan Sampson">
+                <div class="card-summary">
+                    <div class="player-name">Sampson</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Dylan Sampson (RB)</div>
+                    <div class="team-title">Cleveland Browns (CLE)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (15) • 22h (0) • Prime (1)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @NYG || @BAL || IND
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="8" data-column="3">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Chuba Hubbard">
+                <div class="card-summary">
+                    <div class="player-name">Hubbard</div>
+                    <div class="bye-tag">5</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Chuba Hubbard (RB)</div>
+                    <div class="team-title">Carolina Panthers (CAR)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (1) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CIN || PIT || SEA
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Kyle Monangai">
+                <div class="card-summary">
+                    <div class="player-name">Monangai</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Kyle Monangai (RB)</div>
+                    <div class="team-title">Chicago Bears (CHI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (8) • 22h (2) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @BUF || GB || DET
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Kenny Gainwell">
+                <div class="card-summary">
+                    <div class="player-name">Gainwell</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Kenny Gainwell (RB)</div>
+                    <div class="team-title">Tampa Bay Buccaneers (TB)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 12.6</div>
+                        <div><strong>XFP:</strong> 11.8</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.7</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NO || @ATL || LAR
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jonathon Brooks">
+                <div class="card-summary">
+                    <div class="player-name">Brooks</div>
+                    <div class="bye-tag">5</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jonathon Brooks (RB)</div>
+                    <div class="team-title">Carolina Panthers (CAR)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (1) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CIN || PIT || SEA
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Tyrone Tracy Jr.">
+                <div class="card-summary">
+                    <div class="player-name">Tracy Jr.</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Tyrone Tracy Jr. (RB)</div>
+                    <div class="team-title">New York Giants (NYG)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (1) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CLE || @DET || @DAL
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Woody Marks">
+                <div class="card-summary">
+                    <div class="player-name">Marks</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Woody Marks (RB)</div>
+                    <div class="team-title">Houston Texans (HOU)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> JAX || @PHI || @GB
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Tyjae Spears">
+                <div class="card-summary">
+                    <div class="player-name">Spears</div>
+                    <div class="bye-tag">9</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Tyjae Spears (RB)</div>
+                    <div class="team-title">Tennessee Titans (TEN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (14) • 22h (2) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> IND || @LV || PIT
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Keaton Mitchell">
+                <div class="card-summary">
+                    <div class="player-name">Mitchell</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Keaton Mitchell (RB)</div>
+                    <div class="team-title">Los Angeles Chargers (LAC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (3) • 22h (9) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> SF || @MIA || KAN
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="8" data-column="4">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Rico Dowdle">
+                <div class="card-summary">
+                    <div class="player-name">Dowdle</div>
+                    <div class="bye-tag">9</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Rico Dowdle (RB)</div>
+                    <div class="team-title">Pittsburgh Steelers (PIT)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 13.3</div>
+                        <div><strong>XFP:</strong> 12.7</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.6</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (8) • 22h (1) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> BAL || CAR || @TEN
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="J.K. Dobbins">
+                <div class="card-summary">
+                    <div class="player-name">Dobbins</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">J.K. Dobbins (RB)</div>
+                    <div class="team-title">Denver Broncos (DEN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (9) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LV || BUF || @NE
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Rachaad White">
+                <div class="card-summary">
+                    <div class="player-name">White</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Rachaad White (RB)</div>
+                    <div class="team-title">WAS (WAS)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (-) • 22h (-) • Prime (-)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> Kein Spielplan
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jacory Croskey-Merritt">
+                <div class="card-summary">
+                    <div class="player-name">Croskey-Merritt</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jacory Croskey-Merritt (RB)</div>
+                    <div class="team-title">WAS (WAS)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (-) • 22h (-) • Prime (-)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> Kein Spielplan
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Chris Rodriguez Jr.">
+                <div class="card-summary">
+                    <div class="player-name">Rodriguez Jr.</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Chris Rodriguez Jr. (RB)</div>
+                    <div class="team-title">JAC (JAC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (-) • 22h (-) • Prime (-)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> Kein Spielplan
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Zach Charbonnet">
+                <div class="card-summary">
+                    <div class="player-name">Charbonnet</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Zach Charbonnet (RB)</div>
+                    <div class="team-title">Seattle Seahawks (SEA)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (7) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @PHI || LAR || @CAR
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Alvin Kamara">
+                <div class="card-summary">
+                    <div class="player-name">Kamara</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Alvin Kamara (RB)</div>
+                    <div class="team-title">New Orleans Saints (NO)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (13) • 22h (1) • Prime (2)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @TB || ARI || @ATL
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="8" data-column="5">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Carnell Tate">
+                <div class="card-summary">
+                    <div class="player-name">Tate</div>
+                    <div class="bye-tag">9</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Carnell Tate (WR)</div>
+                    <div class="team-title">Tennessee Titans (TEN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (14) • 22h (2) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> IND || @LV || PIT
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Brian Thomas Jr.">
+                <div class="card-summary">
+                    <div class="player-name">Thomas Jr.</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Brian Thomas Jr. (WR)</div>
+                    <div class="team-title">JAC (JAC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (-) • 22h (-) • Prime (-)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> Kein Spielplan
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Parker Washington">
+                <div class="card-summary">
+                    <div class="player-name">Washington</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Parker Washington (WR)</div>
+                    <div class="team-title">JAC (JAC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (-) • 22h (-) • Prime (-)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> Kein Spielplan
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Michael Wilson">
+                <div class="card-summary">
+                    <div class="player-name">Wilson</div>
+                    <div class="bye-tag">14</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Michael Wilson (WR)</div>
+                    <div class="team-title">Arizona Cardinals (ARI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 12.5</div>
+                        <div><strong>XFP:</strong> 13.5</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-1.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (4) • 22h (12) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NYJ || @NO || LV
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Makai Lemon">
+                <div class="card-summary">
+                    <div class="player-name">Lemon</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Makai Lemon (WR)</div>
+                    <div class="team-title">Philadelphia Eagles (PHI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (3) • Prime (8)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> SEA || HOU || @SF
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Wan'Dale Robinson">
+                <div class="card-summary">
+                    <div class="player-name">Robinson</div>
+                    <div class="bye-tag">9</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Wan'Dale Robinson (WR)</div>
+                    <div class="team-title">Tennessee Titans (TEN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 13.6</div>
+                        <div><strong>XFP:</strong> 14.4</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-0.8</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (14) • 22h (2) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> IND || @LV || PIT
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Xavier Worthy">
+                <div class="card-summary">
+                    <div class="player-name">Worthy</div>
+                    <div class="bye-tag">5</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Xavier Worthy (WR)</div>
+                    <div class="team-title">Kansas City Chiefs (KC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (4) • 22h (5) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NE || SF || @LAC
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Romeo Doubs">
+                <div class="card-summary">
+                    <div class="player-name">Doubs</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Romeo Doubs (WR)</div>
+                    <div class="team-title">New England Patriots (NE)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (6) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @KC || @NYJ || DEN
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="KC Concepcion">
+                <div class="card-summary">
+                    <div class="player-name">Concepcion</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">KC Concepcion (WR)</div>
+                    <div class="team-title">Cleveland Browns (CLE)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (15) • 22h (0) • Prime (1)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @NYG || @BAL || IND
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="8" data-column="6">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Rome Odunze">
+                <div class="card-summary">
+                    <div class="player-name">Odunze</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Rome Odunze (WR)</div>
+                    <div class="team-title">Chicago Bears (CHI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 12.2</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (8) • 22h (2) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @BUF || GB || DET
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Alec Pierce">
+                <div class="card-summary">
+                    <div class="player-name">Pierce</div>
+                    <div class="bye-tag">13</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Alec Pierce (WR)</div>
+                    <div class="team-title">Indianapolis Colts (IND)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (12) • 22h (0) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @TEN || CIN || @CLE
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Courtland Sutton">
+                <div class="card-summary">
+                    <div class="player-name">Sutton</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Courtland Sutton (WR)</div>
+                    <div class="team-title">Denver Broncos (DEN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 13.5</div>
+                        <div><strong>XFP:</strong> 14.4</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-0.9</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (9) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LV || BUF || @NE
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jordyn Tyson">
+                <div class="card-summary">
+                    <div class="player-name">Tyson</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jordyn Tyson (WR)</div>
+                    <div class="team-title">New Orleans Saints (NO)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (13) • 22h (1) • Prime (2)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @TB || ARI || @ATL
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Quentin Johnston">
+                <div class="card-summary">
+                    <div class="player-name">Johnston</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Quentin Johnston (WR)</div>
+                    <div class="team-title">Los Angeles Chargers (LAC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 12.3</div>
+                        <div><strong>XFP:</strong> 10.4</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+1.9</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (3) • 22h (9) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> SF || @MIA || KAN
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jakobi Meyers">
+                <div class="card-summary">
+                    <div class="player-name">Meyers</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jakobi Meyers (WR)</div>
+                    <div class="team-title">JAC (JAC)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (-) • 22h (-) • Prime (-)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> Kein Spielplan
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Josh Downs">
+                <div class="card-summary">
+                    <div class="player-name">Downs</div>
+                    <div class="bye-tag">13</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Josh Downs (WR)</div>
+                    <div class="team-title">Indianapolis Colts (IND)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (12) • 22h (0) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @TEN || CIN || @CLE
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jayden Higgins">
+                <div class="card-summary">
+                    <div class="player-name">Higgins</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jayden Higgins (WR)</div>
+                    <div class="team-title">Houston Texans (HOU)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> JAX || @PHI || @GB
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jalen Coker">
+                <div class="card-summary">
+                    <div class="player-name">Coker</div>
+                    <div class="bye-tag">5</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jalen Coker (WR)</div>
+                    <div class="team-title">Carolina Panthers (CAR)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (11) • 22h (1) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CIN || PIT || SEA
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Rashid Shaheed">
+                <div class="card-summary">
+                    <div class="player-name">Shaheed</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Rashid Shaheed (WR)</div>
+                    <div class="team-title">Seattle Seahawks (SEA)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (7) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @PHI || LAR || @CAR
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="8" data-column="7">
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Marvin Harrison Jr.">
+                <div class="card-summary">
+                    <div class="player-name">Harrison Jr.</div>
+                    <div class="bye-tag">14</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Marvin Harrison Jr. (WR)</div>
+                    <div class="team-title">Arizona Cardinals (ARI)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (4) • 22h (12) • Prime (0)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NYJ || @NO || LV
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="DK Metcalf">
+                <div class="card-summary">
+                    <div class="player-name">Metcalf</div>
+                    <div class="bye-tag">9</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">DK Metcalf (WR)</div>
+                    <div class="team-title">Pittsburgh Steelers (PIT)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 12.5</div>
+                        <div><strong>XFP:</strong> 12.7</div>
+                        <div><strong>DIF:</strong> <span class="neg-dif">-0.2</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (8) • 22h (1) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> BAL || CAR || @TEN
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Chris Godwin Jr.">
+                <div class="card-summary">
+                    <div class="player-name">Godwin Jr.</div>
+                    <div class="bye-tag">10</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Chris Godwin Jr. (WR)</div>
+                    <div class="team-title">Tampa Bay Buccaneers (TB)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (10) • 22h (1) • Prime (3)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> NO || @ATL || LAR
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Michael Pittman Jr.">
+                <div class="card-summary">
+                    <div class="player-name">Pittman Jr.</div>
+                    <div class="bye-tag">9</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Michael Pittman Jr. (WR)</div>
+                    <div class="team-title">Pittsburgh Steelers (PIT)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 12.3</div>
+                        <div><strong>XFP:</strong> 11.2</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+1.1</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (8) • 22h (1) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> BAL || CAR || @TEN
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Ricky Pearsall">
+                <div class="card-summary">
+                    <div class="player-name">Pearsall</div>
+                    <div class="bye-tag">8</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Ricky Pearsall (WR)</div>
+                    <div class="team-title">San Francisco 49ers (SF)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (2) • 22h (9) • Prime (5)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> @LAC || @KC || PHI
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jordan Addison">
+                <div class="card-summary">
+                    <div class="player-name">Addison</div>
+                    <div class="bye-tag">6</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jordan Addison (WR)</div>
+                    <div class="team-title">Minnesota Vikings (MIN)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (4) • Prime (4)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> DET || WAS || @NYJ
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jayden Reed">
+                <div class="card-summary">
+                    <div class="player-name">Reed</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Jayden Reed (WR)</div>
+                    <div class="team-title">Green Bay Packers (GB)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (4) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> MIA || @CHI || HOU
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Khalil Shakir">
+                <div class="card-summary">
+                    <div class="player-name">Shakir</div>
+                    <div class="bye-tag">7</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Khalil Shakir (WR)</div>
+                    <div class="team-title">Buffalo Bills (BUF)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (7) • 22h (3) • Prime (6)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> CHI || @DEN || @MIA
+                    </div>
+                </div>
+            </li>
+                
+            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Matthew Golden">
+                <div class="card-summary">
+                    <div class="player-name">Golden</div>
+                    <div class="bye-tag">11</div>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Matthew Golden (WR)</div>
+                    <div class="team-title">Green Bay Packers (GB)</div>
+                    <div class="stats-grid">
+                        <div><strong>FPTS:</strong> 0.0</div>
+                        <div><strong>XFP:</strong> 0.0</div>
+                        <div><strong>DIF:</strong> <span class="pos-dif">+0.0</span></div>
+                    </div>
+                    <div class="slots-info">
+                        <strong>Slots:</strong> 19h (5) • 22h (4) • Prime (7)
+                    </div>
+                    <div class="schedule-box">
+                        <strong>Playoffs:</strong> MIA || @CHI || HOU
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="8" data-column="8"></ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setupDragAndDrop();
+        });
+
+        function setupDragAndDrop() {
+            const grid = document.querySelector('.board-grid');
+
+            grid.addEventListener('dragstart', (e) => {
+                if (e.target.classList.contains('player-card')) {
+                    e.target.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', '');
+                }
+            });
+
+            grid.addEventListener('dragend', (e) => {
+                if (e.target.classList.contains('player-card')) {
+                    e.target.classList.remove('dragging');
+                    document.querySelectorAll('.player-list-box').forEach(b => b.classList.remove('drag-over'));
+                }
+            });
+
+            grid.addEventListener('click', (e) => {
+                const summary = e.target.closest('.card-summary');
+                if (!summary) return;
+                const card = summary.parentElement;
+                if (card.classList.contains('dragging')) return;
+                
+                const isExpanded = card.classList.contains('expanded');
+                card.parentElement.querySelectorAll('.player-card').forEach(c => c.classList.remove('expanded'));
+                if (!isExpanded) card.classList.add('expanded');
+            });
+
+            const boxes = document.querySelectorAll('.player-list-box');
+            boxes.forEach(box => {
+                box.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    box.classList.add('drag-over');
+                    const draggingItem = document.querySelector('.dragging');
+                    if (!draggingItem) return;
+
+                    const siblings = [...box.querySelectorAll('.player-card:not(.dragging)')];
+                    const nextSibling = siblings.find(sibling => {
+                        const r = sibling.getBoundingClientRect();
+                        return e.clientY <= r.top + r.height / 2;
+                    });
+                    box.insertBefore(draggingItem, nextSibling);
+                });
+
+                box.addEventListener('dragleave', () => {
+                    box.classList.remove('drag-over');
+                });
+            });
+        }
+
+        // Sendet die neue Struktur via POST-Request an den Python Server
+        async function saveBoardLayout() {
+            const boxes = document.querySelectorAll('.player-list-box');
+            const payload = [];
+
+            boxes.forEach(box => {
+                const tier = parseInt(box.getAttribute('data-tier'));
+                const columnId = parseInt(box.getAttribute('data-column'));
+                const cards = box.querySelectorAll('.player-card');
+
+                cards.forEach((card, index) => {
+                    payload.push({
+                        name: card.getAttribute('data-id'),
+                        tier: tier,
+                        column_id: columnId,
+                        sort_order: index
+                    });
+                });
+            });
+
+            try {
+                const response = await fetch('/save-layout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (response.ok) {
+                    alert('Reihenfolge und Tiers erfolgreich dauerhaft gespeichert!');
+                } else {
+                    alert('Fehler beim Speichern auf dem Server.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Server nicht erreichbar. Hast du main.py gestartet?');
+            }
+        }
+    </script>
+</body>
+</html>
+    
