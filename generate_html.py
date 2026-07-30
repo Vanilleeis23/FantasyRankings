@@ -361,7 +361,7 @@ def generate_html():
                 return (a.sort_order || 0) - (b.sort_order || 0);
             }});
 
-            // Trigger den GitHub Actions Workflow via Repository Dispatch Event
+            // Ruft direkt deine neue Funktion unten auf – die kümmert sich selbst um den Token!
             saveToGitHub(updatedPlayers);
         }}
 
