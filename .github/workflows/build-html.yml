@@ -7,6 +7,8 @@ on:
     paths:
       - 'players.json'
       - 'teams.json'
+      - 'generate_html.py'
+      - 'main.py'
   workflow_run:
     workflows: ["Save Player Layout"]
     types:
