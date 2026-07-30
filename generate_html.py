@@ -366,13 +366,15 @@ def generate_html():
         }}
 
         async function saveToGitHub(payload) {{
-            // Platzhalter für deine echten Daten im Browser-Code
-            const GITHUB_REPO = "DEIN_GITHUB_NAME/DEIN_REPO_NAME"; 
-            const GITHUB_TOKEN = "DEIN_PERSONAL_ACCESS_TOKEN";
-
-            if (GITHUB_TOKEN === "DEIN_PERSONAL_ACCESS_TOKEN") {{
-                alert("Bitte hinterlege zuerst deinen GitHub-Token und Repository-Namen im JavaScript-Code!");
-                return;
+            const GITHUB_REPO = "Vanilleeis23/FantasyRankings"; // Nur das Repo fest eintragen
+            
+            // Holt den Token aus dem lokalen Browserspeicher oder fragt danach
+            let GITHUB_TOKEN = localStorage.getItem('github_token');
+            
+            if (!GITHUB_TOKEN) {{
+                GITHUB_TOKEN = prompt("Bitte gib deinen GitHub Personal Access Token ein (wird nur lokal im Browser gespeichert):");
+                if (!GITHUB_TOKEN) return;
+                localStorage.setItem('github_token', GITHUB_TOKEN);
             }}
 
             try {{
@@ -392,7 +394,10 @@ def generate_html():
                 }});
 
                 if (response.status === 204) {{
-                    alert('Speichervorgang auf GitHub erfolgreich gestartet! Das Board aktualisiert sich in Kürze.');
+                    alert('Speichervorgang auf GitHub erfolgreich gestartet!');
+                }} else if (response.status === 401 || response.status === 403) {{
+                    alert('Fehler: Token ist ungültig oder abgelaufen. Er wird zurückgesetzt.');
+                    localStorage.removeItem('github_token');
                 }} else {{
                     const errText = await response.text();
                     alert(`Fehler beim Speichern (Status ${{response.status}}): ${{errText}}`);
