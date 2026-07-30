@@ -1,41 +1,50 @@
-name: Save Board Layout from Webpage
+name: Save Player Layout
 
 on:
   repository_dispatch:
     types: [save_layout]
 
-# DIESEN BLOCK HINZUFÜGEN:
 permissions:
   contents: write
   actions: write
 
 jobs:
-  save-json:
+  save:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          ref: main
 
-      - name: Save payload to file
+       Tarjeta data schreiben
+      - name: Write payload to players.json
         run: |
           cat << 'EOF' > players.json
           ${{ toJson(github.event.client_payload.players_data) }}
           EOF
 
-      - name: Formatiere JSON sauber (optional, verhindert Einzeiler-JSON)
-        run: |
-          node -e "const fs = require('fs'); const data = JSON.parse(fs.readFileSync('players.json', 'utf8')); fs.writeFileSync('players.json', JSON.stringify(data, null, 4), 'utf8');"
-
-      - name: Commit and Push Changes
+      - name: Commit and Push changes
+        id: git_push
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add players.json
           
-          # Nur commiten, falls sich strukturell wirklich etwas geändert hat
           if ! git diff --cached --quiet; then
-            git commit -m "chore: update players.json layout via web interface [skip ci]"
+            git commit -m "Data: Spieler-Layout gespeichert"
+            git pull --rebase origin main
             git push origin main
+            echo "changed=true" >> $GITHUB_OUTPUT
           else
             echo "Keine Änderungen festgestellt."
+            echo "changed=false" >> $GITHUB_OUTPUT
           fi
+
+  # DIESEN NEUEN JOB HINZUFÜGEN:
+  # Er startet automatisch nach dem 'save'-Job und ruft die build-html auf
+  trigger-build:
+    needs: save
+    # Nur ausführen, wenn oben auch wirklich neue Daten gepusht wurden
+    if: ${{ needs.save.outputs.changed != 'false' }}
+    uses: ./.github/workflows/build-html.yml@main
