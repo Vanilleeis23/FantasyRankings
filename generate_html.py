@@ -354,7 +354,7 @@ def generate_html():
                     <div class="player-name">{last_name}</div>
                     <div class="bye-tag">{player['bye']}</div>
                     <label class="drafted-label-header" onclick="event.stopPropagation();">
-                        <input type="checkbox" class="drafted-cb" onchange="toggleDrafted(this)"> D
+                        <input type="checkbox" class="drafted-cb" onchange="toggleDrafted(this)">
                     </label>
                 </div>
                 <div class="card-details">
@@ -388,7 +388,7 @@ def generate_html():
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, '{player['name'].replace(' ', '_').replace('.', '_')}')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" {"selected" if current_note == "" else ""}>Keine</option>
+                            <option value="" {"selected" if current_note == "" else ""}>Free</option>
                             <option value="OWNED" {"selected" if current_note == "OWNED" else ""}>OWNED</option>
                             <option value="QB" {"selected" if current_note == "QB" else ""}>QB vorhanden</option>
                             <option value="RB" {"selected" if current_note == "RB" else ""}>RB vorhanden</option>
