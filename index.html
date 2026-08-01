@@ -80,12 +80,12 @@
         .position-header-cell {
             font-size: 1.1em; font-weight: bold; text-align: center; color: #fff;
             padding: 8px 2px; border-radius: 6px; text-transform: uppercase;
-            letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.06); margin-bottom: 8px;
+            letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.06); margin-bottom: 0;
         }
         .tier-row-header {
             grid-column: span 9; background: #2c3e50; color: #fff; font-size: 0.75em;
             font-weight: bold; text-align: center; padding: 5px 12px; border-radius: 4px;
-            margin-top: 10px; margin-bottom: 4px; letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 0; margin-bottom: 4px; letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .player-list-box {
             background-color: #e2e8f0; border-radius: 6px; padding: 4px; min-height: 60px;
@@ -259,22 +259,22 @@
     <div class="top-bar">
         <h1>Fantasy Football Board</h1>
         <div class="search-container">
-            <input type="text" class="search-input" id="board-search" placeholder="Spieler suchen (Auto-Complete)..." oninput="filterPlayers(this.value)">
+            <input type="text" class="search-input" id="board-search" placeholder="Search" oninput="filterPlayers(this.value)">
         </div>
         <div class="top-bar-actions">
-            <button class="compare-btn" onclick="openComparePopup()">Spieler vergleichen (<span id="compare-count">0</span>)</button>
-            <button class="save-btn" onclick="handleSave()">Layout speichern</button>
+            <button class="compare-btn" onclick="openComparePopup()">Compare (<span id="compare-count">0</span>)</button>
+            <button class="save-btn" onclick="handleSave()">Save Layout</button>
         </div>
     </div>
     
     <div class="board-grid">
     
-        <div class="position-header-cell" style="background-color: #2ecc71; grid-column: span 2;">QB</div>
-        <div class="position-header-cell" style="background-color: #e74c3c; grid-column: span 3;">RB</div>
-        <div class="position-header-cell" style="background-color: #3498db; grid-column: span 3;">WR</div>
-        <div class="position-header-cell" style="background-color: #9b59b6; grid-column: span 1;">TE</div>
-    <div class="tier-row-header">TIER 1</div><ul class="player-list-box" data-tier="1" data-column="0"></ul><ul class="player-list-box" data-tier="1" data-column="1"></ul><ul class="player-list-box" data-tier="1" data-column="2">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Bijan Robinson" data-pos="RB" id="player-card-Bijan_Robinson">
+        <div class="position-header-cell" style="background-color: #f1c40f; grid-column: span 2;">QB</div>
+        <div class="position-header-cell" style="background-color: #2ecc71; grid-column: span 3;">RB</div>
+        <div class="position-header-cell" style="background-color: #e67e22; grid-column: span 3;">WR</div>
+        <div class="position-header-cell" style="background-color: #e74c3c; grid-column: span 1;">TE</div>
+    <div class="tier-row-header">TIER 1</div><ul class="player-list-box" data-tier="1" data-column="0" style="background-color: #fef9e7;"></ul><ul class="player-list-box" data-tier="1" data-column="1" style="background-color: #fef9e7;"></ul><ul class="player-list-box" data-tier="1" data-column="2" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Bijan Robinson" data-pos="RB" id="player-card-Bijan_Robinson">
                 <div class="card-summary">
                     <div class="player-name">Robinson</div>
                     <div class="bye-tag">11</div>
@@ -324,7 +324,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jonathan Taylor" data-pos="RB" id="player-card-Jonathan_Taylor">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jonathan Taylor" data-pos="RB" id="player-card-Jonathan_Taylor">
                 <div class="card-summary">
                     <div class="player-name">Taylor</div>
                     <div class="bye-tag">13</div>
@@ -373,8 +373,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="1" data-column="3">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jahmyr Gibbs" data-pos="RB" id="player-card-Jahmyr_Gibbs">
+                </ul><ul class="player-list-box" data-tier="1" data-column="3" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jahmyr Gibbs" data-pos="RB" id="player-card-Jahmyr_Gibbs">
                 <div class="card-summary">
                     <div class="player-name">Gibbs</div>
                     <div class="bye-tag">6</div>
@@ -423,8 +423,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="1" data-column="4">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Christian McCaffrey" data-pos="RB" id="player-card-Christian_McCaffrey">
+                </ul><ul class="player-list-box" data-tier="1" data-column="4" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Christian McCaffrey" data-pos="RB" id="player-card-Christian_McCaffrey">
                 <div class="card-summary">
                     <div class="player-name">McCaffrey</div>
                     <div class="bye-tag">8</div>
@@ -473,8 +473,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="1" data-column="5">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="JaMarr Chase" data-pos="WR" id="player-card-JaMarr_Chase">
+                </ul><ul class="player-list-box" data-tier="1" data-column="5" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="JaMarr Chase" data-pos="WR" id="player-card-JaMarr_Chase">
                 <div class="card-summary">
                     <div class="player-name">Chase</div>
                     <div class="bye-tag">6</div>
@@ -524,7 +524,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Amon-Ra St. Brown" data-pos="WR" id="player-card-Amon-Ra_St__Brown">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Amon-Ra St. Brown" data-pos="WR" id="player-card-Amon-Ra_St__Brown">
                 <div class="card-summary">
                     <div class="player-name">Brown</div>
                     <div class="bye-tag">6</div>
@@ -573,8 +573,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="1" data-column="6">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Puka Nacua" data-pos="WR" id="player-card-Puka_Nacua">
+                </ul><ul class="player-list-box" data-tier="1" data-column="6" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Puka Nacua" data-pos="WR" id="player-card-Puka_Nacua">
                 <div class="card-summary">
                     <div class="player-name">Nacua</div>
                     <div class="bye-tag">11</div>
@@ -624,7 +624,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="CeeDee Lamb" data-pos="WR" id="player-card-CeeDee_Lamb">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="CeeDee Lamb" data-pos="WR" id="player-card-CeeDee_Lamb">
                 <div class="card-summary">
                     <div class="player-name">Lamb</div>
                     <div class="bye-tag">14</div>
@@ -673,8 +673,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="1" data-column="7">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jaxon Smith-Njigba" data-pos="WR" id="player-card-Jaxon_Smith-Njigba">
+                </ul><ul class="player-list-box" data-tier="1" data-column="7" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Jaxon Smith-Njigba" data-pos="WR" id="player-card-Jaxon_Smith-Njigba">
                 <div class="card-summary">
                     <div class="player-name">Smith-Njigba</div>
                     <div class="bye-tag">11</div>
@@ -724,7 +724,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Justin Jefferson" data-pos="WR" id="player-card-Justin_Jefferson">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Justin Jefferson" data-pos="WR" id="player-card-Justin_Jefferson">
                 <div class="card-summary">
                     <div class="player-name">Jefferson</div>
                     <div class="bye-tag">6</div>
@@ -773,8 +773,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="1" data-column="8"></ul><div class="tier-row-header">TIER 2</div><ul class="player-list-box" data-tier="2" data-column="0">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Josh Allen" data-pos="QB" id="player-card-Josh_Allen">
+                </ul><ul class="player-list-box" data-tier="1" data-column="8" style="background-color: #fce4d6;"></ul><div class="tier-row-header">TIER 2</div><ul class="player-list-box" data-tier="2" data-column="0" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Josh Allen" data-pos="QB" id="player-card-Josh_Allen">
                 <div class="card-summary">
                     <div class="player-name">Allen</div>
                     <div class="bye-tag">7</div>
@@ -823,8 +823,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="2" data-column="1">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Lamar Jackson" data-pos="QB" id="player-card-Lamar_Jackson">
+                </ul><ul class="player-list-box" data-tier="2" data-column="1" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Lamar Jackson" data-pos="QB" id="player-card-Lamar_Jackson">
                 <div class="card-summary">
                     <div class="player-name">Jackson</div>
                     <div class="bye-tag">13</div>
@@ -873,8 +873,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="2" data-column="2">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="DeVon Achane" data-pos="RB" id="player-card-DeVon_Achane">
+                </ul><ul class="player-list-box" data-tier="2" data-column="2" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="DeVon Achane" data-pos="RB" id="player-card-DeVon_Achane">
                 <div class="card-summary">
                     <div class="player-name">Achane</div>
                     <div class="bye-tag">6</div>
@@ -923,8 +923,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="2" data-column="3">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Chase Brown" data-pos="RB" id="player-card-Chase_Brown">
+                </ul><ul class="player-list-box" data-tier="2" data-column="3" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Chase Brown" data-pos="RB" id="player-card-Chase_Brown">
                 <div class="card-summary">
                     <div class="player-name">Brown</div>
                     <div class="bye-tag">6</div>
@@ -974,7 +974,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Ashton Jeanty" data-pos="RB" id="player-card-Ashton_Jeanty">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Ashton Jeanty" data-pos="RB" id="player-card-Ashton_Jeanty">
                 <div class="card-summary">
                     <div class="player-name">Jeanty</div>
                     <div class="bye-tag">13</div>
@@ -1023,8 +1023,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="2" data-column="4">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="James Cook III" data-pos="RB" id="player-card-James_Cook_III">
+                </ul><ul class="player-list-box" data-tier="2" data-column="4" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="James Cook III" data-pos="RB" id="player-card-James_Cook_III">
                 <div class="card-summary">
                     <div class="player-name">Cook III</div>
                     <div class="bye-tag">7</div>
@@ -1073,8 +1073,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="2" data-column="5">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Drake London" data-pos="WR" id="player-card-Drake_London">
+                </ul><ul class="player-list-box" data-tier="2" data-column="5" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Drake London" data-pos="WR" id="player-card-Drake_London">
                 <div class="card-summary">
                     <div class="player-name">London</div>
                     <div class="bye-tag">11</div>
@@ -1124,7 +1124,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="George Pickens" data-pos="WR" id="player-card-George_Pickens">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="George Pickens" data-pos="WR" id="player-card-George_Pickens">
                 <div class="card-summary">
                     <div class="player-name">Pickens</div>
                     <div class="bye-tag">14</div>
@@ -1173,8 +1173,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="2" data-column="6">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="A.J. Brown" data-pos="WR" id="player-card-A_J__Brown">
+                </ul><ul class="player-list-box" data-tier="2" data-column="6" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="A.J. Brown" data-pos="WR" id="player-card-A_J__Brown">
                 <div class="card-summary">
                     <div class="player-name">Brown</div>
                     <div class="bye-tag">11</div>
@@ -1223,8 +1223,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="2" data-column="7">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Nico Collins" data-pos="WR" id="player-card-Nico_Collins">
+                </ul><ul class="player-list-box" data-tier="2" data-column="7" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Nico Collins" data-pos="WR" id="player-card-Nico_Collins">
                 <div class="card-summary">
                     <div class="player-name">Collins</div>
                     <div class="bye-tag">8</div>
@@ -1273,8 +1273,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="2" data-column="8">
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Brock Bowers" data-pos="TE" id="player-card-Brock_Bowers">
+                </ul><ul class="player-list-box" data-tier="2" data-column="8" style="background-color: #fce4d6;">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Brock Bowers" data-pos="TE" id="player-card-Brock_Bowers">
                 <div class="card-summary">
                     <div class="player-name">Bowers</div>
                     <div class="bye-tag">13</div>
@@ -1324,7 +1324,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Trey McBride" data-pos="TE" id="player-card-Trey_McBride">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Trey McBride" data-pos="TE" id="player-card-Trey_McBride">
                 <div class="card-summary">
                     <div class="player-name">McBride</div>
                     <div class="bye-tag">14</div>
@@ -1373,8 +1373,8 @@
                     </div>
                 </div>
             </li>
-                </ul><div class="tier-row-header">TIER 3</div><ul class="player-list-box" data-tier="3" data-column="0">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jayden Daniels" data-pos="QB" id="player-card-Jayden_Daniels">
+                </ul><div class="tier-row-header">TIER 3</div><ul class="player-list-box" data-tier="3" data-column="0" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Jayden Daniels" data-pos="QB" id="player-card-Jayden_Daniels">
                 <div class="card-summary">
                     <div class="player-name">Daniels</div>
                     <div class="bye-tag">7</div>
@@ -1424,7 +1424,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Drake Maye" data-pos="QB" id="player-card-Drake_Maye">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Drake Maye" data-pos="QB" id="player-card-Drake_Maye">
                 <div class="card-summary">
                     <div class="player-name">Maye</div>
                     <div class="bye-tag">11</div>
@@ -1473,8 +1473,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="3" data-column="1">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jalen Hurts" data-pos="QB" id="player-card-Jalen_Hurts">
+                </ul><ul class="player-list-box" data-tier="3" data-column="1" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Jalen Hurts" data-pos="QB" id="player-card-Jalen_Hurts">
                 <div class="card-summary">
                     <div class="player-name">Hurts</div>
                     <div class="bye-tag">10</div>
@@ -1524,7 +1524,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Joe Burrow" data-pos="QB" id="player-card-Joe_Burrow">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Joe Burrow" data-pos="QB" id="player-card-Joe_Burrow">
                 <div class="card-summary">
                     <div class="player-name">Burrow</div>
                     <div class="bye-tag">6</div>
@@ -1573,8 +1573,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="3" data-column="2">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Derrick Henry" data-pos="RB" id="player-card-Derrick_Henry">
+                </ul><ul class="player-list-box" data-tier="3" data-column="2" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Derrick Henry" data-pos="RB" id="player-card-Derrick_Henry">
                 <div class="card-summary">
                     <div class="player-name">Henry</div>
                     <div class="bye-tag">13</div>
@@ -1623,8 +1623,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="3" data-column="3">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Kenneth Walker III" data-pos="RB" id="player-card-Kenneth_Walker_III">
+                </ul><ul class="player-list-box" data-tier="3" data-column="3" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Kenneth Walker III" data-pos="RB" id="player-card-Kenneth_Walker_III">
                 <div class="card-summary">
                     <div class="player-name">Walker III</div>
                     <div class="bye-tag">5</div>
@@ -1674,7 +1674,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Saquon Barkley" data-pos="RB" id="player-card-Saquon_Barkley">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Saquon Barkley" data-pos="RB" id="player-card-Saquon_Barkley">
                 <div class="card-summary">
                     <div class="player-name">Barkley</div>
                     <div class="bye-tag">10</div>
@@ -1723,8 +1723,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="3" data-column="4">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Omarion Hampton" data-pos="RB" id="player-card-Omarion_Hampton">
+                </ul><ul class="player-list-box" data-tier="3" data-column="4" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Omarion Hampton" data-pos="RB" id="player-card-Omarion_Hampton">
                 <div class="card-summary">
                     <div class="player-name">Hampton</div>
                     <div class="bye-tag">7</div>
@@ -1774,7 +1774,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jeremiyah Love" data-pos="RB" id="player-card-Jeremiyah_Love">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jeremiyah Love" data-pos="RB" id="player-card-Jeremiyah_Love">
                 <div class="card-summary">
                     <div class="player-name">Love</div>
                     <div class="bye-tag">14</div>
@@ -1823,8 +1823,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="3" data-column="5">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Chris Olave" data-pos="WR" id="player-card-Chris_Olave">
+                </ul><ul class="player-list-box" data-tier="3" data-column="5" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Chris Olave" data-pos="WR" id="player-card-Chris_Olave">
                 <div class="card-summary">
                     <div class="player-name">Olave</div>
                     <div class="bye-tag">8</div>
@@ -1873,8 +1873,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="3" data-column="6">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Rashee Rice" data-pos="WR" id="player-card-Rashee_Rice">
+                </ul><ul class="player-list-box" data-tier="3" data-column="6" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Rashee Rice" data-pos="WR" id="player-card-Rashee_Rice">
                 <div class="card-summary">
                     <div class="player-name">Rice</div>
                     <div class="bye-tag">5</div>
@@ -1923,8 +1923,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="3" data-column="7"></ul><ul class="player-list-box" data-tier="3" data-column="8"></ul><div class="tier-row-header">TIER 4</div><ul class="player-list-box" data-tier="4" data-column="0">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Patrick Mahomes II" data-pos="QB" id="player-card-Patrick_Mahomes_II">
+                </ul><ul class="player-list-box" data-tier="3" data-column="7" style="background-color: #fdf2e9;"></ul><ul class="player-list-box" data-tier="3" data-column="8" style="background-color: #fce4d6;"></ul><div class="tier-row-header">TIER 4</div><ul class="player-list-box" data-tier="4" data-column="0" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Patrick Mahomes II" data-pos="QB" id="player-card-Patrick_Mahomes_II">
                 <div class="card-summary">
                     <div class="player-name">Mahomes II</div>
                     <div class="bye-tag">5</div>
@@ -1974,7 +1974,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jaxson Dart" data-pos="QB" id="player-card-Jaxson_Dart">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Jaxson Dart" data-pos="QB" id="player-card-Jaxson_Dart">
                 <div class="card-summary">
                     <div class="player-name">Dart</div>
                     <div class="bye-tag">8</div>
@@ -2023,8 +2023,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="4" data-column="1">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Justin Herbert" data-pos="QB" id="player-card-Justin_Herbert">
+                </ul><ul class="player-list-box" data-tier="4" data-column="1" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Justin Herbert" data-pos="QB" id="player-card-Justin_Herbert">
                 <div class="card-summary">
                     <div class="player-name">Herbert</div>
                     <div class="bye-tag">7</div>
@@ -2074,7 +2074,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Dak Prescott" data-pos="QB" id="player-card-Dak_Prescott">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Dak Prescott" data-pos="QB" id="player-card-Dak_Prescott">
                 <div class="card-summary">
                     <div class="player-name">Prescott</div>
                     <div class="bye-tag">14</div>
@@ -2124,7 +2124,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jordan Love" data-pos="QB" id="player-card-Jordan_Love">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Jordan Love" data-pos="QB" id="player-card-Jordan_Love">
                 <div class="card-summary">
                     <div class="player-name">Love</div>
                     <div class="bye-tag">11</div>
@@ -2173,8 +2173,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="4" data-column="2">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Kyren Williams" data-pos="RB" id="player-card-Kyren_Williams">
+                </ul><ul class="player-list-box" data-tier="4" data-column="2" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Kyren Williams" data-pos="RB" id="player-card-Kyren_Williams">
                 <div class="card-summary">
                     <div class="player-name">Williams</div>
                     <div class="bye-tag">11</div>
@@ -2224,7 +2224,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Javonte Williams" data-pos="RB" id="player-card-Javonte_Williams">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Javonte Williams" data-pos="RB" id="player-card-Javonte_Williams">
                 <div class="card-summary">
                     <div class="player-name">Williams</div>
                     <div class="bye-tag">14</div>
@@ -2273,8 +2273,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="4" data-column="3">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Josh Jacobs" data-pos="RB" id="player-card-Josh_Jacobs">
+                </ul><ul class="player-list-box" data-tier="4" data-column="3" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Josh Jacobs" data-pos="RB" id="player-card-Josh_Jacobs">
                 <div class="card-summary">
                     <div class="player-name">Jacobs</div>
                     <div class="bye-tag">11</div>
@@ -2323,8 +2323,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="4" data-column="4">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Breece Hall" data-pos="RB" id="player-card-Breece_Hall">
+                </ul><ul class="player-list-box" data-tier="4" data-column="4" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Breece Hall" data-pos="RB" id="player-card-Breece_Hall">
                 <div class="card-summary">
                     <div class="player-name">Hall</div>
                     <div class="bye-tag">13</div>
@@ -2373,8 +2373,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="4" data-column="5">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="DeVonta Smith" data-pos="WR" id="player-card-DeVonta_Smith">
+                </ul><ul class="player-list-box" data-tier="4" data-column="5" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="DeVonta Smith" data-pos="WR" id="player-card-DeVonta_Smith">
                 <div class="card-summary">
                     <div class="player-name">Smith</div>
                     <div class="bye-tag">10</div>
@@ -2424,7 +2424,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Tetairoa McMillan" data-pos="WR" id="player-card-Tetairoa_McMillan">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Tetairoa McMillan" data-pos="WR" id="player-card-Tetairoa_McMillan">
                 <div class="card-summary">
                     <div class="player-name">McMillan</div>
                     <div class="bye-tag">5</div>
@@ -2473,8 +2473,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="4" data-column="6">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Zay Flowers" data-pos="WR" id="player-card-Zay_Flowers">
+                </ul><ul class="player-list-box" data-tier="4" data-column="6" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Zay Flowers" data-pos="WR" id="player-card-Zay_Flowers">
                 <div class="card-summary">
                     <div class="player-name">Flowers</div>
                     <div class="bye-tag">13</div>
@@ -2523,8 +2523,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="4" data-column="7">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Tee Higgins" data-pos="WR" id="player-card-Tee_Higgins">
+                </ul><ul class="player-list-box" data-tier="4" data-column="7" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Tee Higgins" data-pos="WR" id="player-card-Tee_Higgins">
                 <div class="card-summary">
                     <div class="player-name">Higgins</div>
                     <div class="bye-tag">6</div>
@@ -2573,8 +2573,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="4" data-column="8"></ul><div class="tier-row-header">TIER 5</div><ul class="player-list-box" data-tier="5" data-column="0">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Kyler Murray" data-pos="QB" id="player-card-Kyler_Murray">
+                </ul><ul class="player-list-box" data-tier="4" data-column="8" style="background-color: #fce4d6;"></ul><div class="tier-row-header">TIER 5</div><ul class="player-list-box" data-tier="5" data-column="0" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Kyler Murray" data-pos="QB" id="player-card-Kyler_Murray">
                 <div class="card-summary">
                     <div class="player-name">Murray</div>
                     <div class="bye-tag">6</div>
@@ -2624,7 +2624,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Caleb Williams" data-pos="QB" id="player-card-Caleb_Williams">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Caleb Williams" data-pos="QB" id="player-card-Caleb_Williams">
                 <div class="card-summary">
                     <div class="player-name">Williams</div>
                     <div class="bye-tag">10</div>
@@ -2674,7 +2674,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Trevor Lawrence" data-pos="QB" id="player-card-Trevor_Lawrence">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Trevor Lawrence" data-pos="QB" id="player-card-Trevor_Lawrence">
                 <div class="card-summary">
                     <div class="player-name">Lawrence</div>
                     <div class="bye-tag">7</div>
@@ -2723,8 +2723,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="5" data-column="1">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Malik Willis" data-pos="QB" id="player-card-Malik_Willis">
+                </ul><ul class="player-list-box" data-tier="5" data-column="1" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Malik Willis" data-pos="QB" id="player-card-Malik_Willis">
                 <div class="card-summary">
                     <div class="player-name">Willis</div>
                     <div class="bye-tag">6</div>
@@ -2774,7 +2774,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Baker Mayfield" data-pos="QB" id="player-card-Baker_Mayfield">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Baker Mayfield" data-pos="QB" id="player-card-Baker_Mayfield">
                 <div class="card-summary">
                     <div class="player-name">Mayfield</div>
                     <div class="bye-tag">10</div>
@@ -2823,8 +2823,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="5" data-column="2">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Bucky Irving" data-pos="RB" id="player-card-Bucky_Irving">
+                </ul><ul class="player-list-box" data-tier="5" data-column="2" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Bucky Irving" data-pos="RB" id="player-card-Bucky_Irving">
                 <div class="card-summary">
                     <div class="player-name">Irving</div>
                     <div class="bye-tag">10</div>
@@ -2873,8 +2873,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="5" data-column="3">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Travis Etienne Jr." data-pos="RB" id="player-card-Travis_Etienne_Jr_">
+                </ul><ul class="player-list-box" data-tier="5" data-column="3" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Travis Etienne Jr." data-pos="RB" id="player-card-Travis_Etienne_Jr_">
                 <div class="card-summary">
                     <div class="player-name">Etienne Jr.</div>
                     <div class="bye-tag">8</div>
@@ -2914,9 +2914,9 @@
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
                             <option value="" >Free</option>
-                            <option value="OWNED" >OWNED</option>
+                            <option value="OWNED" selected>OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="RB" >RB vorhanden</option>
                             <option value="WR" >WR vorhanden</option>
                             <option value="TE" >TE vorhanden</option>
                         </select>
@@ -2924,7 +2924,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Quinshon Judkins" data-pos="RB" id="player-card-Quinshon_Judkins">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Quinshon Judkins" data-pos="RB" id="player-card-Quinshon_Judkins">
                 <div class="card-summary">
                     <div class="player-name">Judkins</div>
                     <div class="bye-tag">11</div>
@@ -2973,8 +2973,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="5" data-column="4">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Cam Skattebo" data-pos="RB" id="player-card-Cam_Skattebo">
+                </ul><ul class="player-list-box" data-tier="5" data-column="4" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Cam Skattebo" data-pos="RB" id="player-card-Cam_Skattebo">
                 <div class="card-summary">
                     <div class="player-name">Skattebo</div>
                     <div class="bye-tag">8</div>
@@ -3023,8 +3023,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="5" data-column="5">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Ladd McConkey" data-pos="WR" id="player-card-Ladd_McConkey">
+                </ul><ul class="player-list-box" data-tier="5" data-column="5" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Ladd McConkey" data-pos="WR" id="player-card-Ladd_McConkey">
                 <div class="card-summary">
                     <div class="player-name">McConkey</div>
                     <div class="bye-tag">7</div>
@@ -3073,8 +3073,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="5" data-column="6">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Garrett Wilson" data-pos="WR" id="player-card-Garrett_Wilson">
+                </ul><ul class="player-list-box" data-tier="5" data-column="6" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Garrett Wilson" data-pos="WR" id="player-card-Garrett_Wilson">
                 <div class="card-summary">
                     <div class="player-name">Wilson</div>
                     <div class="bye-tag">13</div>
@@ -3124,7 +3124,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jaylen Waddle" data-pos="WR" id="player-card-Jaylen_Waddle">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Jaylen Waddle" data-pos="WR" id="player-card-Jaylen_Waddle">
                 <div class="card-summary">
                     <div class="player-name">Waddle</div>
                     <div class="bye-tag">10</div>
@@ -3173,8 +3173,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="5" data-column="7">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Emeka Egbuka" data-pos="WR" id="player-card-Emeka_Egbuka">
+                </ul><ul class="player-list-box" data-tier="5" data-column="7" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Emeka Egbuka" data-pos="WR" id="player-card-Emeka_Egbuka">
                 <div class="card-summary">
                     <div class="player-name">Egbuka</div>
                     <div class="bye-tag">10</div>
@@ -3223,8 +3223,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="5" data-column="8">
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Tyler Warren" data-pos="TE" id="player-card-Tyler_Warren">
+                </ul><ul class="player-list-box" data-tier="5" data-column="8" style="background-color: #fce4d6;">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Tyler Warren" data-pos="TE" id="player-card-Tyler_Warren">
                 <div class="card-summary">
                     <div class="player-name">Warren</div>
                     <div class="bye-tag">13</div>
@@ -3274,7 +3274,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Colston Loveland" data-pos="TE" id="player-card-Colston_Loveland">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Colston Loveland" data-pos="TE" id="player-card-Colston_Loveland">
                 <div class="card-summary">
                     <div class="player-name">Loveland</div>
                     <div class="bye-tag">10</div>
@@ -3324,7 +3324,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Kyle Pitts Sr." data-pos="TE" id="player-card-Kyle_Pitts_Sr_">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Kyle Pitts Sr." data-pos="TE" id="player-card-Kyle_Pitts_Sr_">
                 <div class="card-summary">
                     <div class="player-name">Pitts Sr.</div>
                     <div class="bye-tag">11</div>
@@ -3374,7 +3374,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Tucker Kraft" data-pos="TE" id="player-card-Tucker_Kraft">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Tucker Kraft" data-pos="TE" id="player-card-Tucker_Kraft">
                 <div class="card-summary">
                     <div class="player-name">Kraft</div>
                     <div class="bye-tag">11</div>
@@ -3423,8 +3423,8 @@
                     </div>
                 </div>
             </li>
-                </ul><div class="tier-row-header">TIER 6</div><ul class="player-list-box" data-tier="6" data-column="0">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Matthew Stafford" data-pos="QB" id="player-card-Matthew_Stafford">
+                </ul><div class="tier-row-header">TIER 6</div><ul class="player-list-box" data-tier="6" data-column="0" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Matthew Stafford" data-pos="QB" id="player-card-Matthew_Stafford">
                 <div class="card-summary">
                     <div class="player-name">Stafford</div>
                     <div class="bye-tag">11</div>
@@ -3474,7 +3474,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Bo Nix" data-pos="QB" id="player-card-Bo_Nix">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Bo Nix" data-pos="QB" id="player-card-Bo_Nix">
                 <div class="card-summary">
                     <div class="player-name">Nix</div>
                     <div class="bye-tag">10</div>
@@ -3523,8 +3523,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="6" data-column="1">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jared Goff" data-pos="QB" id="player-card-Jared_Goff">
+                </ul><ul class="player-list-box" data-tier="6" data-column="1" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Jared Goff" data-pos="QB" id="player-card-Jared_Goff">
                 <div class="card-summary">
                     <div class="player-name">Goff</div>
                     <div class="bye-tag">6</div>
@@ -3574,7 +3574,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Brock Purdy" data-pos="QB" id="player-card-Brock_Purdy">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Brock Purdy" data-pos="QB" id="player-card-Brock_Purdy">
                 <div class="card-summary">
                     <div class="player-name">Purdy</div>
                     <div class="bye-tag">8</div>
@@ -3623,8 +3623,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="6" data-column="2">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="TreVeyon Henderson" data-pos="RB" id="player-card-TreVeyon_Henderson">
+                </ul><ul class="player-list-box" data-tier="6" data-column="2" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="TreVeyon Henderson" data-pos="RB" id="player-card-TreVeyon_Henderson">
                 <div class="card-summary">
                     <div class="player-name">Henderson</div>
                     <div class="bye-tag">11</div>
@@ -3673,8 +3673,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="6" data-column="3">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="David Montgomery" data-pos="RB" id="player-card-David_Montgomery">
+                </ul><ul class="player-list-box" data-tier="6" data-column="3" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="David Montgomery" data-pos="RB" id="player-card-David_Montgomery">
                 <div class="card-summary">
                     <div class="player-name">Montgomery</div>
                     <div class="bye-tag">8</div>
@@ -3723,8 +3723,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="6" data-column="4">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="DAndre Swift" data-pos="RB" id="player-card-DAndre_Swift">
+                </ul><ul class="player-list-box" data-tier="6" data-column="4" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="DAndre Swift" data-pos="RB" id="player-card-DAndre_Swift">
                 <div class="card-summary">
                     <div class="player-name">Swift</div>
                     <div class="bye-tag">10</div>
@@ -3774,7 +3774,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Bhayshul Tuten" data-pos="RB" id="player-card-Bhayshul_Tuten">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Bhayshul Tuten" data-pos="RB" id="player-card-Bhayshul_Tuten">
                 <div class="card-summary">
                     <div class="player-name">Tuten</div>
                     <div class="bye-tag">7</div>
@@ -3823,8 +3823,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="6" data-column="5">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Terry McLaurin" data-pos="WR" id="player-card-Terry_McLaurin">
+                </ul><ul class="player-list-box" data-tier="6" data-column="5" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Terry McLaurin" data-pos="WR" id="player-card-Terry_McLaurin">
                 <div class="card-summary">
                     <div class="player-name">McLaurin</div>
                     <div class="bye-tag">7</div>
@@ -3873,8 +3873,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="6" data-column="6">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Davante Adams" data-pos="WR" id="player-card-Davante_Adams">
+                </ul><ul class="player-list-box" data-tier="6" data-column="6" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Davante Adams" data-pos="WR" id="player-card-Davante_Adams">
                 <div class="card-summary">
                     <div class="player-name">Adams</div>
                     <div class="bye-tag">11</div>
@@ -3923,8 +3923,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="6" data-column="7">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Malik Nabers" data-pos="WR" id="player-card-Malik_Nabers">
+                </ul><ul class="player-list-box" data-tier="6" data-column="7" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Malik Nabers" data-pos="WR" id="player-card-Malik_Nabers">
                 <div class="card-summary">
                     <div class="player-name">Nabers</div>
                     <div class="bye-tag">8</div>
@@ -3974,7 +3974,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Luther Burden III" data-pos="WR" id="player-card-Luther_Burden_III">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Luther Burden III" data-pos="WR" id="player-card-Luther_Burden_III">
                 <div class="card-summary">
                     <div class="player-name">Burden III</div>
                     <div class="bye-tag">10</div>
@@ -4023,8 +4023,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="6" data-column="8">
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Sam LaPorta" data-pos="TE" id="player-card-Sam_LaPorta">
+                </ul><ul class="player-list-box" data-tier="6" data-column="8" style="background-color: #fce4d6;">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Sam LaPorta" data-pos="TE" id="player-card-Sam_LaPorta">
                 <div class="card-summary">
                     <div class="player-name">LaPorta</div>
                     <div class="bye-tag">6</div>
@@ -4074,7 +4074,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Harold Fannin Jr." data-pos="TE" id="player-card-Harold_Fannin_Jr_">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Harold Fannin Jr." data-pos="TE" id="player-card-Harold_Fannin_Jr_">
                 <div class="card-summary">
                     <div class="player-name">Fannin Jr.</div>
                     <div class="bye-tag">11</div>
@@ -4123,8 +4123,8 @@
                     </div>
                 </div>
             </li>
-                </ul><div class="tier-row-header">TIER 7</div><ul class="player-list-box" data-tier="7" data-column="0">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Cam Ward" data-pos="QB" id="player-card-Cam_Ward">
+                </ul><div class="tier-row-header">TIER 7</div><ul class="player-list-box" data-tier="7" data-column="0" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Cam Ward" data-pos="QB" id="player-card-Cam_Ward">
                 <div class="card-summary">
                     <div class="player-name">Ward</div>
                     <div class="bye-tag">9</div>
@@ -4173,8 +4173,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="7" data-column="1">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Aaron Rodgers" data-pos="QB" id="player-card-Aaron_Rodgers">
+                </ul><ul class="player-list-box" data-tier="7" data-column="1" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Aaron Rodgers" data-pos="QB" id="player-card-Aaron_Rodgers">
                 <div class="card-summary">
                     <div class="player-name">Rodgers</div>
                     <div class="bye-tag">9</div>
@@ -4224,7 +4224,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jacoby Brissett" data-pos="QB" id="player-card-Jacoby_Brissett">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Jacoby Brissett" data-pos="QB" id="player-card-Jacoby_Brissett">
                 <div class="card-summary">
                     <div class="player-name">Brissett</div>
                     <div class="bye-tag">14</div>
@@ -4274,7 +4274,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Tyler Shough" data-pos="QB" id="player-card-Tyler_Shough">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Tyler Shough" data-pos="QB" id="player-card-Tyler_Shough">
                 <div class="card-summary">
                     <div class="player-name">Shough</div>
                     <div class="bye-tag">8</div>
@@ -4323,8 +4323,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="7" data-column="2">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jadarian Price" data-pos="RB" id="player-card-Jadarian_Price">
+                </ul><ul class="player-list-box" data-tier="7" data-column="2" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jadarian Price" data-pos="RB" id="player-card-Jadarian_Price">
                 <div class="card-summary">
                     <div class="player-name">Price</div>
                     <div class="bye-tag">11</div>
@@ -4374,7 +4374,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Rhamondre Stevenson" data-pos="RB" id="player-card-Rhamondre_Stevenson">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Rhamondre Stevenson" data-pos="RB" id="player-card-Rhamondre_Stevenson">
                 <div class="card-summary">
                     <div class="player-name">Stevenson</div>
                     <div class="bye-tag">11</div>
@@ -4423,8 +4423,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="7" data-column="3">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jaylen Warren" data-pos="RB" id="player-card-Jaylen_Warren">
+                </ul><ul class="player-list-box" data-tier="7" data-column="3" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jaylen Warren" data-pos="RB" id="player-card-Jaylen_Warren">
                 <div class="card-summary">
                     <div class="player-name">Warren</div>
                     <div class="bye-tag">9</div>
@@ -4473,8 +4473,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="7" data-column="4">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Tony Pollard" data-pos="RB" id="player-card-Tony_Pollard">
+                </ul><ul class="player-list-box" data-tier="7" data-column="4" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Tony Pollard" data-pos="RB" id="player-card-Tony_Pollard">
                 <div class="card-summary">
                     <div class="player-name">Pollard</div>
                     <div class="bye-tag">9</div>
@@ -4523,8 +4523,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="7" data-column="5">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Mike Evans" data-pos="WR" id="player-card-Mike_Evans">
+                </ul><ul class="player-list-box" data-tier="7" data-column="5" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Mike Evans" data-pos="WR" id="player-card-Mike_Evans">
                 <div class="card-summary">
                     <div class="player-name">Evans</div>
                     <div class="bye-tag">8</div>
@@ -4574,7 +4574,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="DJ Moore" data-pos="WR" id="player-card-DJ_Moore">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="DJ Moore" data-pos="WR" id="player-card-DJ_Moore">
                 <div class="card-summary">
                     <div class="player-name">Moore</div>
                     <div class="bye-tag">7</div>
@@ -4623,8 +4623,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="7" data-column="6">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jameson Williams" data-pos="WR" id="player-card-Jameson_Williams">
+                </ul><ul class="player-list-box" data-tier="7" data-column="6" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Jameson Williams" data-pos="WR" id="player-card-Jameson_Williams">
                 <div class="card-summary">
                     <div class="player-name">Williams</div>
                     <div class="bye-tag">6</div>
@@ -4673,8 +4673,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="7" data-column="7">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Christian Watson" data-pos="WR" id="player-card-Christian_Watson">
+                </ul><ul class="player-list-box" data-tier="7" data-column="7" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Christian Watson" data-pos="WR" id="player-card-Christian_Watson">
                 <div class="card-summary">
                     <div class="player-name">Watson</div>
                     <div class="bye-tag">11</div>
@@ -4723,8 +4723,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="7" data-column="8"></ul><div class="tier-row-header">TIER 8</div><ul class="player-list-box" data-tier="8" data-column="0">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Geno Smith" data-pos="QB" id="player-card-Geno_Smith">
+                </ul><ul class="player-list-box" data-tier="7" data-column="8" style="background-color: #fce4d6;"></ul><div class="tier-row-header">TIER 8</div><ul class="player-list-box" data-tier="8" data-column="0" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Geno Smith" data-pos="QB" id="player-card-Geno_Smith">
                 <div class="card-summary">
                     <div class="player-name">Smith</div>
                     <div class="bye-tag">13</div>
@@ -4774,7 +4774,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Bryce Young" data-pos="QB" id="player-card-Bryce_Young">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Bryce Young" data-pos="QB" id="player-card-Bryce_Young">
                 <div class="card-summary">
                     <div class="player-name">Young</div>
                     <div class="bye-tag">5</div>
@@ -4824,7 +4824,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Tua Tagovailoa" data-pos="QB" id="player-card-Tua_Tagovailoa">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Tua Tagovailoa" data-pos="QB" id="player-card-Tua_Tagovailoa">
                 <div class="card-summary">
                     <div class="player-name">Tagovailoa</div>
                     <div class="bye-tag">11</div>
@@ -4873,8 +4873,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="8" data-column="1">
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Sam Darnold" data-pos="QB" id="player-card-Sam_Darnold">
+                </ul><ul class="player-list-box" data-tier="8" data-column="1" style="background-color: #fef9e7;">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Sam Darnold" data-pos="QB" id="player-card-Sam_Darnold">
                 <div class="card-summary">
                     <div class="player-name">Darnold</div>
                     <div class="bye-tag">11</div>
@@ -4924,7 +4924,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Daniel Jones" data-pos="QB" id="player-card-Daniel_Jones">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="Daniel Jones" data-pos="QB" id="player-card-Daniel_Jones">
                 <div class="card-summary">
                     <div class="player-name">Jones</div>
                     <div class="bye-tag">13</div>
@@ -4974,7 +4974,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="C.J. Stroud" data-pos="QB" id="player-card-C_J__Stroud">
+            <li class="player-card" draggable="true" style="border-left-color: #f1c40f;" data-id="C.J. Stroud" data-pos="QB" id="player-card-C_J__Stroud">
                 <div class="card-summary">
                     <div class="player-name">Stroud</div>
                     <div class="bye-tag">8</div>
@@ -5023,8 +5023,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="8" data-column="2">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="RJ Harvey" data-pos="RB" id="player-card-RJ_Harvey">
+                </ul><ul class="player-list-box" data-tier="8" data-column="2" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="RJ Harvey" data-pos="RB" id="player-card-RJ_Harvey">
                 <div class="card-summary">
                     <div class="player-name">Harvey</div>
                     <div class="bye-tag">10</div>
@@ -5074,7 +5074,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Blake Corum" data-pos="RB" id="player-card-Blake_Corum">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Blake Corum" data-pos="RB" id="player-card-Blake_Corum">
                 <div class="card-summary">
                     <div class="player-name">Corum</div>
                     <div class="bye-tag">11</div>
@@ -5124,7 +5124,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Aaron Jones Sr." data-pos="RB" id="player-card-Aaron_Jones_Sr_">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Aaron Jones Sr." data-pos="RB" id="player-card-Aaron_Jones_Sr_">
                 <div class="card-summary">
                     <div class="player-name">Jones Sr.</div>
                     <div class="bye-tag">6</div>
@@ -5174,7 +5174,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jordan Mason" data-pos="RB" id="player-card-Jordan_Mason">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jordan Mason" data-pos="RB" id="player-card-Jordan_Mason">
                 <div class="card-summary">
                     <div class="player-name">Mason</div>
                     <div class="bye-tag">6</div>
@@ -5224,7 +5224,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Tyler Allgeier" data-pos="RB" id="player-card-Tyler_Allgeier">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Tyler Allgeier" data-pos="RB" id="player-card-Tyler_Allgeier">
                 <div class="card-summary">
                     <div class="player-name">Allgeier</div>
                     <div class="bye-tag">14</div>
@@ -5274,7 +5274,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Dylan Sampson" data-pos="RB" id="player-card-Dylan_Sampson">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Dylan Sampson" data-pos="RB" id="player-card-Dylan_Sampson">
                 <div class="card-summary">
                     <div class="player-name">Sampson</div>
                     <div class="bye-tag">11</div>
@@ -5323,8 +5323,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="8" data-column="3">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Chuba Hubbard" data-pos="RB" id="player-card-Chuba_Hubbard">
+                </ul><ul class="player-list-box" data-tier="8" data-column="3" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Chuba Hubbard" data-pos="RB" id="player-card-Chuba_Hubbard">
                 <div class="card-summary">
                     <div class="player-name">Hubbard</div>
                     <div class="bye-tag">5</div>
@@ -5374,7 +5374,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Kyle Monangai" data-pos="RB" id="player-card-Kyle_Monangai">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Kyle Monangai" data-pos="RB" id="player-card-Kyle_Monangai">
                 <div class="card-summary">
                     <div class="player-name">Monangai</div>
                     <div class="bye-tag">10</div>
@@ -5424,7 +5424,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Kenny Gainwell" data-pos="RB" id="player-card-Kenny_Gainwell">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Kenny Gainwell" data-pos="RB" id="player-card-Kenny_Gainwell">
                 <div class="card-summary">
                     <div class="player-name">Gainwell</div>
                     <div class="bye-tag">10</div>
@@ -5474,7 +5474,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jonathon Brooks" data-pos="RB" id="player-card-Jonathon_Brooks">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jonathon Brooks" data-pos="RB" id="player-card-Jonathon_Brooks">
                 <div class="card-summary">
                     <div class="player-name">Brooks</div>
                     <div class="bye-tag">5</div>
@@ -5524,7 +5524,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Tyrone Tracy Jr." data-pos="RB" id="player-card-Tyrone_Tracy_Jr_">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Tyrone Tracy Jr." data-pos="RB" id="player-card-Tyrone_Tracy_Jr_">
                 <div class="card-summary">
                     <div class="player-name">Tracy Jr.</div>
                     <div class="bye-tag">8</div>
@@ -5574,7 +5574,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Woody Marks" data-pos="RB" id="player-card-Woody_Marks">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Woody Marks" data-pos="RB" id="player-card-Woody_Marks">
                 <div class="card-summary">
                     <div class="player-name">Marks</div>
                     <div class="bye-tag">8</div>
@@ -5624,7 +5624,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Tyjae Spears" data-pos="RB" id="player-card-Tyjae_Spears">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Tyjae Spears" data-pos="RB" id="player-card-Tyjae_Spears">
                 <div class="card-summary">
                     <div class="player-name">Spears</div>
                     <div class="bye-tag">9</div>
@@ -5674,7 +5674,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Keaton Mitchell" data-pos="RB" id="player-card-Keaton_Mitchell">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Keaton Mitchell" data-pos="RB" id="player-card-Keaton_Mitchell">
                 <div class="card-summary">
                     <div class="player-name">Mitchell</div>
                     <div class="bye-tag">7</div>
@@ -5724,7 +5724,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jonathan Coleman" data-pos="RB" id="player-card-Jonathan_Coleman">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jonathan Coleman" data-pos="RB" id="player-card-Jonathan_Coleman">
                 <div class="card-summary">
                     <div class="player-name">Coleman</div>
                     <div class="bye-tag">10</div>
@@ -5773,8 +5773,58 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="8" data-column="4">
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Rico Dowdle" data-pos="RB" id="player-card-Rico_Dowdle">
+                
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Nic Singleton" data-pos="WR" id="player-card-Nic_Singleton">
+                <div class="card-summary">
+                    <div class="player-name">Singleton</div>
+                    <div class="bye-tag">9</div>
+                    <label class="drafted-label-header" onclick="event.stopPropagation();">
+                        <input type="checkbox" class="drafted-cb" onchange="toggleDrafted(this)">
+                    </label>
+                </div>
+                <div class="card-details">
+                    <div class="full-name-title">Nic Singleton (WR)</div>
+                    <div class="team-title">Denver Broncos (DEN)</div>
+                    
+                    <hr class="card-divider">
+                    
+                    <div class="stats-grid">
+                        <div><strong>FPTS</strong><br>0</div>
+                        <div><strong>XFP</strong><br>9.3</div>
+                        <div><strong>DIF</strong><br><span class="neutral-dif">0</span></div>
+                    </div>
+                    
+                    <hr class="card-divider">
+                    
+                    <div class="centered-section">
+                        <strong>Slots</strong>
+                        <span>19h (2) • 22h (9) • Prime (5)</span>
+                    </div>
+                    
+                    <hr class="card-divider">
+                    
+                    <div class="centered-section">
+                        <strong>Playoffs</strong>
+                        <span>@LV  •  BUF  •  @NE</span>
+                    </div>
+
+                    <div class="action-section-details">
+                        <label onclick="event.stopPropagation();">
+                            <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Nic_Singleton')"> Compare
+                        </label>
+                        <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
+                            <option value="" >Free</option>
+                            <option value="OWNED" selected>OWNED</option>
+                            <option value="QB" >QB vorhanden</option>
+                            <option value="RB" >RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
+                        </select>
+                    </div>
+                </div>
+            </li>
+                </ul><ul class="player-list-box" data-tier="8" data-column="4" style="background-color: #e8f8f5;">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Rico Dowdle" data-pos="RB" id="player-card-Rico_Dowdle">
                 <div class="card-summary">
                     <div class="player-name">Dowdle</div>
                     <div class="bye-tag">9</div>
@@ -5824,7 +5874,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="J.K. Dobbins" data-pos="RB" id="player-card-J_K__Dobbins">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="J.K. Dobbins" data-pos="RB" id="player-card-J_K__Dobbins">
                 <div class="card-summary">
                     <div class="player-name">Dobbins</div>
                     <div class="bye-tag">10</div>
@@ -5874,7 +5924,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Rachaad White" data-pos="RB" id="player-card-Rachaad_White">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Rachaad White" data-pos="RB" id="player-card-Rachaad_White">
                 <div class="card-summary">
                     <div class="player-name">White</div>
                     <div class="bye-tag">7</div>
@@ -5924,7 +5974,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jacory Croskey-Merritt" data-pos="RB" id="player-card-Jacory_Croskey-Merritt">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Jacory Croskey-Merritt" data-pos="RB" id="player-card-Jacory_Croskey-Merritt">
                 <div class="card-summary">
                     <div class="player-name">Croskey-Merritt</div>
                     <div class="bye-tag">7</div>
@@ -5974,7 +6024,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Chris Rodriguez Jr." data-pos="RB" id="player-card-Chris_Rodriguez_Jr_">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Chris Rodriguez Jr." data-pos="RB" id="player-card-Chris_Rodriguez_Jr_">
                 <div class="card-summary">
                     <div class="player-name">Rodriguez Jr.</div>
                     <div class="bye-tag">7</div>
@@ -6024,7 +6074,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Zach Charbonnet" data-pos="RB" id="player-card-Zach_Charbonnet">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Zach Charbonnet" data-pos="RB" id="player-card-Zach_Charbonnet">
                 <div class="card-summary">
                     <div class="player-name">Charbonnet</div>
                     <div class="bye-tag">11</div>
@@ -6074,7 +6124,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="James Conner" data-pos="RB" id="player-card-James_Conner">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="James Conner" data-pos="RB" id="player-card-James_Conner">
                 <div class="card-summary">
                     <div class="player-name">Conner</div>
                     <div class="bye-tag">14</div>
@@ -6124,7 +6174,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Alvin Kamara" data-pos="RB" id="player-card-Alvin_Kamara">
+            <li class="player-card" draggable="true" style="border-left-color: #2ecc71;" data-id="Alvin Kamara" data-pos="RB" id="player-card-Alvin_Kamara">
                 <div class="card-summary">
                     <div class="player-name">Kamara</div>
                     <div class="bye-tag">8</div>
@@ -6173,8 +6223,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="8" data-column="5">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Carnell Tate" data-pos="WR" id="player-card-Carnell_Tate">
+                </ul><ul class="player-list-box" data-tier="8" data-column="5" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Carnell Tate" data-pos="WR" id="player-card-Carnell_Tate">
                 <div class="card-summary">
                     <div class="player-name">Tate</div>
                     <div class="bye-tag">9</div>
@@ -6224,7 +6274,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Brian Thomas Jr." data-pos="WR" id="player-card-Brian_Thomas_Jr_">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Brian Thomas Jr." data-pos="WR" id="player-card-Brian_Thomas_Jr_">
                 <div class="card-summary">
                     <div class="player-name">Thomas Jr.</div>
                     <div class="bye-tag">7</div>
@@ -6274,7 +6324,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Parker Washington" data-pos="WR" id="player-card-Parker_Washington">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Parker Washington" data-pos="WR" id="player-card-Parker_Washington">
                 <div class="card-summary">
                     <div class="player-name">Washington</div>
                     <div class="bye-tag">7</div>
@@ -6324,7 +6374,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Michael Wilson" data-pos="WR" id="player-card-Michael_Wilson">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Michael Wilson" data-pos="WR" id="player-card-Michael_Wilson">
                 <div class="card-summary">
                     <div class="player-name">Wilson</div>
                     <div class="bye-tag">14</div>
@@ -6374,7 +6424,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Makai Lemon" data-pos="WR" id="player-card-Makai_Lemon">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Makai Lemon" data-pos="WR" id="player-card-Makai_Lemon">
                 <div class="card-summary">
                     <div class="player-name">Lemon</div>
                     <div class="bye-tag">10</div>
@@ -6424,7 +6474,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="WanDale Robinson" data-pos="WR" id="player-card-WanDale_Robinson">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="WanDale Robinson" data-pos="WR" id="player-card-WanDale_Robinson">
                 <div class="card-summary">
                     <div class="player-name">Robinson</div>
                     <div class="bye-tag">9</div>
@@ -6474,7 +6524,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Xavier Worthy" data-pos="WR" id="player-card-Xavier_Worthy">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Xavier Worthy" data-pos="WR" id="player-card-Xavier_Worthy">
                 <div class="card-summary">
                     <div class="player-name">Worthy</div>
                     <div class="bye-tag">5</div>
@@ -6524,7 +6574,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Romeo Doubs" data-pos="WR" id="player-card-Romeo_Doubs">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Romeo Doubs" data-pos="WR" id="player-card-Romeo_Doubs">
                 <div class="card-summary">
                     <div class="player-name">Doubs</div>
                     <div class="bye-tag">11</div>
@@ -6574,7 +6624,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="KC Concepcion" data-pos="WR" id="player-card-KC_Concepcion">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="KC Concepcion" data-pos="WR" id="player-card-KC_Concepcion">
                 <div class="card-summary">
                     <div class="player-name">Concepcion</div>
                     <div class="bye-tag">11</div>
@@ -6623,8 +6673,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="8" data-column="6">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Rome Odunze" data-pos="WR" id="player-card-Rome_Odunze">
+                </ul><ul class="player-list-box" data-tier="8" data-column="6" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Rome Odunze" data-pos="WR" id="player-card-Rome_Odunze">
                 <div class="card-summary">
                     <div class="player-name">Odunze</div>
                     <div class="bye-tag">10</div>
@@ -6674,7 +6724,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Alec Pierce" data-pos="WR" id="player-card-Alec_Pierce">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Alec Pierce" data-pos="WR" id="player-card-Alec_Pierce">
                 <div class="card-summary">
                     <div class="player-name">Pierce</div>
                     <div class="bye-tag">13</div>
@@ -6724,7 +6774,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Courtland Sutton" data-pos="WR" id="player-card-Courtland_Sutton">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Courtland Sutton" data-pos="WR" id="player-card-Courtland_Sutton">
                 <div class="card-summary">
                     <div class="player-name">Sutton</div>
                     <div class="bye-tag">10</div>
@@ -6774,7 +6824,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jordyn Tyson" data-pos="WR" id="player-card-Jordyn_Tyson">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Jordyn Tyson" data-pos="WR" id="player-card-Jordyn_Tyson">
                 <div class="card-summary">
                     <div class="player-name">Tyson</div>
                     <div class="bye-tag">8</div>
@@ -6824,7 +6874,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Quentin Johnston" data-pos="WR" id="player-card-Quentin_Johnston">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Quentin Johnston" data-pos="WR" id="player-card-Quentin_Johnston">
                 <div class="card-summary">
                     <div class="player-name">Johnston</div>
                     <div class="bye-tag">7</div>
@@ -6874,7 +6924,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jakobi Meyers" data-pos="WR" id="player-card-Jakobi_Meyers">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Jakobi Meyers" data-pos="WR" id="player-card-Jakobi_Meyers">
                 <div class="card-summary">
                     <div class="player-name">Meyers</div>
                     <div class="bye-tag">7</div>
@@ -6924,7 +6974,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Josh Downs" data-pos="WR" id="player-card-Josh_Downs">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Josh Downs" data-pos="WR" id="player-card-Josh_Downs">
                 <div class="card-summary">
                     <div class="player-name">Downs</div>
                     <div class="bye-tag">13</div>
@@ -6974,7 +7024,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jayden Higgins" data-pos="WR" id="player-card-Jayden_Higgins">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Jayden Higgins" data-pos="WR" id="player-card-Jayden_Higgins">
                 <div class="card-summary">
                     <div class="player-name">Higgins</div>
                     <div class="bye-tag">8</div>
@@ -7024,7 +7074,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jalen Coker" data-pos="WR" id="player-card-Jalen_Coker">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Jalen Coker" data-pos="WR" id="player-card-Jalen_Coker">
                 <div class="card-summary">
                     <div class="player-name">Coker</div>
                     <div class="bye-tag">5</div>
@@ -7074,7 +7124,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Rashid Shaheed" data-pos="WR" id="player-card-Rashid_Shaheed">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Rashid Shaheed" data-pos="WR" id="player-card-Rashid_Shaheed">
                 <div class="card-summary">
                     <div class="player-name">Shaheed</div>
                     <div class="bye-tag">11</div>
@@ -7123,8 +7173,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="8" data-column="7">
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Marvin Harrison Jr." data-pos="WR" id="player-card-Marvin_Harrison_Jr_">
+                </ul><ul class="player-list-box" data-tier="8" data-column="7" style="background-color: #fdf2e9;">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Marvin Harrison Jr." data-pos="WR" id="player-card-Marvin_Harrison_Jr_">
                 <div class="card-summary">
                     <div class="player-name">Harrison Jr.</div>
                     <div class="bye-tag">14</div>
@@ -7164,17 +7214,17 @@
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
                             <option value="" >Free</option>
-                            <option value="OWNED" >OWNED</option>
+                            <option value="OWNED" selected>OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
                             <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="DK Metcalf" data-pos="WR" id="player-card-DK_Metcalf">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="DK Metcalf" data-pos="WR" id="player-card-DK_Metcalf">
                 <div class="card-summary">
                     <div class="player-name">Metcalf</div>
                     <div class="bye-tag">9</div>
@@ -7224,7 +7274,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Chris Godwin Jr." data-pos="WR" id="player-card-Chris_Godwin_Jr_">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Chris Godwin Jr." data-pos="WR" id="player-card-Chris_Godwin_Jr_">
                 <div class="card-summary">
                     <div class="player-name">Godwin Jr.</div>
                     <div class="bye-tag">10</div>
@@ -7274,7 +7324,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Michael Pittman Jr." data-pos="WR" id="player-card-Michael_Pittman_Jr_">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Michael Pittman Jr." data-pos="WR" id="player-card-Michael_Pittman_Jr_">
                 <div class="card-summary">
                     <div class="player-name">Pittman Jr.</div>
                     <div class="bye-tag">9</div>
@@ -7324,7 +7374,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Ricky Pearsall" data-pos="WR" id="player-card-Ricky_Pearsall">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Ricky Pearsall" data-pos="WR" id="player-card-Ricky_Pearsall">
                 <div class="card-summary">
                     <div class="player-name">Pearsall</div>
                     <div class="bye-tag">8</div>
@@ -7374,7 +7424,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jordan Addison" data-pos="WR" id="player-card-Jordan_Addison">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Jordan Addison" data-pos="WR" id="player-card-Jordan_Addison">
                 <div class="card-summary">
                     <div class="player-name">Addison</div>
                     <div class="bye-tag">6</div>
@@ -7424,7 +7474,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Jayden Reed" data-pos="WR" id="player-card-Jayden_Reed">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Jayden Reed" data-pos="WR" id="player-card-Jayden_Reed">
                 <div class="card-summary">
                     <div class="player-name">Reed</div>
                     <div class="bye-tag">11</div>
@@ -7474,7 +7524,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Khalil Shakir" data-pos="WR" id="player-card-Khalil_Shakir">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Khalil Shakir" data-pos="WR" id="player-card-Khalil_Shakir">
                 <div class="card-summary">
                     <div class="player-name">Shakir</div>
                     <div class="bye-tag">7</div>
@@ -7524,7 +7574,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #3498db;" data-id="Matthew Golden" data-pos="WR" id="player-card-Matthew_Golden">
+            <li class="player-card" draggable="true" style="border-left-color: #e67e22;" data-id="Matthew Golden" data-pos="WR" id="player-card-Matthew_Golden">
                 <div class="card-summary">
                     <div class="player-name">Golden</div>
                     <div class="bye-tag">11</div>
@@ -7573,8 +7623,8 @@
                     </div>
                 </div>
             </li>
-                </ul><ul class="player-list-box" data-tier="8" data-column="8">
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Jake Ferguson" data-pos="TE" id="player-card-Jake_Ferguson">
+                </ul><ul class="player-list-box" data-tier="8" data-column="8" style="background-color: #fce4d6;">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Jake Ferguson" data-pos="TE" id="player-card-Jake_Ferguson">
                 <div class="card-summary">
                     <div class="player-name">Ferguson</div>
                     <div class="bye-tag">14</div>
@@ -7624,7 +7674,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="George Kittle" data-pos="TE" id="player-card-George_Kittle">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="George Kittle" data-pos="TE" id="player-card-George_Kittle">
                 <div class="card-summary">
                     <div class="player-name">Kittle</div>
                     <div class="bye-tag">8</div>
@@ -7674,7 +7724,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Travis Kelce" data-pos="TE" id="player-card-Travis_Kelce">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Travis Kelce" data-pos="TE" id="player-card-Travis_Kelce">
                 <div class="card-summary">
                     <div class="player-name">Kelce</div>
                     <div class="bye-tag">5</div>
@@ -7724,7 +7774,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Dalton Kincaid" data-pos="TE" id="player-card-Dalton_Kincaid">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Dalton Kincaid" data-pos="TE" id="player-card-Dalton_Kincaid">
                 <div class="card-summary">
                     <div class="player-name">Kincaid</div>
                     <div class="bye-tag">7</div>
@@ -7774,7 +7824,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Isaiah Likely" data-pos="TE" id="player-card-Isaiah_Likely">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Isaiah Likely" data-pos="TE" id="player-card-Isaiah_Likely">
                 <div class="card-summary">
                     <div class="player-name">Likely</div>
                     <div class="bye-tag">8</div>
@@ -7824,7 +7874,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Mark Andrews" data-pos="TE" id="player-card-Mark_Andrews">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Mark Andrews" data-pos="TE" id="player-card-Mark_Andrews">
                 <div class="card-summary">
                     <div class="player-name">Andrews</div>
                     <div class="bye-tag">13</div>
@@ -7874,7 +7924,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Chig Okonkwo" data-pos="TE" id="player-card-Chig_Okonkwo">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Chig Okonkwo" data-pos="TE" id="player-card-Chig_Okonkwo">
                 <div class="card-summary">
                     <div class="player-name">Okonkwo</div>
                     <div class="bye-tag">7</div>
@@ -7924,7 +7974,7 @@
                 </div>
             </li>
                 
-            <li class="player-card" draggable="true" style="border-left-color: #9b59b6;" data-id="Dalton Schultz" data-pos="TE" id="player-card-Dalton_Schultz">
+            <li class="player-card" draggable="true" style="border-left-color: #e74c3c;" data-id="Dalton Schultz" data-pos="TE" id="player-card-Dalton_Schultz">
                 <div class="card-summary">
                     <div class="player-name">Schultz</div>
                     <div class="bye-tag">8</div>
@@ -7977,7 +8027,7 @@
     </div>
 
     <script>
-        const originalPlayers = [{"bye": 11, "column_id": 2, "dif": 3.8, "fpts": 22.8, "name": "Bijan Robinson", "note": "TE", "position": "RB", "sort_order": 0, "team": "ATL", "tier": 1, "xfp": 19}, {"bye": 6, "column_id": 3, "dif": 4.9, "fpts": 21.7, "name": "Jahmyr Gibbs", "note": "WR", "position": "RB", "sort_order": 0, "team": "DET", "tier": 1, "xfp": 16.9}, {"bye": 6, "column_id": 5, "dif": -0.9, "fpts": 19.4, "name": "JaMarr Chase", "note": "", "position": "WR", "sort_order": 0, "team": "CIN", "tier": 1, "xfp": 20.3}, {"bye": 11, "column_id": 6, "dif": 5.6, "fpts": 23.3, "name": "Puka Nacua", "note": "", "position": "WR", "sort_order": 0, "team": "LAR", "tier": 1, "xfp": 17.8}, {"bye": 11, "column_id": 7, "dif": 3.9, "fpts": 21.7, "name": "Jaxon Smith-Njigba", "note": "RB", "position": "WR", "sort_order": 0, "team": "SEA", "tier": 1, "xfp": 17.7}, {"bye": 8, "column_id": 4, "dif": 0.9, "fpts": 25.3, "name": "Christian McCaffrey", "note": "", "position": "RB", "sort_order": 0, "team": "SF", "tier": 1, "xfp": 24.4}, {"bye": 6, "column_id": 5, "dif": 0.3, "fpts": 18.7, "name": "Amon-Ra St. Brown", "note": "OWNED", "position": "WR", "sort_order": 1, "team": "DET", "tier": 1, "xfp": 18.3}, {"bye": 13, "column_id": 2, "dif": 3.9, "fpts": 22.2, "name": "Jonathan Taylor", "note": "TE", "position": "RB", "sort_order": 1, "team": "IND", "tier": 1, "xfp": 18.4}, {"bye": 14, "column_id": 6, "dif": -2.8, "fpts": 15.3, "name": "CeeDee Lamb", "note": "", "position": "WR", "sort_order": 1, "team": "DAL", "tier": 1, "xfp": 18.1}, {"bye": 6, "column_id": 7, "dif": 3.5, "fpts": 11.4, "name": "Justin Jefferson", "note": "", "position": "WR", "sort_order": 1, "team": "MIN", "tier": 1, "xfp": 15}, {"bye": 7, "column_id": 4, "dif": 3.3, "fpts": 19, "name": "James Cook III", "note": "", "position": "RB", "sort_order": 0, "team": "BUF", "tier": 2, "xfp": 15.7}, {"bye": 13, "column_id": 8, "dif": 1.4, "fpts": 14.5, "name": "Brock Bowers", "note": "", "position": "TE", "sort_order": 0, "team": "LV", "tier": 2, "xfp": 13.1}, {"bye": 7, "column_id": 0, "dif": 0, "fpts": 0, "name": "Josh Allen", "note": "", "position": "QB", "sort_order": 0, "team": "BUF", "tier": 2, "xfp": 0}, {"bye": 13, "column_id": 1, "dif": 0, "fpts": 0, "name": "Lamar Jackson", "note": "WR", "position": "QB", "sort_order": 0, "team": "BAL", "tier": 2, "xfp": 0}, {"bye": 11, "column_id": 5, "dif": 0.1, "fpts": 16.6, "name": "Drake London", "note": "TE", "position": "WR", "sort_order": 0, "team": "ATL", "tier": 2, "xfp": 16.6}, {"bye": 6, "column_id": 2, "dif": 3.5, "fpts": 20.2, "name": "DeVon Achane", "note": "QB", "position": "RB", "sort_order": 0, "team": "MIA", "tier": 2, "xfp": 16.7}, {"bye": 6, "column_id": 3, "dif": -0.3, "fpts": 16.4, "name": "Chase Brown", "note": "", "position": "RB", "sort_order": 0, "team": "CIN", "tier": 2, "xfp": 16.6}, {"bye": 11, "column_id": 6, "dif": -0.1, "fpts": 14.7, "name": "A.J. Brown", "note": "", "position": "WR", "sort_order": 0, "team": "NE", "tier": 2, "xfp": 14.8}, {"bye": 8, "column_id": 7, "dif": -0.8, "fpts": 15, "name": "Nico Collins", "note": "", "position": "WR", "sort_order": 0, "team": "HOU", "tier": 2, "xfp": 15.8}, {"bye": 13, "column_id": 3, "dif": -0.5, "fpts": 14.6, "name": "Ashton Jeanty", "note": "", "position": "RB", "sort_order": 1, "team": "LV", "tier": 2, "xfp": 15.1}, {"bye": 14, "column_id": 8, "dif": 0.9, "fpts": 18.9, "name": "Trey McBride", "note": "WR", "position": "TE", "sort_order": 1, "team": "ARI", "tier": 2, "xfp": 18}, {"bye": 14, "column_id": 5, "dif": 1.7, "fpts": 18, "name": "George Pickens", "note": "", "position": "WR", "sort_order": 1, "team": "DAL", "tier": 2, "xfp": 16.3}, {"bye": 7, "column_id": 0, "dif": 0, "fpts": 0, "name": "Jayden Daniels", "note": "", "position": "QB", "sort_order": 0, "team": "WAS", "tier": 3, "xfp": 0}, {"bye": 10, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jalen Hurts", "note": "", "position": "QB", "sort_order": 0, "team": "PHI", "tier": 3, "xfp": 0}, {"bye": 7, "column_id": 4, "dif": 0.8, "fpts": 14.9, "name": "Omarion Hampton", "note": "", "position": "RB", "sort_order": 0, "team": "LAC", "tier": 3, "xfp": 14.1}, {"bye": 13, "column_id": 2, "dif": 2.9, "fpts": 16.9, "name": "Derrick Henry", "note": "WR", "position": "RB", "sort_order": 0, "team": "BAL", "tier": 3, "xfp": 14}, {"bye": 5, "column_id": 3, "dif": 0.2, "fpts": 10.9, "name": "Kenneth Walker III", "note": "", "position": "RB", "sort_order": 0, "team": "KC", "tier": 3, "xfp": 10.6}, {"bye": 5, "column_id": 6, "dif": 0.1, "fpts": 18.5, "name": "Rashee Rice", "note": "", "position": "WR", "sort_order": 0, "team": "KC", "tier": 3, "xfp": 18.4}, {"bye": 8, "column_id": 5, "dif": -1, "fpts": 16.9, "name": "Chris Olave", "note": "RB", "position": "WR", "sort_order": 0, "team": "NO", "tier": 3, "xfp": 17.8}, {"bye": 11, "column_id": 0, "dif": 0, "fpts": 0, "name": "Drake Maye", "note": "", "position": "QB", "sort_order": 1, "team": "NE", "tier": 3, "xfp": 0}, {"bye": 6, "column_id": 1, "dif": 0, "fpts": 0, "name": "Joe Burrow", "note": "", "position": "QB", "sort_order": 1, "team": "CIN", "tier": 3, "xfp": 0}, {"bye": 14, "column_id": 4, "dif": 0, "fpts": 0, "name": "Jeremiyah Love", "note": "WR", "position": "RB", "sort_order": 1, "team": "ARI", "tier": 3, "xfp": 0}, {"bye": 10, "column_id": 3, "dif": -0.7, "fpts": 14.5, "name": "Saquon Barkley", "note": "", "position": "RB", "sort_order": 1, "team": "PHI", "tier": 3, "xfp": 15.2}, {"bye": 7, "column_id": 1, "dif": 0, "fpts": 0, "name": "Justin Herbert", "note": "", "position": "QB", "sort_order": 0, "team": "LAC", "tier": 4, "xfp": 0}, {"bye": 10, "column_id": 5, "dif": 1.1, "fpts": 12.1, "name": "DeVonta Smith", "note": "", "position": "WR", "sort_order": 0, "team": "PHI", "tier": 4, "xfp": 13.2}, {"bye": 13, "column_id": 6, "dif": 0.9, "fpts": 13.5, "name": "Zay Flowers", "note": "OWNED", "position": "WR", "sort_order": 0, "team": "BAL", "tier": 4, "xfp": 12.7}, {"bye": 6, "column_id": 7, "dif": 1.8, "fpts": 13.6, "name": "Tee Higgins", "note": "", "position": "WR", "sort_order": 0, "team": "CIN", "tier": 4, "xfp": 11.9}, {"bye": 11, "column_id": 2, "dif": 1.7, "fpts": 15.9, "name": "Kyren Williams", "note": "", "position": "RB", "sort_order": 0, "team": "LAR", "tier": 4, "xfp": 14.2}, {"bye": 11, "column_id": 3, "dif": 1.1, "fpts": 15.9, "name": "Josh Jacobs", "note": "QB", "position": "RB", "sort_order": 0, "team": "GB", "tier": 4, "xfp": 14.8}, {"bye": 13, "column_id": 4, "dif": 1, "fpts": 12.8, "name": "Breece Hall", "note": "", "position": "RB", "sort_order": 0, "team": "NYJ", "tier": 4, "xfp": 11.8}, {"bye": 5, "column_id": 0, "dif": 0, "fpts": 0, "name": "Patrick Mahomes II", "note": "", "position": "QB", "sort_order": 0, "team": "KC", "tier": 4, "xfp": 0}, {"bye": 14, "column_id": 1, "dif": 0, "fpts": 0, "name": "Dak Prescott", "note": "", "position": "QB", "sort_order": 1, "team": "DAL", "tier": 4, "xfp": 0}, {"bye": 8, "column_id": 0, "dif": 0, "fpts": 0, "name": "Jaxson Dart", "note": "", "position": "QB", "sort_order": 1, "team": "NYG", "tier": 4, "xfp": 0}, {"bye": 5, "column_id": 5, "dif": -0.2, "fpts": 12.6, "name": "Tetairoa McMillan", "note": "", "position": "WR", "sort_order": 1, "team": "CAR", "tier": 4, "xfp": 12.8}, {"bye": 14, "column_id": 2, "dif": -0.5, "fpts": 15.3, "name": "Javonte Williams", "note": "", "position": "RB", "sort_order": 1, "team": "DAL", "tier": 4, "xfp": 15.8}, {"bye": 11, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jordan Love", "note": "OWNED", "position": "QB", "sort_order": 2, "team": "GB", "tier": 4, "xfp": 0}, {"bye": 13, "column_id": 8, "dif": 0, "fpts": 11.3, "name": "Tyler Warren", "note": "OWNED", "position": "TE", "sort_order": 0, "team": "IND", "tier": 5, "xfp": 11.3}, {"bye": 13, "column_id": 6, "dif": -0.1, "fpts": 14.2, "name": "Garrett Wilson", "note": "", "position": "WR", "sort_order": 0, "team": "NYJ", "tier": 5, "xfp": 14.3}, {"bye": 10, "column_id": 7, "dif": -2.7, "fpts": 12, "name": "Emeka Egbuka", "note": "QB", "position": "WR", "sort_order": 0, "team": "TB", "tier": 5, "xfp": 14.7}, {"bye": 7, "column_id": 5, "dif": 0.9, "fpts": 11.3, "name": "Ladd McConkey", "note": "", "position": "WR", "sort_order": 0, "team": "LAC", "tier": 5, "xfp": 12.2}, {"bye": 8, "column_id": 3, "dif": 1.3, "fpts": 15.6, "name": "Travis Etienne Jr.", "note": "RB", "position": "RB", "sort_order": 0, "team": "NO", "tier": 5, "xfp": 14.3}, {"bye": 8, "column_id": 4, "dif": 0.9, "fpts": 15.8, "name": "Cam Skattebo", "note": "", "position": "RB", "sort_order": 0, "team": "NYG", "tier": 5, "xfp": 14.9}, {"bye": 10, "column_id": 2, "dif": -0.5, "fpts": 14.3, "name": "Bucky Irving", "note": "QB", "position": "RB", "sort_order": 0, "team": "TB", "tier": 5, "xfp": 14.8}, {"bye": 6, "column_id": 0, "dif": 0, "fpts": 0, "name": "Kyler Murray", "note": "", "position": "QB", "sort_order": 0, "team": "MIN", "tier": 5, "xfp": 0}, {"bye": 6, "column_id": 1, "dif": 0, "fpts": 0, "name": "Malik Willis", "note": "OWNED", "position": "QB", "sort_order": 0, "team": "MIA", "tier": 5, "xfp": 0}, {"bye": 10, "column_id": 8, "dif": 1.6, "fpts": 9.3, "name": "Colston Loveland", "note": "", "position": "TE", "sort_order": 1, "team": "CHI", "tier": 5, "xfp": 7.8}, {"bye": 10, "column_id": 0, "dif": 0, "fpts": 0, "name": "Caleb Williams", "note": "", "position": "QB", "sort_order": 1, "team": "CHI", "tier": 5, "xfp": 0}, {"bye": 10, "column_id": 1, "dif": 0, "fpts": 0, "name": "Baker Mayfield", "note": "OWNED", "position": "QB", "sort_order": 1, "team": "TB", "tier": 5, "xfp": 0}, {"bye": 10, "column_id": 6, "dif": 0.8, "fpts": 12.1, "name": "Jaylen Waddle", "note": "", "position": "WR", "sort_order": 1, "team": "DEN", "tier": 5, "xfp": 11.4}, {"bye": 11, "column_id": 3, "dif": -1.8, "fpts": 12, "name": "Quinshon Judkins", "note": "OWNED", "position": "RB", "sort_order": 1, "team": "CLE", "tier": 5, "xfp": 13.8}, {"bye": 11, "column_id": 8, "dif": 1, "fpts": 12.4, "name": "Kyle Pitts Sr.", "note": "OWNED", "position": "TE", "sort_order": 2, "team": "ATL", "tier": 5, "xfp": 11.5}, {"bye": 7, "column_id": 0, "dif": 0, "fpts": 0, "name": "Trevor Lawrence", "note": "", "position": "QB", "sort_order": 2, "team": "JAC", "tier": 5, "xfp": 0}, {"bye": 11, "column_id": 8, "dif": 5.3, "fpts": 14.7, "name": "Tucker Kraft", "note": "QB", "position": "TE", "sort_order": 3, "team": "GB", "tier": 5, "xfp": 9.4}, {"bye": 6, "column_id": 8, "dif": 3.5, "fpts": 11.9, "name": "Sam LaPorta", "note": "WR", "position": "TE", "sort_order": 0, "team": "DET", "tier": 6, "xfp": 8.4}, {"bye": 11, "column_id": 0, "dif": 0, "fpts": 0, "name": "Matthew Stafford", "note": "", "position": "QB", "sort_order": 0, "team": "LAR", "tier": 6, "xfp": 0}, {"bye": 6, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jared Goff", "note": "WR", "position": "QB", "sort_order": 0, "team": "DET", "tier": 6, "xfp": 0}, {"bye": 8, "column_id": 7, "dif": -3.3, "fpts": 14.3, "name": "Malik Nabers", "note": "", "position": "WR", "sort_order": 0, "team": "NYG", "tier": 6, "xfp": 17.6}, {"bye": 7, "column_id": 5, "dif": 0.2, "fpts": 11.6, "name": "Terry McLaurin", "note": "", "position": "WR", "sort_order": 0, "team": "WAS", "tier": 6, "xfp": 11.4}, {"bye": 11, "column_id": 6, "dif": -1.8, "fpts": 15.9, "name": "Davante Adams", "note": "", "position": "WR", "sort_order": 0, "team": "LAR", "tier": 6, "xfp": 17.7}, {"bye": 10, "column_id": 4, "dif": 1.6, "fpts": 15, "name": "DAndre Swift", "note": "", "position": "RB", "sort_order": 0, "team": "CHI", "tier": 6, "xfp": 13.4}, {"bye": 11, "column_id": 2, "dif": 1.5, "fpts": 11.9, "name": "TreVeyon Henderson", "note": "", "position": "RB", "sort_order": 0, "team": "NE", "tier": 6, "xfp": 10.3}, {"bye": 8, "column_id": 3, "dif": 0.4, "fpts": 9.7, "name": "David Montgomery", "note": "", "position": "RB", "sort_order": 0, "team": "HOU", "tier": 6, "xfp": 9.3}, {"bye": 11, "column_id": 8, "dif": 0.4, "fpts": 11.7, "name": "Harold Fannin Jr.", "note": "RB", "position": "TE", "sort_order": 1, "team": "CLE", "tier": 6, "xfp": 11.3}, {"bye": 8, "column_id": 1, "dif": 0, "fpts": 0, "name": "Brock Purdy", "note": "", "position": "QB", "sort_order": 1, "team": "SF", "tier": 6, "xfp": 0}, {"bye": 10, "column_id": 0, "dif": 0, "fpts": 0, "name": "Bo Nix", "note": "", "position": "QB", "sort_order": 1, "team": "DEN", "tier": 6, "xfp": 0}, {"bye": 10, "column_id": 7, "dif": 2.1, "fpts": 8.6, "name": "Luther Burden III", "note": "", "position": "WR", "sort_order": 1, "team": "CHI", "tier": 6, "xfp": 6.5}, {"bye": 7, "column_id": 4, "dif": 0.6, "fpts": 5.8, "name": "Bhayshul Tuten", "note": "", "position": "RB", "sort_order": 1, "team": "JAC", "tier": 6, "xfp": 5.2}, {"bye": 8, "column_id": 5, "dif": -6.4, "fpts": 11.3, "name": "Mike Evans", "note": "", "position": "WR", "sort_order": 0, "team": "SF", "tier": 7, "xfp": 17.8}, {"bye": 6, "column_id": 6, "dif": 2.5, "fpts": 12.9, "name": "Jameson Williams", "note": "WR", "position": "WR", "sort_order": 0, "team": "DET", "tier": 7, "xfp": 10.4}, {"bye": 11, "column_id": 7, "dif": 2.6, "fpts": 13.2, "name": "Christian Watson", "note": "QB", "position": "WR", "sort_order": 0, "team": "GB", "tier": 7, "xfp": 10.6}, {"bye": 11, "column_id": 2, "dif": 0, "fpts": 0, "name": "Jadarian Price", "note": "OWNED", "position": "RB", "sort_order": 0, "team": "SEA", "tier": 7, "xfp": 0}, {"bye": 9, "column_id": 3, "dif": 1.2, "fpts": 13.5, "name": "Jaylen Warren", "note": "", "position": "RB", "sort_order": 0, "team": "PIT", "tier": 7, "xfp": 12.3}, {"bye": 9, "column_id": 4, "dif": -0.7, "fpts": 11.2, "name": "Tony Pollard", "note": "OWNED", "position": "RB", "sort_order": 0, "team": "TEN", "tier": 7, "xfp": 11.9}, {"bye": 9, "column_id": 1, "dif": 0, "fpts": 0, "name": "Aaron Rodgers", "note": "", "position": "QB", "sort_order": 0, "team": "PIT", "tier": 7, "xfp": 0}, {"bye": 9, "column_id": 0, "dif": 0, "fpts": 0, "name": "Cam Ward", "note": "RB", "position": "QB", "sort_order": 0, "team": "TEN", "tier": 7, "xfp": 0}, {"bye": 7, "column_id": 5, "dif": 0.4, "fpts": 10.3, "name": "DJ Moore", "note": "", "position": "WR", "sort_order": 1, "team": "BUF", "tier": 7, "xfp": 9.9}, {"bye": 11, "column_id": 2, "dif": 0.6, "fpts": 11, "name": "Rhamondre Stevenson", "note": "", "position": "RB", "sort_order": 1, "team": "NE", "tier": 7, "xfp": 10.4}, {"bye": 14, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jacoby Brissett", "note": "WR", "position": "QB", "sort_order": 1, "team": "ARI", "tier": 7, "xfp": 0}, {"bye": 8, "column_id": 1, "dif": 0, "fpts": 0, "name": "Tyler Shough", "note": "RB", "position": "QB", "sort_order": 2, "team": "NO", "tier": 7, "xfp": 0}, {"bye": 14, "column_id": 8, "dif": 0, "fpts": 11.7, "name": "Jake Ferguson", "note": "", "position": "TE", "sort_order": 0, "team": "DAL", "tier": 8, "xfp": 11.7}, {"bye": 11, "column_id": 1, "dif": 0, "fpts": 0, "name": "Sam Darnold", "note": "RB", "position": "QB", "sort_order": 0, "team": "SEA", "tier": 8, "xfp": 0}, {"bye": 10, "column_id": 6, "dif": 3, "fpts": 12.2, "name": "Rome Odunze", "note": "", "position": "WR", "sort_order": 0, "team": "CHI", "tier": 8, "xfp": 15.1}, {"bye": 14, "column_id": 7, "dif": 1.8, "fpts": 10.5, "name": "Marvin Harrison Jr.", "note": "WR", "position": "WR", "sort_order": 0, "team": "ARI", "tier": 8, "xfp": 12.2}, {"bye": 9, "column_id": 5, "dif": 0, "fpts": 0, "name": "Carnell Tate", "note": "RB", "position": "WR", "sort_order": 0, "team": "TEN", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 3, "dif": 1, "fpts": 8.8, "name": "Chuba Hubbard", "note": "", "position": "RB", "sort_order": 0, "team": "CAR", "tier": 8, "xfp": 9.7}, {"bye": 9, "column_id": 4, "dif": 0.6, "fpts": 13.3, "name": "Rico Dowdle", "note": "", "position": "RB", "sort_order": 0, "team": "PIT", "tier": 8, "xfp": 12.7}, {"bye": 10, "column_id": 2, "dif": 1.9, "fpts": 12.7, "name": "RJ Harvey", "note": "", "position": "RB", "sort_order": 0, "team": "DEN", "tier": 8, "xfp": 10.8}, {"bye": 13, "column_id": 0, "dif": 0, "fpts": 0, "name": "Geno Smith", "note": "", "position": "QB", "sort_order": 0, "team": "NYJ", "tier": 8, "xfp": 0}, {"bye": 8, "column_id": 8, "dif": 4.2, "fpts": 15.4, "name": "George Kittle", "note": "", "position": "TE", "sort_order": 1, "team": "SF", "tier": 8, "xfp": 11.2}, {"bye": 13, "column_id": 6, "dif": 0.7, "fpts": 11, "name": "Alec Pierce", "note": "TE", "position": "WR", "sort_order": 1, "team": "IND", "tier": 8, "xfp": 11.7}, {"bye": 9, "column_id": 7, "dif": -0.2, "fpts": 12.5, "name": "DK Metcalf", "note": "", "position": "WR", "sort_order": 1, "team": "PIT", "tier": 8, "xfp": 12.7}, {"bye": 7, "column_id": 5, "dif": 2.1, "fpts": 10.1, "name": "Brian Thomas Jr.", "note": "", "position": "WR", "sort_order": 1, "team": "JAC", "tier": 8, "xfp": 12.1}, {"bye": 10, "column_id": 3, "dif": 0.3, "fpts": 8.7, "name": "Kyle Monangai", "note": "", "position": "RB", "sort_order": 1, "team": "CHI", "tier": 8, "xfp": 9}, {"bye": 10, "column_id": 4, "dif": 0.6, "fpts": 11.6, "name": "J.K. Dobbins", "note": "", "position": "RB", "sort_order": 1, "team": "DEN", "tier": 8, "xfp": 11}, {"bye": 11, "column_id": 2, "dif": 0.1, "fpts": 7.1, "name": "Blake Corum", "note": "", "position": "RB", "sort_order": 1, "team": "LAR", "tier": 8, "xfp": 7}, {"bye": 13, "column_id": 1, "dif": 0, "fpts": 0, "name": "Daniel Jones", "note": "TE", "position": "QB", "sort_order": 1, "team": "IND", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 0, "dif": 0, "fpts": 0, "name": "Bryce Young", "note": "", "position": "QB", "sort_order": 1, "team": "CAR", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 8, "dif": 1.1, "fpts": 11.7, "name": "Travis Kelce", "note": "", "position": "TE", "sort_order": 2, "team": "KC", "tier": 8, "xfp": 10.6}, {"bye": 8, "column_id": 1, "dif": 0, "fpts": 0, "name": "C.J. Stroud", "note": "", "position": "QB", "sort_order": 2, "team": "HOU", "tier": 8, "xfp": 0}, {"bye": 10, "column_id": 6, "dif": -0.9, "fpts": 13.5, "name": "Courtland Sutton", "note": "", "position": "WR", "sort_order": 2, "team": "DEN", "tier": 8, "xfp": 14.4}, {"bye": 10, "column_id": 7, "dif": 0.1, "fpts": 9.9, "name": "Chris Godwin Jr.", "note": "QB", "position": "WR", "sort_order": 2, "team": "TB", "tier": 8, "xfp": 9.8}, {"bye": 7, "column_id": 5, "dif": 0.7, "fpts": 10.2, "name": "Parker Washington", "note": "", "position": "WR", "sort_order": 2, "team": "JAC", "tier": 8, "xfp": 10.9}, {"bye": 10, "column_id": 3, "dif": 0.7, "fpts": 12.6, "name": "Kenny Gainwell", "note": "QB", "position": "RB", "sort_order": 2, "team": "TB", "tier": 8, "xfp": 11.8}, {"bye": 7, "column_id": 4, "dif": 0.6, "fpts": 8.6, "name": "Rachaad White", "note": "", "position": "RB", "sort_order": 2, "team": "WAS", "tier": 8, "xfp": 9.1}, {"bye": 6, "column_id": 2, "dif": 1, "fpts": 10, "name": "Aaron Jones Sr.", "note": "", "position": "RB", "sort_order": 2, "team": "MIN", "tier": 8, "xfp": 10.9}, {"bye": 11, "column_id": 0, "dif": 0, "fpts": 0, "name": "Tua Tagovailoa", "note": "TE", "position": "QB", "sort_order": 2, "team": "ATL", "tier": 8, "xfp": 0}, {"bye": 7, "column_id": 8, "dif": 3.3, "fpts": 10.8, "name": "Dalton Kincaid", "note": "", "position": "TE", "sort_order": 3, "team": "BUF", "tier": 8, "xfp": 7.5}, {"bye": 8, "column_id": 6, "dif": 0, "fpts": 0, "name": "Jordyn Tyson", "note": "RB", "position": "WR", "sort_order": 3, "team": "NO", "tier": 8, "xfp": 0}, {"bye": 9, "column_id": 7, "dif": 1.1, "fpts": 12.3, "name": "Michael Pittman Jr.", "note": "", "position": "WR", "sort_order": 3, "team": "PIT", "tier": 8, "xfp": 11.2}, {"bye": 14, "column_id": 5, "dif": -1, "fpts": 12.5, "name": "Michael Wilson", "note": "WR", "position": "WR", "sort_order": 3, "team": "ARI", "tier": 8, "xfp": 13.5}, {"bye": 5, "column_id": 3, "dif": 0, "fpts": 0, "name": "Jonathon Brooks", "note": "", "position": "RB", "sort_order": 3, "team": "CAR", "tier": 8, "xfp": 0}, {"bye": 7, "column_id": 4, "dif": 1.2, "fpts": 8.7, "name": "Jacory Croskey-Merritt", "note": "", "position": "RB", "sort_order": 3, "team": "WAS", "tier": 8, "xfp": 7.5}, {"bye": 6, "column_id": 2, "dif": 0.6, "fpts": 8, "name": "Jordan Mason", "note": "", "position": "RB", "sort_order": 3, "team": "MIN", "tier": 8, "xfp": 7.4}, {"bye": 8, "column_id": 8, "dif": 0.3, "fpts": 4.4, "name": "Isaiah Likely", "note": "", "position": "TE", "sort_order": 4, "team": "NYG", "tier": 8, "xfp": 4.7}, {"bye": 7, "column_id": 6, "dif": 1.9, "fpts": 12.3, "name": "Quentin Johnston", "note": "", "position": "WR", "sort_order": 4, "team": "LAC", "tier": 8, "xfp": 10.4}, {"bye": 8, "column_id": 7, "dif": 3, "fpts": 9.8, "name": "Ricky Pearsall", "note": "", "position": "WR", "sort_order": 4, "team": "SF", "tier": 8, "xfp": 12.9}, {"bye": 10, "column_id": 5, "dif": 0, "fpts": 0, "name": "Makai Lemon", "note": "", "position": "WR", "sort_order": 4, "team": "PHI", "tier": 8, "xfp": 0}, {"bye": 8, "column_id": 3, "dif": 0, "fpts": 9.5, "name": "Tyrone Tracy Jr.", "note": "", "position": "RB", "sort_order": 4, "team": "NYG", "tier": 8, "xfp": 9.5}, {"bye": 7, "column_id": 4, "dif": 0.6, "fpts": 6.4, "name": "Chris Rodriguez Jr.", "note": "", "position": "RB", "sort_order": 4, "team": "JAC", "tier": 8, "xfp": 5.8}, {"bye": 14, "column_id": 2, "dif": 0.4, "fpts": 7.5, "name": "Tyler Allgeier", "note": "WR", "position": "RB", "sort_order": 4, "team": "ARI", "tier": 8, "xfp": 7.1}, {"bye": 13, "column_id": 8, "dif": 0.5, "fpts": 8, "name": "Mark Andrews", "note": "WR", "position": "TE", "sort_order": 5, "team": "BAL", "tier": 8, "xfp": 8.5}, {"bye": 7, "column_id": 6, "dif": 0.4, "fpts": 11.2, "name": "Jakobi Meyers", "note": "", "position": "WR", "sort_order": 5, "team": "JAC", "tier": 8, "xfp": 11.5}, {"bye": 6, "column_id": 7, "dif": 0.6, "fpts": 10.3, "name": "Jordan Addison", "note": "", "position": "WR", "sort_order": 5, "team": "MIN", "tier": 8, "xfp": 9.7}, {"bye": 9, "column_id": 5, "dif": -0.8, "fpts": 13.6, "name": "WanDale Robinson", "note": "RB", "position": "WR", "sort_order": 5, "team": "TEN", "tier": 8, "xfp": 14.4}, {"bye": 8, "column_id": 3, "dif": -2.1, "fpts": 9.2, "name": "Woody Marks", "note": "", "position": "RB", "sort_order": 5, "team": "HOU", "tier": 8, "xfp": 11.4}, {"bye": 11, "column_id": 4, "dif": 0.4, "fpts": 10.7, "name": "Zach Charbonnet", "note": "RB", "position": "RB", "sort_order": 5, "team": "SEA", "tier": 8, "xfp": 10.3}, {"bye": 11, "column_id": 2, "dif": 0.3, "fpts": 5.9, "name": "Dylan Sampson", "note": "RB", "position": "RB", "sort_order": 5, "team": "CLE", "tier": 8, "xfp": 5.5}, {"bye": 7, "column_id": 8, "dif": 0.1, "fpts": 7.6, "name": "Chig Okonkwo", "note": "", "position": "TE", "sort_order": 6, "team": "WAS", "tier": 8, "xfp": 7.7}, {"bye": 13, "column_id": 6, "dif": 0.8, "fpts": 8.5, "name": "Josh Downs", "note": "TE", "position": "WR", "sort_order": 6, "team": "IND", "tier": 8, "xfp": 9.3}, {"bye": 11, "column_id": 7, "dif": 1.7, "fpts": 8.1, "name": "Jayden Reed", "note": "QB", "position": "WR", "sort_order": 6, "team": "GB", "tier": 8, "xfp": 6.3}, {"bye": 5, "column_id": 5, "dif": 2.8, "fpts": 7.9, "name": "Xavier Worthy", "note": "", "position": "WR", "sort_order": 6, "team": "KC", "tier": 8, "xfp": 10.7}, {"bye": 9, "column_id": 3, "dif": 0.3, "fpts": 8.5, "name": "Tyjae Spears", "note": "OWNED", "position": "RB", "sort_order": 6, "team": "TEN", "tier": 8, "xfp": 8.8}, {"bye": 14, "column_id": 4, "dif": -1.9, "fpts": 11.1, "name": "James Conner", "note": "WR", "position": "RB", "sort_order": 6, "team": "ARI", "tier": 8, "xfp": 13}, {"bye": 8, "column_id": 8, "dif": 0.3, "fpts": 10.4, "name": "Dalton Schultz", "note": "", "position": "TE", "sort_order": 7, "team": "HOU", "tier": 8, "xfp": 10.7}, {"bye": 8, "column_id": 4, "dif": -2.6, "fpts": 9.3, "name": "Alvin Kamara", "note": "RB", "position": "RB", "sort_order": 7, "team": "NO", "tier": 8, "xfp": 12}, {"bye": 8, "column_id": 6, "dif": 0.4, "fpts": 7.5, "name": "Jayden Higgins", "note": "", "position": "WR", "sort_order": 7, "team": "HOU", "tier": 8, "xfp": 7.1}, {"bye": 7, "column_id": 7, "dif": 1.1, "fpts": 10.5, "name": "Khalil Shakir", "note": "", "position": "WR", "sort_order": 7, "team": "BUF", "tier": 8, "xfp": 9.3}, {"bye": 11, "column_id": 5, "dif": 0.7, "fpts": 10.2, "name": "Romeo Doubs", "note": "", "position": "WR", "sort_order": 7, "team": "NE", "tier": 8, "xfp": 10.9}, {"bye": 7, "column_id": 3, "dif": 0.5, "fpts": 4.6, "name": "Keaton Mitchell", "note": "", "position": "RB", "sort_order": 7, "team": "LAC", "tier": 8, "xfp": 4.1}, {"bye": 10, "column_id": 3, "dif": 0, "fpts": 0, "name": "Jonathan Coleman", "note": "", "position": "RB", "sort_order": 8, "team": "DEN", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 6, "dif": 1.8, "fpts": 7.3, "name": "Jalen Coker", "note": "", "position": "WR", "sort_order": 8, "team": "CAR", "tier": 8, "xfp": 5.5}, {"bye": 11, "column_id": 7, "dif": 0.4, "fpts": 5.2, "name": "Matthew Golden", "note": "QB", "position": "WR", "sort_order": 8, "team": "GB", "tier": 8, "xfp": 5.7}, {"bye": 11, "column_id": 5, "dif": 0, "fpts": 0, "name": "KC Concepcion", "note": "RB", "position": "WR", "sort_order": 8, "team": "CLE", "tier": 8, "xfp": 0}, {"bye": 11, "column_id": 6, "dif": 0.9, "fpts": 8.5, "name": "Rashid Shaheed", "note": "RB", "position": "WR", "sort_order": 9, "team": "SEA", "tier": 8, "xfp": 9.3}];
+        const originalPlayers = [{"bye": 11, "column_id": 2, "dif": 3.8, "fpts": 22.8, "name": "Bijan Robinson", "note": "TE", "position": "RB", "sort_order": 0, "team": "ATL", "tier": 1, "xfp": 19}, {"bye": 6, "column_id": 3, "dif": 4.9, "fpts": 21.7, "name": "Jahmyr Gibbs", "note": "WR", "position": "RB", "sort_order": 0, "team": "DET", "tier": 1, "xfp": 16.9}, {"bye": 6, "column_id": 5, "dif": -0.9, "fpts": 19.4, "name": "JaMarr Chase", "note": "", "position": "WR", "sort_order": 0, "team": "CIN", "tier": 1, "xfp": 20.3}, {"bye": 11, "column_id": 6, "dif": 5.6, "fpts": 23.3, "name": "Puka Nacua", "note": "", "position": "WR", "sort_order": 0, "team": "LAR", "tier": 1, "xfp": 17.8}, {"bye": 11, "column_id": 7, "dif": 3.9, "fpts": 21.7, "name": "Jaxon Smith-Njigba", "note": "RB", "position": "WR", "sort_order": 0, "team": "SEA", "tier": 1, "xfp": 17.7}, {"bye": 8, "column_id": 4, "dif": 0.9, "fpts": 25.3, "name": "Christian McCaffrey", "note": "", "position": "RB", "sort_order": 0, "team": "SF", "tier": 1, "xfp": 24.4}, {"bye": 6, "column_id": 5, "dif": 0.3, "fpts": 18.7, "name": "Amon-Ra St. Brown", "note": "OWNED", "position": "WR", "sort_order": 1, "team": "DET", "tier": 1, "xfp": 18.3}, {"bye": 13, "column_id": 2, "dif": 3.9, "fpts": 22.2, "name": "Jonathan Taylor", "note": "TE", "position": "RB", "sort_order": 1, "team": "IND", "tier": 1, "xfp": 18.4}, {"bye": 14, "column_id": 6, "dif": -2.8, "fpts": 15.3, "name": "CeeDee Lamb", "note": "", "position": "WR", "sort_order": 1, "team": "DAL", "tier": 1, "xfp": 18.1}, {"bye": 6, "column_id": 7, "dif": 3.5, "fpts": 11.4, "name": "Justin Jefferson", "note": "", "position": "WR", "sort_order": 1, "team": "MIN", "tier": 1, "xfp": 15}, {"bye": 7, "column_id": 4, "dif": 3.3, "fpts": 19, "name": "James Cook III", "note": "", "position": "RB", "sort_order": 0, "team": "BUF", "tier": 2, "xfp": 15.7}, {"bye": 13, "column_id": 8, "dif": 1.4, "fpts": 14.5, "name": "Brock Bowers", "note": "", "position": "TE", "sort_order": 0, "team": "LV", "tier": 2, "xfp": 13.1}, {"bye": 7, "column_id": 0, "dif": 0, "fpts": 0, "name": "Josh Allen", "note": "", "position": "QB", "sort_order": 0, "team": "BUF", "tier": 2, "xfp": 0}, {"bye": 13, "column_id": 1, "dif": 0, "fpts": 0, "name": "Lamar Jackson", "note": "WR", "position": "QB", "sort_order": 0, "team": "BAL", "tier": 2, "xfp": 0}, {"bye": 11, "column_id": 5, "dif": 0.1, "fpts": 16.6, "name": "Drake London", "note": "TE", "position": "WR", "sort_order": 0, "team": "ATL", "tier": 2, "xfp": 16.6}, {"bye": 6, "column_id": 2, "dif": 3.5, "fpts": 20.2, "name": "DeVon Achane", "note": "QB", "position": "RB", "sort_order": 0, "team": "MIA", "tier": 2, "xfp": 16.7}, {"bye": 6, "column_id": 3, "dif": -0.3, "fpts": 16.4, "name": "Chase Brown", "note": "", "position": "RB", "sort_order": 0, "team": "CIN", "tier": 2, "xfp": 16.6}, {"bye": 11, "column_id": 6, "dif": -0.1, "fpts": 14.7, "name": "A.J. Brown", "note": "", "position": "WR", "sort_order": 0, "team": "NE", "tier": 2, "xfp": 14.8}, {"bye": 8, "column_id": 7, "dif": -0.8, "fpts": 15, "name": "Nico Collins", "note": "", "position": "WR", "sort_order": 0, "team": "HOU", "tier": 2, "xfp": 15.8}, {"bye": 13, "column_id": 3, "dif": -0.5, "fpts": 14.6, "name": "Ashton Jeanty", "note": "", "position": "RB", "sort_order": 1, "team": "LV", "tier": 2, "xfp": 15.1}, {"bye": 14, "column_id": 8, "dif": 0.9, "fpts": 18.9, "name": "Trey McBride", "note": "WR", "position": "TE", "sort_order": 1, "team": "ARI", "tier": 2, "xfp": 18}, {"bye": 14, "column_id": 5, "dif": 1.7, "fpts": 18, "name": "George Pickens", "note": "", "position": "WR", "sort_order": 1, "team": "DAL", "tier": 2, "xfp": 16.3}, {"bye": 7, "column_id": 0, "dif": 0, "fpts": 0, "name": "Jayden Daniels", "note": "", "position": "QB", "sort_order": 0, "team": "WAS", "tier": 3, "xfp": 0}, {"bye": 10, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jalen Hurts", "note": "", "position": "QB", "sort_order": 0, "team": "PHI", "tier": 3, "xfp": 0}, {"bye": 7, "column_id": 4, "dif": 0.8, "fpts": 14.9, "name": "Omarion Hampton", "note": "", "position": "RB", "sort_order": 0, "team": "LAC", "tier": 3, "xfp": 14.1}, {"bye": 13, "column_id": 2, "dif": 2.9, "fpts": 16.9, "name": "Derrick Henry", "note": "WR", "position": "RB", "sort_order": 0, "team": "BAL", "tier": 3, "xfp": 14}, {"bye": 5, "column_id": 3, "dif": 0.2, "fpts": 10.9, "name": "Kenneth Walker III", "note": "", "position": "RB", "sort_order": 0, "team": "KC", "tier": 3, "xfp": 10.6}, {"bye": 5, "column_id": 6, "dif": 0.1, "fpts": 18.5, "name": "Rashee Rice", "note": "", "position": "WR", "sort_order": 0, "team": "KC", "tier": 3, "xfp": 18.4}, {"bye": 8, "column_id": 5, "dif": -1, "fpts": 16.9, "name": "Chris Olave", "note": "RB", "position": "WR", "sort_order": 0, "team": "NO", "tier": 3, "xfp": 17.8}, {"bye": 11, "column_id": 0, "dif": 0, "fpts": 0, "name": "Drake Maye", "note": "", "position": "QB", "sort_order": 1, "team": "NE", "tier": 3, "xfp": 0}, {"bye": 6, "column_id": 1, "dif": 0, "fpts": 0, "name": "Joe Burrow", "note": "", "position": "QB", "sort_order": 1, "team": "CIN", "tier": 3, "xfp": 0}, {"bye": 14, "column_id": 4, "dif": 0, "fpts": 0, "name": "Jeremiyah Love", "note": "WR", "position": "RB", "sort_order": 1, "team": "ARI", "tier": 3, "xfp": 0}, {"bye": 10, "column_id": 3, "dif": -0.7, "fpts": 14.5, "name": "Saquon Barkley", "note": "", "position": "RB", "sort_order": 1, "team": "PHI", "tier": 3, "xfp": 15.2}, {"bye": 7, "column_id": 1, "dif": 0, "fpts": 0, "name": "Justin Herbert", "note": "", "position": "QB", "sort_order": 0, "team": "LAC", "tier": 4, "xfp": 0}, {"bye": 10, "column_id": 5, "dif": 1.1, "fpts": 12.1, "name": "DeVonta Smith", "note": "", "position": "WR", "sort_order": 0, "team": "PHI", "tier": 4, "xfp": 13.2}, {"bye": 13, "column_id": 6, "dif": 0.9, "fpts": 13.5, "name": "Zay Flowers", "note": "OWNED", "position": "WR", "sort_order": 0, "team": "BAL", "tier": 4, "xfp": 12.7}, {"bye": 6, "column_id": 7, "dif": 1.8, "fpts": 13.6, "name": "Tee Higgins", "note": "", "position": "WR", "sort_order": 0, "team": "CIN", "tier": 4, "xfp": 11.9}, {"bye": 11, "column_id": 2, "dif": 1.7, "fpts": 15.9, "name": "Kyren Williams", "note": "", "position": "RB", "sort_order": 0, "team": "LAR", "tier": 4, "xfp": 14.2}, {"bye": 11, "column_id": 3, "dif": 1.1, "fpts": 15.9, "name": "Josh Jacobs", "note": "QB", "position": "RB", "sort_order": 0, "team": "GB", "tier": 4, "xfp": 14.8}, {"bye": 13, "column_id": 4, "dif": 1, "fpts": 12.8, "name": "Breece Hall", "note": "", "position": "RB", "sort_order": 0, "team": "NYJ", "tier": 4, "xfp": 11.8}, {"bye": 5, "column_id": 0, "dif": 0, "fpts": 0, "name": "Patrick Mahomes II", "note": "", "position": "QB", "sort_order": 0, "team": "KC", "tier": 4, "xfp": 0}, {"bye": 14, "column_id": 1, "dif": 0, "fpts": 0, "name": "Dak Prescott", "note": "", "position": "QB", "sort_order": 1, "team": "DAL", "tier": 4, "xfp": 0}, {"bye": 8, "column_id": 0, "dif": 0, "fpts": 0, "name": "Jaxson Dart", "note": "", "position": "QB", "sort_order": 1, "team": "NYG", "tier": 4, "xfp": 0}, {"bye": 5, "column_id": 5, "dif": -0.2, "fpts": 12.6, "name": "Tetairoa McMillan", "note": "", "position": "WR", "sort_order": 1, "team": "CAR", "tier": 4, "xfp": 12.8}, {"bye": 14, "column_id": 2, "dif": -0.5, "fpts": 15.3, "name": "Javonte Williams", "note": "", "position": "RB", "sort_order": 1, "team": "DAL", "tier": 4, "xfp": 15.8}, {"bye": 11, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jordan Love", "note": "OWNED", "position": "QB", "sort_order": 2, "team": "GB", "tier": 4, "xfp": 0}, {"bye": 13, "column_id": 8, "dif": 0, "fpts": 11.3, "name": "Tyler Warren", "note": "OWNED", "position": "TE", "sort_order": 0, "team": "IND", "tier": 5, "xfp": 11.3}, {"bye": 13, "column_id": 6, "dif": -0.1, "fpts": 14.2, "name": "Garrett Wilson", "note": "", "position": "WR", "sort_order": 0, "team": "NYJ", "tier": 5, "xfp": 14.3}, {"bye": 10, "column_id": 7, "dif": -2.7, "fpts": 12, "name": "Emeka Egbuka", "note": "QB", "position": "WR", "sort_order": 0, "team": "TB", "tier": 5, "xfp": 14.7}, {"bye": 7, "column_id": 5, "dif": 0.9, "fpts": 11.3, "name": "Ladd McConkey", "note": "", "position": "WR", "sort_order": 0, "team": "LAC", "tier": 5, "xfp": 12.2}, {"bye": 8, "column_id": 3, "dif": 1.3, "fpts": 15.6, "name": "Travis Etienne Jr.", "note": "OWNED", "position": "RB", "sort_order": 0, "team": "NO", "tier": 5, "xfp": 14.3}, {"bye": 8, "column_id": 4, "dif": 0.9, "fpts": 15.8, "name": "Cam Skattebo", "note": "", "position": "RB", "sort_order": 0, "team": "NYG", "tier": 5, "xfp": 14.9}, {"bye": 10, "column_id": 2, "dif": -0.5, "fpts": 14.3, "name": "Bucky Irving", "note": "QB", "position": "RB", "sort_order": 0, "team": "TB", "tier": 5, "xfp": 14.8}, {"bye": 6, "column_id": 0, "dif": 0, "fpts": 0, "name": "Kyler Murray", "note": "", "position": "QB", "sort_order": 0, "team": "MIN", "tier": 5, "xfp": 0}, {"bye": 6, "column_id": 1, "dif": 0, "fpts": 0, "name": "Malik Willis", "note": "OWNED", "position": "QB", "sort_order": 0, "team": "MIA", "tier": 5, "xfp": 0}, {"bye": 10, "column_id": 8, "dif": 1.6, "fpts": 9.3, "name": "Colston Loveland", "note": "", "position": "TE", "sort_order": 1, "team": "CHI", "tier": 5, "xfp": 7.8}, {"bye": 10, "column_id": 0, "dif": 0, "fpts": 0, "name": "Caleb Williams", "note": "", "position": "QB", "sort_order": 1, "team": "CHI", "tier": 5, "xfp": 0}, {"bye": 10, "column_id": 1, "dif": 0, "fpts": 0, "name": "Baker Mayfield", "note": "OWNED", "position": "QB", "sort_order": 1, "team": "TB", "tier": 5, "xfp": 0}, {"bye": 10, "column_id": 6, "dif": 0.8, "fpts": 12.1, "name": "Jaylen Waddle", "note": "", "position": "WR", "sort_order": 1, "team": "DEN", "tier": 5, "xfp": 11.4}, {"bye": 11, "column_id": 3, "dif": -1.8, "fpts": 12, "name": "Quinshon Judkins", "note": "OWNED", "position": "RB", "sort_order": 1, "team": "CLE", "tier": 5, "xfp": 13.8}, {"bye": 11, "column_id": 8, "dif": 1, "fpts": 12.4, "name": "Kyle Pitts Sr.", "note": "OWNED", "position": "TE", "sort_order": 2, "team": "ATL", "tier": 5, "xfp": 11.5}, {"bye": 7, "column_id": 0, "dif": 0, "fpts": 0, "name": "Trevor Lawrence", "note": "", "position": "QB", "sort_order": 2, "team": "JAC", "tier": 5, "xfp": 0}, {"bye": 11, "column_id": 8, "dif": 5.3, "fpts": 14.7, "name": "Tucker Kraft", "note": "QB", "position": "TE", "sort_order": 3, "team": "GB", "tier": 5, "xfp": 9.4}, {"bye": 6, "column_id": 8, "dif": 3.5, "fpts": 11.9, "name": "Sam LaPorta", "note": "WR", "position": "TE", "sort_order": 0, "team": "DET", "tier": 6, "xfp": 8.4}, {"bye": 11, "column_id": 0, "dif": 0, "fpts": 0, "name": "Matthew Stafford", "note": "", "position": "QB", "sort_order": 0, "team": "LAR", "tier": 6, "xfp": 0}, {"bye": 6, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jared Goff", "note": "WR", "position": "QB", "sort_order": 0, "team": "DET", "tier": 6, "xfp": 0}, {"bye": 8, "column_id": 7, "dif": -3.3, "fpts": 14.3, "name": "Malik Nabers", "note": "", "position": "WR", "sort_order": 0, "team": "NYG", "tier": 6, "xfp": 17.6}, {"bye": 7, "column_id": 5, "dif": 0.2, "fpts": 11.6, "name": "Terry McLaurin", "note": "", "position": "WR", "sort_order": 0, "team": "WAS", "tier": 6, "xfp": 11.4}, {"bye": 11, "column_id": 6, "dif": -1.8, "fpts": 15.9, "name": "Davante Adams", "note": "", "position": "WR", "sort_order": 0, "team": "LAR", "tier": 6, "xfp": 17.7}, {"bye": 10, "column_id": 4, "dif": 1.6, "fpts": 15, "name": "DAndre Swift", "note": "", "position": "RB", "sort_order": 0, "team": "CHI", "tier": 6, "xfp": 13.4}, {"bye": 11, "column_id": 2, "dif": 1.5, "fpts": 11.9, "name": "TreVeyon Henderson", "note": "", "position": "RB", "sort_order": 0, "team": "NE", "tier": 6, "xfp": 10.3}, {"bye": 8, "column_id": 3, "dif": 0.4, "fpts": 9.7, "name": "David Montgomery", "note": "", "position": "RB", "sort_order": 0, "team": "HOU", "tier": 6, "xfp": 9.3}, {"bye": 11, "column_id": 8, "dif": 0.4, "fpts": 11.7, "name": "Harold Fannin Jr.", "note": "RB", "position": "TE", "sort_order": 1, "team": "CLE", "tier": 6, "xfp": 11.3}, {"bye": 8, "column_id": 1, "dif": 0, "fpts": 0, "name": "Brock Purdy", "note": "", "position": "QB", "sort_order": 1, "team": "SF", "tier": 6, "xfp": 0}, {"bye": 10, "column_id": 0, "dif": 0, "fpts": 0, "name": "Bo Nix", "note": "", "position": "QB", "sort_order": 1, "team": "DEN", "tier": 6, "xfp": 0}, {"bye": 10, "column_id": 7, "dif": 2.1, "fpts": 8.6, "name": "Luther Burden III", "note": "", "position": "WR", "sort_order": 1, "team": "CHI", "tier": 6, "xfp": 6.5}, {"bye": 7, "column_id": 4, "dif": 0.6, "fpts": 5.8, "name": "Bhayshul Tuten", "note": "", "position": "RB", "sort_order": 1, "team": "JAC", "tier": 6, "xfp": 5.2}, {"bye": 8, "column_id": 5, "dif": -6.4, "fpts": 11.3, "name": "Mike Evans", "note": "", "position": "WR", "sort_order": 0, "team": "SF", "tier": 7, "xfp": 17.8}, {"bye": 6, "column_id": 6, "dif": 2.5, "fpts": 12.9, "name": "Jameson Williams", "note": "WR", "position": "WR", "sort_order": 0, "team": "DET", "tier": 7, "xfp": 10.4}, {"bye": 11, "column_id": 7, "dif": 2.6, "fpts": 13.2, "name": "Christian Watson", "note": "QB", "position": "WR", "sort_order": 0, "team": "GB", "tier": 7, "xfp": 10.6}, {"bye": 11, "column_id": 2, "dif": 0, "fpts": 0, "name": "Jadarian Price", "note": "OWNED", "position": "RB", "sort_order": 0, "team": "SEA", "tier": 7, "xfp": 0}, {"bye": 9, "column_id": 3, "dif": 1.2, "fpts": 13.5, "name": "Jaylen Warren", "note": "", "position": "RB", "sort_order": 0, "team": "PIT", "tier": 7, "xfp": 12.3}, {"bye": 9, "column_id": 4, "dif": -0.7, "fpts": 11.2, "name": "Tony Pollard", "note": "OWNED", "position": "RB", "sort_order": 0, "team": "TEN", "tier": 7, "xfp": 11.9}, {"bye": 9, "column_id": 1, "dif": 0, "fpts": 0, "name": "Aaron Rodgers", "note": "", "position": "QB", "sort_order": 0, "team": "PIT", "tier": 7, "xfp": 0}, {"bye": 9, "column_id": 0, "dif": 0, "fpts": 0, "name": "Cam Ward", "note": "RB", "position": "QB", "sort_order": 0, "team": "TEN", "tier": 7, "xfp": 0}, {"bye": 7, "column_id": 5, "dif": 0.4, "fpts": 10.3, "name": "DJ Moore", "note": "", "position": "WR", "sort_order": 1, "team": "BUF", "tier": 7, "xfp": 9.9}, {"bye": 11, "column_id": 2, "dif": 0.6, "fpts": 11, "name": "Rhamondre Stevenson", "note": "", "position": "RB", "sort_order": 1, "team": "NE", "tier": 7, "xfp": 10.4}, {"bye": 14, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jacoby Brissett", "note": "WR", "position": "QB", "sort_order": 1, "team": "ARI", "tier": 7, "xfp": 0}, {"bye": 8, "column_id": 1, "dif": 0, "fpts": 0, "name": "Tyler Shough", "note": "RB", "position": "QB", "sort_order": 2, "team": "NO", "tier": 7, "xfp": 0}, {"bye": 14, "column_id": 8, "dif": 0, "fpts": 11.7, "name": "Jake Ferguson", "note": "", "position": "TE", "sort_order": 0, "team": "DAL", "tier": 8, "xfp": 11.7}, {"bye": 11, "column_id": 1, "dif": 0, "fpts": 0, "name": "Sam Darnold", "note": "RB", "position": "QB", "sort_order": 0, "team": "SEA", "tier": 8, "xfp": 0}, {"bye": 10, "column_id": 6, "dif": 3, "fpts": 12.2, "name": "Rome Odunze", "note": "", "position": "WR", "sort_order": 0, "team": "CHI", "tier": 8, "xfp": 15.1}, {"bye": 14, "column_id": 7, "dif": 1.8, "fpts": 10.5, "name": "Marvin Harrison Jr.", "note": "OWNED", "position": "WR", "sort_order": 0, "team": "ARI", "tier": 8, "xfp": 12.2}, {"bye": 9, "column_id": 5, "dif": 0, "fpts": 0, "name": "Carnell Tate", "note": "RB", "position": "WR", "sort_order": 0, "team": "TEN", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 3, "dif": 1, "fpts": 8.8, "name": "Chuba Hubbard", "note": "", "position": "RB", "sort_order": 0, "team": "CAR", "tier": 8, "xfp": 9.7}, {"bye": 9, "column_id": 4, "dif": 0.6, "fpts": 13.3, "name": "Rico Dowdle", "note": "", "position": "RB", "sort_order": 0, "team": "PIT", "tier": 8, "xfp": 12.7}, {"bye": 10, "column_id": 2, "dif": 1.9, "fpts": 12.7, "name": "RJ Harvey", "note": "", "position": "RB", "sort_order": 0, "team": "DEN", "tier": 8, "xfp": 10.8}, {"bye": 13, "column_id": 0, "dif": 0, "fpts": 0, "name": "Geno Smith", "note": "", "position": "QB", "sort_order": 0, "team": "NYJ", "tier": 8, "xfp": 0}, {"bye": 8, "column_id": 8, "dif": 4.2, "fpts": 15.4, "name": "George Kittle", "note": "", "position": "TE", "sort_order": 1, "team": "SF", "tier": 8, "xfp": 11.2}, {"bye": 13, "column_id": 6, "dif": 0.7, "fpts": 11, "name": "Alec Pierce", "note": "TE", "position": "WR", "sort_order": 1, "team": "IND", "tier": 8, "xfp": 11.7}, {"bye": 9, "column_id": 7, "dif": -0.2, "fpts": 12.5, "name": "DK Metcalf", "note": "", "position": "WR", "sort_order": 1, "team": "PIT", "tier": 8, "xfp": 12.7}, {"bye": 7, "column_id": 5, "dif": 2.1, "fpts": 10.1, "name": "Brian Thomas Jr.", "note": "", "position": "WR", "sort_order": 1, "team": "JAC", "tier": 8, "xfp": 12.1}, {"bye": 10, "column_id": 3, "dif": 0.3, "fpts": 8.7, "name": "Kyle Monangai", "note": "", "position": "RB", "sort_order": 1, "team": "CHI", "tier": 8, "xfp": 9}, {"bye": 10, "column_id": 4, "dif": 0.6, "fpts": 11.6, "name": "J.K. Dobbins", "note": "", "position": "RB", "sort_order": 1, "team": "DEN", "tier": 8, "xfp": 11}, {"bye": 11, "column_id": 2, "dif": 0.1, "fpts": 7.1, "name": "Blake Corum", "note": "", "position": "RB", "sort_order": 1, "team": "LAR", "tier": 8, "xfp": 7}, {"bye": 13, "column_id": 1, "dif": 0, "fpts": 0, "name": "Daniel Jones", "note": "TE", "position": "QB", "sort_order": 1, "team": "IND", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 0, "dif": 0, "fpts": 0, "name": "Bryce Young", "note": "", "position": "QB", "sort_order": 1, "team": "CAR", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 8, "dif": 1.1, "fpts": 11.7, "name": "Travis Kelce", "note": "", "position": "TE", "sort_order": 2, "team": "KC", "tier": 8, "xfp": 10.6}, {"bye": 8, "column_id": 1, "dif": 0, "fpts": 0, "name": "C.J. Stroud", "note": "", "position": "QB", "sort_order": 2, "team": "HOU", "tier": 8, "xfp": 0}, {"bye": 10, "column_id": 6, "dif": -0.9, "fpts": 13.5, "name": "Courtland Sutton", "note": "", "position": "WR", "sort_order": 2, "team": "DEN", "tier": 8, "xfp": 14.4}, {"bye": 10, "column_id": 7, "dif": 0.1, "fpts": 9.9, "name": "Chris Godwin Jr.", "note": "QB", "position": "WR", "sort_order": 2, "team": "TB", "tier": 8, "xfp": 9.8}, {"bye": 7, "column_id": 5, "dif": 0.7, "fpts": 10.2, "name": "Parker Washington", "note": "", "position": "WR", "sort_order": 2, "team": "JAC", "tier": 8, "xfp": 10.9}, {"bye": 10, "column_id": 3, "dif": 0.7, "fpts": 12.6, "name": "Kenny Gainwell", "note": "QB", "position": "RB", "sort_order": 2, "team": "TB", "tier": 8, "xfp": 11.8}, {"bye": 7, "column_id": 4, "dif": 0.6, "fpts": 8.6, "name": "Rachaad White", "note": "", "position": "RB", "sort_order": 2, "team": "WAS", "tier": 8, "xfp": 9.1}, {"bye": 6, "column_id": 2, "dif": 1, "fpts": 10, "name": "Aaron Jones Sr.", "note": "", "position": "RB", "sort_order": 2, "team": "MIN", "tier": 8, "xfp": 10.9}, {"bye": 11, "column_id": 0, "dif": 0, "fpts": 0, "name": "Tua Tagovailoa", "note": "TE", "position": "QB", "sort_order": 2, "team": "ATL", "tier": 8, "xfp": 0}, {"bye": 7, "column_id": 8, "dif": 3.3, "fpts": 10.8, "name": "Dalton Kincaid", "note": "", "position": "TE", "sort_order": 3, "team": "BUF", "tier": 8, "xfp": 7.5}, {"bye": 8, "column_id": 6, "dif": 0, "fpts": 0, "name": "Jordyn Tyson", "note": "RB", "position": "WR", "sort_order": 3, "team": "NO", "tier": 8, "xfp": 0}, {"bye": 9, "column_id": 7, "dif": 1.1, "fpts": 12.3, "name": "Michael Pittman Jr.", "note": "", "position": "WR", "sort_order": 3, "team": "PIT", "tier": 8, "xfp": 11.2}, {"bye": 14, "column_id": 5, "dif": -1, "fpts": 12.5, "name": "Michael Wilson", "note": "WR", "position": "WR", "sort_order": 3, "team": "ARI", "tier": 8, "xfp": 13.5}, {"bye": 5, "column_id": 3, "dif": 0, "fpts": 0, "name": "Jonathon Brooks", "note": "", "position": "RB", "sort_order": 3, "team": "CAR", "tier": 8, "xfp": 0}, {"bye": 7, "column_id": 4, "dif": 1.2, "fpts": 8.7, "name": "Jacory Croskey-Merritt", "note": "", "position": "RB", "sort_order": 3, "team": "WAS", "tier": 8, "xfp": 7.5}, {"bye": 6, "column_id": 2, "dif": 0.6, "fpts": 8, "name": "Jordan Mason", "note": "", "position": "RB", "sort_order": 3, "team": "MIN", "tier": 8, "xfp": 7.4}, {"bye": 8, "column_id": 8, "dif": 0.3, "fpts": 4.4, "name": "Isaiah Likely", "note": "", "position": "TE", "sort_order": 4, "team": "NYG", "tier": 8, "xfp": 4.7}, {"bye": 7, "column_id": 6, "dif": 1.9, "fpts": 12.3, "name": "Quentin Johnston", "note": "", "position": "WR", "sort_order": 4, "team": "LAC", "tier": 8, "xfp": 10.4}, {"bye": 8, "column_id": 7, "dif": 3, "fpts": 9.8, "name": "Ricky Pearsall", "note": "", "position": "WR", "sort_order": 4, "team": "SF", "tier": 8, "xfp": 12.9}, {"bye": 10, "column_id": 5, "dif": 0, "fpts": 0, "name": "Makai Lemon", "note": "", "position": "WR", "sort_order": 4, "team": "PHI", "tier": 8, "xfp": 0}, {"bye": 8, "column_id": 3, "dif": 0, "fpts": 9.5, "name": "Tyrone Tracy Jr.", "note": "", "position": "RB", "sort_order": 4, "team": "NYG", "tier": 8, "xfp": 9.5}, {"bye": 7, "column_id": 4, "dif": 0.6, "fpts": 6.4, "name": "Chris Rodriguez Jr.", "note": "", "position": "RB", "sort_order": 4, "team": "JAC", "tier": 8, "xfp": 5.8}, {"bye": 14, "column_id": 2, "dif": 0.4, "fpts": 7.5, "name": "Tyler Allgeier", "note": "WR", "position": "RB", "sort_order": 4, "team": "ARI", "tier": 8, "xfp": 7.1}, {"bye": 13, "column_id": 8, "dif": 0.5, "fpts": 8, "name": "Mark Andrews", "note": "WR", "position": "TE", "sort_order": 5, "team": "BAL", "tier": 8, "xfp": 8.5}, {"bye": 7, "column_id": 6, "dif": 0.4, "fpts": 11.2, "name": "Jakobi Meyers", "note": "", "position": "WR", "sort_order": 5, "team": "JAC", "tier": 8, "xfp": 11.5}, {"bye": 6, "column_id": 7, "dif": 0.6, "fpts": 10.3, "name": "Jordan Addison", "note": "", "position": "WR", "sort_order": 5, "team": "MIN", "tier": 8, "xfp": 9.7}, {"bye": 9, "column_id": 5, "dif": -0.8, "fpts": 13.6, "name": "WanDale Robinson", "note": "RB", "position": "WR", "sort_order": 5, "team": "TEN", "tier": 8, "xfp": 14.4}, {"bye": 8, "column_id": 3, "dif": -2.1, "fpts": 9.2, "name": "Woody Marks", "note": "", "position": "RB", "sort_order": 5, "team": "HOU", "tier": 8, "xfp": 11.4}, {"bye": 11, "column_id": 4, "dif": 0.4, "fpts": 10.7, "name": "Zach Charbonnet", "note": "RB", "position": "RB", "sort_order": 5, "team": "SEA", "tier": 8, "xfp": 10.3}, {"bye": 11, "column_id": 2, "dif": 0.3, "fpts": 5.9, "name": "Dylan Sampson", "note": "RB", "position": "RB", "sort_order": 5, "team": "CLE", "tier": 8, "xfp": 5.5}, {"bye": 7, "column_id": 8, "dif": 0.1, "fpts": 7.6, "name": "Chig Okonkwo", "note": "", "position": "TE", "sort_order": 6, "team": "WAS", "tier": 8, "xfp": 7.7}, {"bye": 13, "column_id": 6, "dif": 0.8, "fpts": 8.5, "name": "Josh Downs", "note": "TE", "position": "WR", "sort_order": 6, "team": "IND", "tier": 8, "xfp": 9.3}, {"bye": 11, "column_id": 7, "dif": 1.7, "fpts": 8.1, "name": "Jayden Reed", "note": "QB", "position": "WR", "sort_order": 6, "team": "GB", "tier": 8, "xfp": 6.3}, {"bye": 5, "column_id": 5, "dif": 2.8, "fpts": 7.9, "name": "Xavier Worthy", "note": "", "position": "WR", "sort_order": 6, "team": "KC", "tier": 8, "xfp": 10.7}, {"bye": 9, "column_id": 3, "dif": 0.3, "fpts": 8.5, "name": "Tyjae Spears", "note": "OWNED", "position": "RB", "sort_order": 6, "team": "TEN", "tier": 8, "xfp": 8.8}, {"bye": 14, "column_id": 4, "dif": -1.9, "fpts": 11.1, "name": "James Conner", "note": "WR", "position": "RB", "sort_order": 6, "team": "ARI", "tier": 8, "xfp": 13}, {"bye": 8, "column_id": 8, "dif": 0.3, "fpts": 10.4, "name": "Dalton Schultz", "note": "", "position": "TE", "sort_order": 7, "team": "HOU", "tier": 8, "xfp": 10.7}, {"bye": 8, "column_id": 4, "dif": -2.6, "fpts": 9.3, "name": "Alvin Kamara", "note": "RB", "position": "RB", "sort_order": 7, "team": "NO", "tier": 8, "xfp": 12}, {"bye": 8, "column_id": 6, "dif": 0.4, "fpts": 7.5, "name": "Jayden Higgins", "note": "", "position": "WR", "sort_order": 7, "team": "HOU", "tier": 8, "xfp": 7.1}, {"bye": 7, "column_id": 7, "dif": 1.1, "fpts": 10.5, "name": "Khalil Shakir", "note": "", "position": "WR", "sort_order": 7, "team": "BUF", "tier": 8, "xfp": 9.3}, {"bye": 11, "column_id": 5, "dif": 0.7, "fpts": 10.2, "name": "Romeo Doubs", "note": "", "position": "WR", "sort_order": 7, "team": "NE", "tier": 8, "xfp": 10.9}, {"bye": 7, "column_id": 3, "dif": 0.5, "fpts": 4.6, "name": "Keaton Mitchell", "note": "", "position": "RB", "sort_order": 7, "team": "LAC", "tier": 8, "xfp": 4.1}, {"bye": 10, "column_id": 3, "dif": 0, "fpts": 0, "name": "Jonathan Coleman", "note": "", "position": "RB", "sort_order": 8, "team": "DEN", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 6, "dif": 1.8, "fpts": 7.3, "name": "Jalen Coker", "note": "", "position": "WR", "sort_order": 8, "team": "CAR", "tier": 8, "xfp": 5.5}, {"bye": 11, "column_id": 7, "dif": 0.4, "fpts": 5.2, "name": "Matthew Golden", "note": "QB", "position": "WR", "sort_order": 8, "team": "GB", "tier": 8, "xfp": 5.7}, {"bye": 11, "column_id": 5, "dif": 0, "fpts": 0, "name": "KC Concepcion", "note": "RB", "position": "WR", "sort_order": 8, "team": "CLE", "tier": 8, "xfp": 0}, {"bye": 11, "column_id": 6, "dif": 0.9, "fpts": 8.5, "name": "Rashid Shaheed", "note": "RB", "position": "WR", "sort_order": 9, "team": "SEA", "tier": 8, "xfp": 9.3}, {"bye": 9, "column_id": 3, "dif": 0, "fpts": 0, "name": "Nic Singleton", "note": "OWNED", "position": "WR", "sort_order": 10, "team": "DEN", "tier": 8, "xfp": 9.3}];
         let selectedComparePlayers = [];
 
         document.addEventListener('DOMContentLoaded', () => {

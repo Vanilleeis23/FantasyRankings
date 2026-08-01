@@ -2000,5 +2000,18 @@
     "team": "SEA",
     "tier": 8,
     "xfp": 9.3
+  },
+    {
+    "bye":9,
+    "column_id": 3,
+    "dif": 0,
+    "fpts": 0,
+    "name": "Nic Singleton",
+    "note": "",
+    "position": "WR",
+    "sort_order": 10,
+    "team": "DEN",
+    "tier": 8,
+    "xfp": 9.3
   }
 ]
