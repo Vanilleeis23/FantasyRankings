@@ -20,14 +20,38 @@ def generate_html():
     with open('players.json', 'r', encoding='utf-8') as f:
         players = json.load(f)
 
-    print("--- RBs mit fpts oder xfp == 0 ---")
+    # dynasty.json laden und auswerten
+    dynasty_players = []
+    if os.path.exists('dynasty.json'):
+        try:
+            with open('dynasty.json', 'r', encoding='utf-8') as f:
+                dynasty_players = json.load(f)
+        except Exception as e:
+            print(f"Hinweis: 'dynasty.json' konnte nicht geladen werden ({e}).")
+    
+    # Sets für die schnelle Abfrage erstellen
+    owned_names = {p.get('name') for p in dynasty_players if p.get('name')}
+    # Kombinierter Schlüssel aus (Team, Position) für vorhandene Positionen im Team
+    teams_owned = {(p.get('team')) for p in dynasty_players if p.get('team')}
+    team_positions_owned = {(p.get('team'), p.get('position')) for p in dynasty_players if p.get('team') and p.get('position')}
+    print(teams_owned)
+    print(team_positions_owned)
+    dict_team_positions_owned = {team: pos for team, pos in team_positions_owned}
+
+    # Zuweisung der Noten basierend auf der Dynasty-Logik
     for player in players:
-        if player.get('position') == 'TE':
-            fpts = player.get('fpts', 0)
-            xfp = player.get('xfp', 0)
-            
-            if fpts == 0 or xfp == 0:
-                print(f"Spieler: {player.get('name')} ({player.get('team')}) | fpts: {fpts} | xfp: {xfp}")
+        p_name = player.get('name')
+        p_team = player.get('team')
+        p_pos = player.get('position')
+        
+        if p_name in owned_names:
+            player['note'] = 'OWNED'
+        elif (p_team) in teams_owned:
+            # Setzt die Note auf z.B. 'RB', 'WR', 'TE' oder 'QB'
+            # Prüfen, ob das Team in den erlaubten Teams ist UND die Kombi (Team, Position) existiert
+            # Setze die Note auf die Position, die für dieses TEAM in Dynasty existiert
+            player['note'] = dict_team_positions_owned [p_team]
+
     print("---------------------------------------")
 
     with open('teams.json', 'r', encoding='utf-8') as f:
@@ -38,10 +62,15 @@ def generate_html():
     tiers_data = {t: {c: [] for c in range(9)} for t in range(1, 9)}
 
     columns_config = [
-        (0, 'QB', 0, '#2ecc71'), (1, 'QB', 1, '#2ecc71'),
-        (2, 'RB', 0, '#e74c3c'), (3, 'RB', 1, '#e74c3c'), (4, 'RB', 2, '#e74c3c'),
-        (5, 'WR', 0, '#3498db'), (6, 'WR', 1, '#3498db'), (7, 'WR', 2, '#3498db'),
-        (8, 'TE', 0, '#9b59b6')
+        (0, 'QB', 0, '#f1c40f', '#fef9e7'), 
+        (1, 'QB', 1, '#f1c40f', '#fef9e7'),
+        (2, 'RB', 0, '#2ecc71', '#e8f8f5'), 
+        (3, 'RB', 1, '#2ecc71', '#e8f8f5'), 
+        (4, 'RB', 2, '#2ecc71', '#e8f8f5'),
+        (5, 'WR', 0, '#e67e22', '#fdf2e9'), 
+        (6, 'WR', 1, '#e67e22', '#fdf2e9'), 
+        (7, 'WR', 2, '#e67e22', '#fdf2e9'),
+        (8, 'TE', 0, '#e74c3c', '#fce4d6')
     ]
     
     def get_column_id(pos, current_count):
@@ -94,6 +123,24 @@ def generate_html():
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }}
+        .search-container {{
+            flex-grow: 1;
+            margin-right: 20px;
+            margin-left: 20px;
+            max-width: 300px;
+        }}
+        .search-input {{
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 0.9em;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.2s;
+        }}
+        .search-input:focus {{
+            border-color: #2563eb;
+        }}
         .top-bar-actions {{
             display: flex;
             gap: 10px;
@@ -134,12 +181,12 @@ def generate_html():
         .position-header-cell {{
             font-size: 1.1em; font-weight: bold; text-align: center; color: #fff;
             padding: 8px 2px; border-radius: 6px; text-transform: uppercase;
-            letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.06); margin-bottom: 8px;
+            letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.06); margin-bottom: 0;
         }}
         .tier-row-header {{
             grid-column: span 9; background: #2c3e50; color: #fff; font-size: 0.75em;
             font-weight: bold; text-align: center; padding: 5px 12px; border-radius: 4px;
-            margin-top: 10px; margin-bottom: 4px; letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 0; margin-bottom: 4px; letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }}
         .player-list-box {{
             background-color: #e2e8f0; border-radius: 6px; padding: 4px; min-height: 60px;
@@ -165,9 +212,13 @@ def generate_html():
         .player-card.status-green {{ background-color: #dcfce7 !important; }}
 
         .player-card.drafted {{
-            opacity: 0.35;
-            filter: grayscale(90%);
+            opacity: 0.25;
+            filter: grayscale(95%);
             background-color: #e2e8f0 !important;
+        }}
+        .player-card.search-hidden {{
+            opacity: 0.15;
+            filter: blur(0.5px) grayscale(50%);
         }}
         .player-card.dragging {{ opacity: 0.4; background: #94a3b8; }}
         .card-summary {{ display: flex; align-items: center; padding: 5px 6px; cursor: grab; user-select: none; gap: 4px; }}
@@ -308,9 +359,12 @@ def generate_html():
 <body>
     <div class="top-bar">
         <h1>Fantasy Football Board</h1>
+        <div class="search-container">
+            <input type="text" class="search-input" id="board-search" placeholder="Search" oninput="filterPlayers(this.value)">
+        </div>
         <div class="top-bar-actions">
-            <button class="compare-btn" onclick="openComparePopup()">Spieler vergleichen (<span id="compare-count">0</span>)</button>
-            <button class="save-btn" onclick="handleSave()">Layout speichern</button>
+            <button class="compare-btn" onclick="openComparePopup()">Compare (<span id="compare-count">0</span>)</button>
+            <button class="save-btn" onclick="handleSave()">Save Layout</button>
         </div>
     </div>
     
@@ -318,17 +372,17 @@ def generate_html():
     """
 
     html_content += """
-        <div class="position-header-cell" style="background-color: #2ecc71; grid-column: span 2;">QB</div>
-        <div class="position-header-cell" style="background-color: #e74c3c; grid-column: span 3;">RB</div>
-        <div class="position-header-cell" style="background-color: #3498db; grid-column: span 3;">WR</div>
-        <div class="position-header-cell" style="background-color: #9b59b6; grid-column: span 1;">TE</div>
+        <div class="position-header-cell" style="background-color: #f1c40f; grid-column: span 2;">QB</div>
+        <div class="position-header-cell" style="background-color: #2ecc71; grid-column: span 3;">RB</div>
+        <div class="position-header-cell" style="background-color: #e67e22; grid-column: span 3;">WR</div>
+        <div class="position-header-cell" style="background-color: #e74c3c; grid-column: span 1;">TE</div>
     """
 
     for tier_num in range(1, 9):
         html_content += f'<div class="tier-row-header">TIER {tier_num}</div>'
         
-        for col_id, pos_name, sub_idx, color in columns_config:
-            html_content += f'<ul class="player-list-box" data-tier="{tier_num}" data-column="{col_id}">'
+        for col_id, pos_name, sub_idx, color, col_bg in columns_config:
+            html_content += f'<ul class="player-list-box" data-tier="{tier_num}" data-column="{col_id}" style="background-color: {col_bg};">'
             
             tier_players = tiers_data[tier_num][col_id]
             for player in tier_players:
@@ -392,7 +446,8 @@ def generate_html():
                             <option value="OWNED" {"selected" if current_note == "OWNED" else ""}>OWNED</option>
                             <option value="QB" {"selected" if current_note == "QB" else ""}>QB vorhanden</option>
                             <option value="RB" {"selected" if current_note == "RB" else ""}>RB vorhanden</option>
-                            <option value="WR/TE" {"selected" if current_note == "WR/TE" else ""}>WR/TE vorhanden</option>
+                            <option value="WR" {"selected" if current_note == "WR" else ""}>WR vorhanden</option>
+                            <option value="TE" {"selected" if current_note == "TE" else ""}>TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -428,15 +483,15 @@ def generate_html():
                 return;
             }}
             
-            // Logik für ROT
-            if (pos === 'RB' && (value === 'QB' || value === 'WR/TE')) {{
+            // Logik für ROT: Wenn gegnerischer Spielertyp vorhanden
+            if (pos === 'RB' && (value === 'QB' || value === 'WR' || value === 'TE')) {{
                 card.classList.add('status-red');
             }} else if ((pos === 'QB' || pos === 'WR' || pos === 'TE') && value === 'RB') {{
                 card.classList.add('status-red');
             }}
             
             // Logik für GRÜN
-            if (pos === 'QB' && value === 'WR/TE') {{
+            if (pos === 'QB' && (value === 'WR' || value === 'TE')) {{
                 card.classList.add('status-green');
             }} else if ((pos === 'WR' || pos === 'TE') && value === 'QB') {{
                 card.classList.add('status-green');
@@ -446,12 +501,31 @@ def generate_html():
         function toggleDrafted(checkbox) {{
             const card = checkbox.closest('.player-card');
             if (card) {{
+                const noteSelect = card.querySelector('.note-select');
                 if (checkbox.checked) {{
                     card.classList.add('drafted');
+                    card.setAttribute('draggable', 'false');
+                    if (noteSelect) noteSelect.disabled = true; // Nicht mehr beschreibbar
                 }} else {{
                     card.classList.remove('drafted');
+                    card.setAttribute('draggable', 'true');
+                    if (noteSelect) noteSelect.disabled = false; // Wieder beschreibbar
                 }}
             }}
+        }}
+
+        function filterPlayers(query) {{
+            const cleanQuery = query.toLowerCase().trim();
+            const cards = document.querySelectorAll('.player-card');
+            
+            cards.forEach(card => {{
+                const pName = card.getAttribute('data-id').toLowerCase();
+                if (cleanQuery === "" || pName.includes(cleanQuery)) {{
+                    card.classList.remove('search-hidden');
+                }} else {{
+                    card.classList.add('search-hidden');
+                }}
+            }});
         }}
 
         function toggleCompare(checkbox, cardId) {{
@@ -515,9 +589,11 @@ def generate_html():
             const grid = document.querySelector('.board-grid');
 
             grid.addEventListener('dragstart', (e) => {{
-                if (e.target.classList.contains('player-card')) {{
+                if (e.target.classList.contains('player-card') && e.target.getAttribute('draggable') !== 'false') {{
                     e.target.classList.add('dragging');
                     e.dataTransfer.setData('text/plain', '');
+                }} else if (e.target.getAttribute('draggable') === 'false') {{
+                    e.preventDefault(); // Verhindert Dragging, wenn gedraftet
                 }}
             }});
 

@@ -22,6 +22,24 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
+        .search-container {
+            flex-grow: 1;
+            margin-right: 20px;
+            margin-left: 20px;
+            max-width: 300px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 0.9em;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-input:focus {
+            border-color: #2563eb;
+        }
         .top-bar-actions {
             display: flex;
             gap: 10px;
@@ -93,9 +111,13 @@
         .player-card.status-green { background-color: #dcfce7 !important; }
 
         .player-card.drafted {
-            opacity: 0.35;
-            filter: grayscale(90%);
+            opacity: 0.25;
+            filter: grayscale(95%);
             background-color: #e2e8f0 !important;
+        }
+        .player-card.search-hidden {
+            opacity: 0.15;
+            filter: blur(0.5px) grayscale(50%);
         }
         .player-card.dragging { opacity: 0.4; background: #94a3b8; }
         .card-summary { display: flex; align-items: center; padding: 5px 6px; cursor: grab; user-select: none; gap: 4px; }
@@ -236,6 +258,9 @@
 <body>
     <div class="top-bar">
         <h1>Fantasy Football Board</h1>
+        <div class="search-container">
+            <input type="text" class="search-input" id="board-search" placeholder="Spieler suchen (Auto-Complete)..." oninput="filterPlayers(this.value)">
+        </div>
         <div class="top-bar-actions">
             <button class="compare-btn" onclick="openComparePopup()">Spieler vergleichen (<span id="compare-count">0</span>)</button>
             <button class="save-btn" onclick="handleSave()">Layout speichern</button>
@@ -288,11 +313,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Bijan_Robinson')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" selected>TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -337,11 +363,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Jonathan_Taylor')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" selected>TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -386,11 +413,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Jahmyr_Gibbs')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -439,7 +467,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -488,7 +517,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -534,10 +564,11 @@
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
                             <option value="" >Free</option>
-                            <option value="OWNED" >OWNED</option>
+                            <option value="OWNED" selected>OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -586,7 +617,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -635,7 +667,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -680,11 +713,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Jaxon_Smith-Njigba')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -733,7 +767,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -782,7 +817,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -827,11 +863,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Lamar_Jackson')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -876,11 +913,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'DeVon_Achane')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
-                            <option value="QB" >QB vorhanden</option>
+                            <option value="QB" selected>QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -929,7 +967,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -978,7 +1017,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1027,7 +1067,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1072,11 +1113,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Drake_London')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" selected>TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1125,7 +1167,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1174,7 +1217,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1223,7 +1267,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1272,7 +1317,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1317,11 +1363,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Trey_McBride')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1370,7 +1417,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1419,7 +1467,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1468,7 +1517,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1517,7 +1567,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1562,11 +1613,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Derrick_Henry')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1615,7 +1667,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1664,7 +1717,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1713,7 +1767,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1758,11 +1813,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Jeremiyah_Love')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1807,11 +1863,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Chris_Olave')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1860,7 +1917,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1909,7 +1967,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -1958,7 +2017,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2007,7 +2067,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2056,7 +2117,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2101,11 +2163,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Jordan_Love')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
-                            <option value="OWNED" >OWNED</option>
+                            <option value="" >Free</option>
+                            <option value="OWNED" selected>OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2154,7 +2217,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2203,7 +2267,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2248,11 +2313,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Josh_Jacobs')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
-                            <option value="QB" >QB vorhanden</option>
+                            <option value="QB" selected>QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2301,7 +2367,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2350,7 +2417,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2399,7 +2467,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2444,11 +2513,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Zay_Flowers')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
-                            <option value="OWNED" >OWNED</option>
+                            <option value="" >Free</option>
+                            <option value="OWNED" selected>OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2497,7 +2567,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2546,7 +2617,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2595,7 +2667,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2644,7 +2717,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2689,11 +2763,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Malik_Willis')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
-                            <option value="OWNED" >OWNED</option>
+                            <option value="" >Free</option>
+                            <option value="OWNED" selected>OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2738,11 +2813,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Baker_Mayfield')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
-                            <option value="OWNED" >OWNED</option>
+                            <option value="" >Free</option>
+                            <option value="OWNED" selected>OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2787,11 +2863,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Bucky_Irving')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
-                            <option value="QB" >QB vorhanden</option>
+                            <option value="QB" selected>QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2836,11 +2913,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Travis_Etienne_Jr_')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2885,11 +2963,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Quinshon_Judkins')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
-                            <option value="OWNED" >OWNED</option>
+                            <option value="" >Free</option>
+                            <option value="OWNED" selected>OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2938,7 +3017,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -2987,7 +3067,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3036,7 +3117,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3085,7 +3167,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3130,11 +3213,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Emeka_Egbuka')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
-                            <option value="QB" >QB vorhanden</option>
+                            <option value="QB" selected>QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3179,11 +3263,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Tyler_Warren')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
-                            <option value="OWNED" >OWNED</option>
+                            <option value="" >Free</option>
+                            <option value="OWNED" selected>OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3232,7 +3317,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3277,11 +3363,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Kyle_Pitts_Sr_')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
-                            <option value="OWNED" >OWNED</option>
+                            <option value="" >Free</option>
+                            <option value="OWNED" selected>OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3326,11 +3413,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Tucker_Kraft')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
-                            <option value="QB" >QB vorhanden</option>
+                            <option value="QB" selected>QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3379,7 +3467,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3428,7 +3517,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3473,11 +3563,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Jared_Goff')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3526,7 +3617,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3575,7 +3667,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3624,7 +3717,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3673,7 +3767,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3722,7 +3817,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3771,7 +3867,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3820,7 +3917,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3869,7 +3967,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3918,7 +4017,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -3963,11 +4063,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Sam_LaPorta')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4012,11 +4113,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Harold_Fannin_Jr_')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4061,11 +4163,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Cam_Ward')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4114,7 +4217,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4159,11 +4263,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Jacoby_Brissett')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4208,11 +4313,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Tyler_Shough')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4257,11 +4363,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Jadarian_Price')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
-                            <option value="OWNED" >OWNED</option>
+                            <option value="" >Free</option>
+                            <option value="OWNED" selected>OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4310,7 +4417,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4359,7 +4467,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4404,11 +4513,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Tony_Pollard')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
-                            <option value="OWNED" >OWNED</option>
+                            <option value="" >Free</option>
+                            <option value="OWNED" selected>OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4457,7 +4567,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4506,7 +4617,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4551,11 +4663,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Jameson_Williams')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4600,11 +4713,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Christian_Watson')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
-                            <option value="QB" >QB vorhanden</option>
+                            <option value="QB" selected>QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4653,7 +4767,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4702,7 +4817,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4747,11 +4863,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Tua_Tagovailoa')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" selected>TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4796,11 +4913,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Sam_Darnold')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4845,11 +4963,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Daniel_Jones')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" selected>TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4898,7 +5017,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4947,7 +5067,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -4996,7 +5117,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5045,7 +5167,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5094,7 +5217,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5139,11 +5263,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Tyler_Allgeier')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5188,11 +5313,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Dylan_Sampson')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5241,7 +5367,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5290,7 +5417,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5335,11 +5463,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Kenny_Gainwell')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
-                            <option value="QB" >QB vorhanden</option>
+                            <option value="QB" selected>QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5388,7 +5517,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5437,7 +5567,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5486,7 +5617,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5531,11 +5663,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Tyjae_Spears')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
-                            <option value="OWNED" >OWNED</option>
+                            <option value="" >Free</option>
+                            <option value="OWNED" selected>OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5584,7 +5717,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5633,7 +5767,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5682,7 +5817,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5731,7 +5867,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5780,7 +5917,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5829,7 +5967,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5878,7 +6017,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5923,11 +6063,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Zach_Charbonnet')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -5972,11 +6113,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'James_Conner')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6021,11 +6163,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Alvin_Kamara')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6070,11 +6213,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Carnell_Tate')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6123,7 +6267,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6172,7 +6317,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6217,11 +6363,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Michael_Wilson')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6270,7 +6417,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6315,11 +6463,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'WanDale_Robinson')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6368,7 +6517,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6417,7 +6567,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6462,11 +6613,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'KC_Concepcion')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6515,7 +6667,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6560,11 +6713,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Alec_Pierce')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" selected>TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6613,7 +6767,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6658,11 +6813,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Jordyn_Tyson')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6711,7 +6867,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6760,7 +6917,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6805,11 +6963,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Josh_Downs')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" selected>TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6858,7 +7017,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6907,7 +7067,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -6952,11 +7113,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Rashid_Shaheed')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
-                            <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="RB" selected>RB vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7001,11 +7163,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Marvin_Harrison_Jr_')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7054,7 +7217,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7099,11 +7263,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Chris_Godwin_Jr_')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
-                            <option value="QB" >QB vorhanden</option>
+                            <option value="QB" selected>QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7152,7 +7317,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7201,7 +7367,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7250,7 +7417,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7295,11 +7463,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Jayden_Reed')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
-                            <option value="QB" >QB vorhanden</option>
+                            <option value="QB" selected>QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7348,7 +7517,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7393,11 +7563,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Matthew_Golden')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
-                            <option value="QB" >QB vorhanden</option>
+                            <option value="QB" selected>QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7446,7 +7617,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7495,7 +7667,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7544,7 +7717,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7593,7 +7767,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7642,7 +7817,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7687,11 +7863,12 @@
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, 'Mark_Andrews')"> Compare
                         </label>
                         <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" selected>Free</option>
+                            <option value="" >Free</option>
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" selected>WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7740,7 +7917,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7789,7 +7967,8 @@
                             <option value="OWNED" >OWNED</option>
                             <option value="QB" >QB vorhanden</option>
                             <option value="RB" >RB vorhanden</option>
-                            <option value="WR/TE" >WR/TE vorhanden</option>
+                            <option value="WR" >WR vorhanden</option>
+                            <option value="TE" >TE vorhanden</option>
                         </select>
                     </div>
                 </div>
@@ -7798,7 +7977,7 @@
     </div>
 
     <script>
-        const originalPlayers = [{"bye": 11, "column_id": 2, "dif": 3.8, "fpts": 22.8, "name": "Bijan Robinson", "note": "", "position": "RB", "sort_order": 0, "team": "ATL", "tier": 1, "xfp": 19}, {"bye": 6, "column_id": 3, "dif": 4.9, "fpts": 21.7, "name": "Jahmyr Gibbs", "note": "", "position": "RB", "sort_order": 0, "team": "DET", "tier": 1, "xfp": 16.9}, {"bye": 6, "column_id": 5, "dif": -0.9, "fpts": 19.4, "name": "JaMarr Chase", "note": "", "position": "WR", "sort_order": 0, "team": "CIN", "tier": 1, "xfp": 20.3}, {"bye": 11, "column_id": 6, "dif": 5.6, "fpts": 23.3, "name": "Puka Nacua", "note": "", "position": "WR", "sort_order": 0, "team": "LAR", "tier": 1, "xfp": 17.8}, {"bye": 11, "column_id": 7, "dif": 3.9, "fpts": 21.7, "name": "Jaxon Smith-Njigba", "note": "", "position": "WR", "sort_order": 0, "team": "SEA", "tier": 1, "xfp": 17.7}, {"bye": 8, "column_id": 4, "dif": 0.9, "fpts": 25.3, "name": "Christian McCaffrey", "note": "", "position": "RB", "sort_order": 0, "team": "SF", "tier": 1, "xfp": 24.4}, {"bye": 6, "column_id": 5, "dif": 0.3, "fpts": 18.7, "name": "Amon-Ra St. Brown", "note": "Owned", "position": "WR", "sort_order": 1, "team": "DET", "tier": 1, "xfp": 18.3}, {"bye": 13, "column_id": 2, "dif": 3.9, "fpts": 22.2, "name": "Jonathan Taylor", "note": "", "position": "RB", "sort_order": 1, "team": "IND", "tier": 1, "xfp": 18.4}, {"bye": 14, "column_id": 6, "dif": -2.8, "fpts": 15.3, "name": "CeeDee Lamb", "note": "", "position": "WR", "sort_order": 1, "team": "DAL", "tier": 1, "xfp": 18.1}, {"bye": 6, "column_id": 7, "dif": 3.5, "fpts": 11.4, "name": "Justin Jefferson", "note": "", "position": "WR", "sort_order": 1, "team": "MIN", "tier": 1, "xfp": 15}, {"bye": 7, "column_id": 4, "dif": 3.3, "fpts": 19, "name": "James Cook III", "note": "", "position": "RB", "sort_order": 0, "team": "BUF", "tier": 2, "xfp": 15.7}, {"bye": 13, "column_id": 8, "dif": 1.4, "fpts": 14.5, "name": "Brock Bowers", "note": "", "position": "TE", "sort_order": 0, "team": "LV", "tier": 2, "xfp": 13.1}, {"bye": 7, "column_id": 0, "dif": 0, "fpts": 0, "name": "Josh Allen", "note": "", "position": "QB", "sort_order": 0, "team": "BUF", "tier": 2, "xfp": 0}, {"bye": 13, "column_id": 1, "dif": 0, "fpts": 0, "name": "Lamar Jackson", "note": "", "position": "QB", "sort_order": 0, "team": "BAL", "tier": 2, "xfp": 0}, {"bye": 11, "column_id": 5, "dif": 0.1, "fpts": 16.6, "name": "Drake London", "note": "", "position": "WR", "sort_order": 0, "team": "ATL", "tier": 2, "xfp": 16.6}, {"bye": 6, "column_id": 2, "dif": 3.5, "fpts": 20.2, "name": "DeVon Achane", "note": "", "position": "RB", "sort_order": 0, "team": "MIA", "tier": 2, "xfp": 16.7}, {"bye": 6, "column_id": 3, "dif": -0.3, "fpts": 16.4, "name": "Chase Brown", "note": "", "position": "RB", "sort_order": 0, "team": "CIN", "tier": 2, "xfp": 16.6}, {"bye": 11, "column_id": 6, "dif": -0.1, "fpts": 14.7, "name": "A.J. Brown", "note": "", "position": "WR", "sort_order": 0, "team": "NE", "tier": 2, "xfp": 14.8}, {"bye": 8, "column_id": 7, "dif": -0.8, "fpts": 15, "name": "Nico Collins", "note": "", "position": "WR", "sort_order": 0, "team": "HOU", "tier": 2, "xfp": 15.8}, {"bye": 13, "column_id": 3, "dif": -0.5, "fpts": 14.6, "name": "Ashton Jeanty", "note": "", "position": "RB", "sort_order": 1, "team": "LV", "tier": 2, "xfp": 15.1}, {"bye": 14, "column_id": 8, "dif": 0.9, "fpts": 18.9, "name": "Trey McBride", "note": "", "position": "TE", "sort_order": 1, "team": "ARI", "tier": 2, "xfp": 18}, {"bye": 14, "column_id": 5, "dif": 1.7, "fpts": 18, "name": "George Pickens", "note": "", "position": "WR", "sort_order": 1, "team": "DAL", "tier": 2, "xfp": 16.3}, {"bye": 7, "column_id": 0, "dif": 0, "fpts": 0, "name": "Jayden Daniels", "note": "", "position": "QB", "sort_order": 0, "team": "WAS", "tier": 3, "xfp": 0}, {"bye": 10, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jalen Hurts", "note": "", "position": "QB", "sort_order": 0, "team": "PHI", "tier": 3, "xfp": 0}, {"bye": 7, "column_id": 4, "dif": 0.8, "fpts": 14.9, "name": "Omarion Hampton", "note": "", "position": "RB", "sort_order": 0, "team": "LAC", "tier": 3, "xfp": 14.1}, {"bye": 13, "column_id": 2, "dif": 2.9, "fpts": 16.9, "name": "Derrick Henry", "note": "", "position": "RB", "sort_order": 0, "team": "BAL", "tier": 3, "xfp": 14}, {"bye": 5, "column_id": 3, "dif": 0.2, "fpts": 10.9, "name": "Kenneth Walker III", "note": "", "position": "RB", "sort_order": 0, "team": "KC", "tier": 3, "xfp": 10.6}, {"bye": 5, "column_id": 6, "dif": 0.1, "fpts": 18.5, "name": "Rashee Rice", "note": "", "position": "WR", "sort_order": 0, "team": "KC", "tier": 3, "xfp": 18.4}, {"bye": 8, "column_id": 5, "dif": -1, "fpts": 16.9, "name": "Chris Olave", "note": "", "position": "WR", "sort_order": 0, "team": "NO", "tier": 3, "xfp": 17.8}, {"bye": 11, "column_id": 0, "dif": 0, "fpts": 0, "name": "Drake Maye", "note": "", "position": "QB", "sort_order": 1, "team": "NE", "tier": 3, "xfp": 0}, {"bye": 6, "column_id": 1, "dif": 0, "fpts": 0, "name": "Joe Burrow", "note": "", "position": "QB", "sort_order": 1, "team": "CIN", "tier": 3, "xfp": 0}, {"bye": 14, "column_id": 4, "dif": 0, "fpts": 0, "name": "Jeremiyah Love", "note": "", "position": "RB", "sort_order": 1, "team": "ARI", "tier": 3, "xfp": 0}, {"bye": 10, "column_id": 3, "dif": -0.7, "fpts": 14.5, "name": "Saquon Barkley", "note": "", "position": "RB", "sort_order": 1, "team": "PHI", "tier": 3, "xfp": 15.2}, {"bye": 7, "column_id": 1, "dif": 0, "fpts": 0, "name": "Justin Herbert", "note": "", "position": "QB", "sort_order": 0, "team": "LAC", "tier": 4, "xfp": 0}, {"bye": 10, "column_id": 5, "dif": 1.1, "fpts": 12.1, "name": "DeVonta Smith", "note": "", "position": "WR", "sort_order": 0, "team": "PHI", "tier": 4, "xfp": 13.2}, {"bye": 13, "column_id": 6, "dif": 0.9, "fpts": 13.5, "name": "Zay Flowers", "note": "", "position": "WR", "sort_order": 0, "team": "BAL", "tier": 4, "xfp": 12.7}, {"bye": 6, "column_id": 7, "dif": 1.8, "fpts": 13.6, "name": "Tee Higgins", "note": "", "position": "WR", "sort_order": 0, "team": "CIN", "tier": 4, "xfp": 11.9}, {"bye": 11, "column_id": 2, "dif": 1.7, "fpts": 15.9, "name": "Kyren Williams", "note": "", "position": "RB", "sort_order": 0, "team": "LAR", "tier": 4, "xfp": 14.2}, {"bye": 11, "column_id": 3, "dif": 1.1, "fpts": 15.9, "name": "Josh Jacobs", "note": "", "position": "RB", "sort_order": 0, "team": "GB", "tier": 4, "xfp": 14.8}, {"bye": 13, "column_id": 4, "dif": 1, "fpts": 12.8, "name": "Breece Hall", "note": "", "position": "RB", "sort_order": 0, "team": "NYJ", "tier": 4, "xfp": 11.8}, {"bye": 5, "column_id": 0, "dif": 0, "fpts": 0, "name": "Patrick Mahomes II", "note": "", "position": "QB", "sort_order": 0, "team": "KC", "tier": 4, "xfp": 0}, {"bye": 14, "column_id": 1, "dif": 0, "fpts": 0, "name": "Dak Prescott", "note": "", "position": "QB", "sort_order": 1, "team": "DAL", "tier": 4, "xfp": 0}, {"bye": 8, "column_id": 0, "dif": 0, "fpts": 0, "name": "Jaxson Dart", "note": "", "position": "QB", "sort_order": 1, "team": "NYG", "tier": 4, "xfp": 0}, {"bye": 5, "column_id": 5, "dif": -0.2, "fpts": 12.6, "name": "Tetairoa McMillan", "note": "", "position": "WR", "sort_order": 1, "team": "CAR", "tier": 4, "xfp": 12.8}, {"bye": 14, "column_id": 2, "dif": -0.5, "fpts": 15.3, "name": "Javonte Williams", "note": "", "position": "RB", "sort_order": 1, "team": "DAL", "tier": 4, "xfp": 15.8}, {"bye": 11, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jordan Love", "note": "", "position": "QB", "sort_order": 2, "team": "GB", "tier": 4, "xfp": 0}, {"bye": 13, "column_id": 8, "dif": 0, "fpts": 11.3, "name": "Tyler Warren", "note": "", "position": "TE", "sort_order": 0, "team": "IND", "tier": 5, "xfp": 11.3}, {"bye": 13, "column_id": 6, "dif": -0.1, "fpts": 14.2, "name": "Garrett Wilson", "note": "", "position": "WR", "sort_order": 0, "team": "NYJ", "tier": 5, "xfp": 14.3}, {"bye": 10, "column_id": 7, "dif": -2.7, "fpts": 12, "name": "Emeka Egbuka", "note": "", "position": "WR", "sort_order": 0, "team": "TB", "tier": 5, "xfp": 14.7}, {"bye": 7, "column_id": 5, "dif": 0.9, "fpts": 11.3, "name": "Ladd McConkey", "note": "", "position": "WR", "sort_order": 0, "team": "LAC", "tier": 5, "xfp": 12.2}, {"bye": 8, "column_id": 3, "dif": 1.3, "fpts": 15.6, "name": "Travis Etienne Jr.", "note": "", "position": "RB", "sort_order": 0, "team": "NO", "tier": 5, "xfp": 14.3}, {"bye": 8, "column_id": 4, "dif": 0.9, "fpts": 15.8, "name": "Cam Skattebo", "note": "", "position": "RB", "sort_order": 0, "team": "NYG", "tier": 5, "xfp": 14.9}, {"bye": 10, "column_id": 2, "dif": -0.5, "fpts": 14.3, "name": "Bucky Irving", "note": "", "position": "RB", "sort_order": 0, "team": "TB", "tier": 5, "xfp": 14.8}, {"bye": 6, "column_id": 0, "dif": 0, "fpts": 0, "name": "Kyler Murray", "note": "", "position": "QB", "sort_order": 0, "team": "MIN", "tier": 5, "xfp": 0}, {"bye": 6, "column_id": 1, "dif": 0, "fpts": 0, "name": "Malik Willis", "note": "", "position": "QB", "sort_order": 0, "team": "MIA", "tier": 5, "xfp": 0}, {"bye": 10, "column_id": 8, "dif": 1.6, "fpts": 9.3, "name": "Colston Loveland", "note": "", "position": "TE", "sort_order": 1, "team": "CHI", "tier": 5, "xfp": 7.8}, {"bye": 10, "column_id": 0, "dif": 0, "fpts": 0, "name": "Caleb Williams", "note": "", "position": "QB", "sort_order": 1, "team": "CHI", "tier": 5, "xfp": 0}, {"bye": 10, "column_id": 1, "dif": 0, "fpts": 0, "name": "Baker Mayfield", "note": "", "position": "QB", "sort_order": 1, "team": "TB", "tier": 5, "xfp": 0}, {"bye": 10, "column_id": 6, "dif": 0.8, "fpts": 12.1, "name": "Jaylen Waddle", "note": "", "position": "WR", "sort_order": 1, "team": "DEN", "tier": 5, "xfp": 11.4}, {"bye": 11, "column_id": 3, "dif": -1.8, "fpts": 12, "name": "Quinshon Judkins", "note": "", "position": "RB", "sort_order": 1, "team": "CLE", "tier": 5, "xfp": 13.8}, {"bye": 11, "column_id": 8, "dif": 1, "fpts": 12.4, "name": "Kyle Pitts Sr.", "note": "", "position": "TE", "sort_order": 2, "team": "ATL", "tier": 5, "xfp": 11.5}, {"bye": 7, "column_id": 0, "dif": 0, "fpts": 0, "name": "Trevor Lawrence", "note": "", "position": "QB", "sort_order": 2, "team": "JAC", "tier": 5, "xfp": 0}, {"bye": 11, "column_id": 8, "dif": 5.3, "fpts": 14.7, "name": "Tucker Kraft", "note": "", "position": "TE", "sort_order": 3, "team": "GB", "tier": 5, "xfp": 9.4}, {"bye": 6, "column_id": 8, "dif": 3.5, "fpts": 11.9, "name": "Sam LaPorta", "note": "", "position": "TE", "sort_order": 0, "team": "DET", "tier": 6, "xfp": 8.4}, {"bye": 11, "column_id": 0, "dif": 0, "fpts": 0, "name": "Matthew Stafford", "note": "", "position": "QB", "sort_order": 0, "team": "LAR", "tier": 6, "xfp": 0}, {"bye": 6, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jared Goff", "note": "", "position": "QB", "sort_order": 0, "team": "DET", "tier": 6, "xfp": 0}, {"bye": 8, "column_id": 7, "dif": -3.3, "fpts": 14.3, "name": "Malik Nabers", "note": "", "position": "WR", "sort_order": 0, "team": "NYG", "tier": 6, "xfp": 17.6}, {"bye": 7, "column_id": 5, "dif": 0.2, "fpts": 11.6, "name": "Terry McLaurin", "note": "", "position": "WR", "sort_order": 0, "team": "WAS", "tier": 6, "xfp": 11.4}, {"bye": 11, "column_id": 6, "dif": -1.8, "fpts": 15.9, "name": "Davante Adams", "note": "", "position": "WR", "sort_order": 0, "team": "LAR", "tier": 6, "xfp": 17.7}, {"bye": 10, "column_id": 4, "dif": 1.6, "fpts": 15, "name": "DAndre Swift", "note": "", "position": "RB", "sort_order": 0, "team": "CHI", "tier": 6, "xfp": 13.4}, {"bye": 11, "column_id": 2, "dif": 1.5, "fpts": 11.9, "name": "TreVeyon Henderson", "note": "", "position": "RB", "sort_order": 0, "team": "NE", "tier": 6, "xfp": 10.3}, {"bye": 8, "column_id": 3, "dif": 0.4, "fpts": 9.7, "name": "David Montgomery", "note": "", "position": "RB", "sort_order": 0, "team": "HOU", "tier": 6, "xfp": 9.3}, {"bye": 11, "column_id": 8, "dif": 0.4, "fpts": 11.7, "name": "Harold Fannin Jr.", "note": "", "position": "TE", "sort_order": 1, "team": "CLE", "tier": 6, "xfp": 11.3}, {"bye": 8, "column_id": 1, "dif": 0, "fpts": 0, "name": "Brock Purdy", "note": "", "position": "QB", "sort_order": 1, "team": "SF", "tier": 6, "xfp": 0}, {"bye": 10, "column_id": 0, "dif": 0, "fpts": 0, "name": "Bo Nix", "note": "", "position": "QB", "sort_order": 1, "team": "DEN", "tier": 6, "xfp": 0}, {"bye": 10, "column_id": 7, "dif": 2.1, "fpts": 8.6, "name": "Luther Burden III", "note": "", "position": "WR", "sort_order": 1, "team": "CHI", "tier": 6, "xfp": 6.5}, {"bye": 7, "column_id": 4, "dif": 0.6, "fpts": 5.8, "name": "Bhayshul Tuten", "note": "", "position": "RB", "sort_order": 1, "team": "JAC", "tier": 6, "xfp": 5.2}, {"bye": 8, "column_id": 5, "dif": -6.4, "fpts": 11.3, "name": "Mike Evans", "note": "", "position": "WR", "sort_order": 0, "team": "SF", "tier": 7, "xfp": 17.8}, {"bye": 6, "column_id": 6, "dif": 2.5, "fpts": 12.9, "name": "Jameson Williams", "note": "", "position": "WR", "sort_order": 0, "team": "DET", "tier": 7, "xfp": 10.4}, {"bye": 11, "column_id": 7, "dif": 2.6, "fpts": 13.2, "name": "Christian Watson", "note": "", "position": "WR", "sort_order": 0, "team": "GB", "tier": 7, "xfp": 10.6}, {"bye": 11, "column_id": 2, "dif": 0, "fpts": 0, "name": "Jadarian Price", "note": "", "position": "RB", "sort_order": 0, "team": "SEA", "tier": 7, "xfp": 0}, {"bye": 9, "column_id": 3, "dif": 1.2, "fpts": 13.5, "name": "Jaylen Warren", "note": "", "position": "RB", "sort_order": 0, "team": "PIT", "tier": 7, "xfp": 12.3}, {"bye": 9, "column_id": 4, "dif": -0.7, "fpts": 11.2, "name": "Tony Pollard", "note": "", "position": "RB", "sort_order": 0, "team": "TEN", "tier": 7, "xfp": 11.9}, {"bye": 9, "column_id": 1, "dif": 0, "fpts": 0, "name": "Aaron Rodgers", "note": "", "position": "QB", "sort_order": 0, "team": "PIT", "tier": 7, "xfp": 0}, {"bye": 9, "column_id": 0, "dif": 0, "fpts": 0, "name": "Cam Ward", "note": "", "position": "QB", "sort_order": 0, "team": "TEN", "tier": 7, "xfp": 0}, {"bye": 7, "column_id": 5, "dif": 0.4, "fpts": 10.3, "name": "DJ Moore", "note": "", "position": "WR", "sort_order": 1, "team": "BUF", "tier": 7, "xfp": 9.9}, {"bye": 11, "column_id": 2, "dif": 0.6, "fpts": 11, "name": "Rhamondre Stevenson", "note": "", "position": "RB", "sort_order": 1, "team": "NE", "tier": 7, "xfp": 10.4}, {"bye": 14, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jacoby Brissett", "note": "", "position": "QB", "sort_order": 1, "team": "ARI", "tier": 7, "xfp": 0}, {"bye": 8, "column_id": 1, "dif": 0, "fpts": 0, "name": "Tyler Shough", "note": "", "position": "QB", "sort_order": 2, "team": "NO", "tier": 7, "xfp": 0}, {"bye": 14, "column_id": 8, "dif": 0, "fpts": 11.7, "name": "Jake Ferguson", "note": "", "position": "TE", "sort_order": 0, "team": "DAL", "tier": 8, "xfp": 11.7}, {"bye": 11, "column_id": 1, "dif": 0, "fpts": 0, "name": "Sam Darnold", "note": "", "position": "QB", "sort_order": 0, "team": "SEA", "tier": 8, "xfp": 0}, {"bye": 10, "column_id": 6, "dif": 3, "fpts": 12.2, "name": "Rome Odunze", "note": "", "position": "WR", "sort_order": 0, "team": "CHI", "tier": 8, "xfp": 15.1}, {"bye": 14, "column_id": 7, "dif": 1.8, "fpts": 10.5, "name": "Marvin Harrison Jr.", "note": "", "position": "WR", "sort_order": 0, "team": "ARI", "tier": 8, "xfp": 12.2}, {"bye": 9, "column_id": 5, "dif": 0, "fpts": 0, "name": "Carnell Tate", "note": "", "position": "WR", "sort_order": 0, "team": "TEN", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 3, "dif": 1, "fpts": 8.8, "name": "Chuba Hubbard", "note": "", "position": "RB", "sort_order": 0, "team": "CAR", "tier": 8, "xfp": 9.7}, {"bye": 9, "column_id": 4, "dif": 0.6, "fpts": 13.3, "name": "Rico Dowdle", "note": "", "position": "RB", "sort_order": 0, "team": "PIT", "tier": 8, "xfp": 12.7}, {"bye": 10, "column_id": 2, "dif": 1.9, "fpts": 12.7, "name": "RJ Harvey", "note": "", "position": "RB", "sort_order": 0, "team": "DEN", "tier": 8, "xfp": 10.8}, {"bye": 13, "column_id": 0, "dif": 0, "fpts": 0, "name": "Geno Smith", "note": "", "position": "QB", "sort_order": 0, "team": "NYJ", "tier": 8, "xfp": 0}, {"bye": 8, "column_id": 8, "dif": 4.2, "fpts": 15.4, "name": "George Kittle", "note": "", "position": "TE", "sort_order": 1, "team": "SF", "tier": 8, "xfp": 11.2}, {"bye": 13, "column_id": 6, "dif": 0.7, "fpts": 11, "name": "Alec Pierce", "note": "", "position": "WR", "sort_order": 1, "team": "IND", "tier": 8, "xfp": 11.7}, {"bye": 9, "column_id": 7, "dif": -0.2, "fpts": 12.5, "name": "DK Metcalf", "note": "", "position": "WR", "sort_order": 1, "team": "PIT", "tier": 8, "xfp": 12.7}, {"bye": 7, "column_id": 5, "dif": 2.1, "fpts": 10.1, "name": "Brian Thomas Jr.", "note": "", "position": "WR", "sort_order": 1, "team": "JAC", "tier": 8, "xfp": 12.1}, {"bye": 10, "column_id": 3, "dif": 0.3, "fpts": 8.7, "name": "Kyle Monangai", "note": "", "position": "RB", "sort_order": 1, "team": "CHI", "tier": 8, "xfp": 9}, {"bye": 10, "column_id": 4, "dif": 0.6, "fpts": 11.6, "name": "J.K. Dobbins", "note": "", "position": "RB", "sort_order": 1, "team": "DEN", "tier": 8, "xfp": 11}, {"bye": 11, "column_id": 2, "dif": 0.1, "fpts": 7.1, "name": "Blake Corum", "note": "", "position": "RB", "sort_order": 1, "team": "LAR", "tier": 8, "xfp": 7}, {"bye": 13, "column_id": 1, "dif": 0, "fpts": 0, "name": "Daniel Jones", "note": "", "position": "QB", "sort_order": 1, "team": "IND", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 0, "dif": 0, "fpts": 0, "name": "Bryce Young", "note": "", "position": "QB", "sort_order": 1, "team": "CAR", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 8, "dif": 1.1, "fpts": 11.7, "name": "Travis Kelce", "note": "", "position": "TE", "sort_order": 2, "team": "KC", "tier": 8, "xfp": 10.6}, {"bye": 8, "column_id": 1, "dif": 0, "fpts": 0, "name": "C.J. Stroud", "note": "", "position": "QB", "sort_order": 2, "team": "HOU", "tier": 8, "xfp": 0}, {"bye": 10, "column_id": 6, "dif": -0.9, "fpts": 13.5, "name": "Courtland Sutton", "note": "", "position": "WR", "sort_order": 2, "team": "DEN", "tier": 8, "xfp": 14.4}, {"bye": 10, "column_id": 7, "dif": 0.1, "fpts": 9.9, "name": "Chris Godwin Jr.", "note": "", "position": "WR", "sort_order": 2, "team": "TB", "tier": 8, "xfp": 9.8}, {"bye": 7, "column_id": 5, "dif": 0.7, "fpts": 10.2, "name": "Parker Washington", "note": "", "position": "WR", "sort_order": 2, "team": "JAC", "tier": 8, "xfp": 10.9}, {"bye": 10, "column_id": 3, "dif": 0.7, "fpts": 12.6, "name": "Kenny Gainwell", "note": "", "position": "RB", "sort_order": 2, "team": "TB", "tier": 8, "xfp": 11.8}, {"bye": 7, "column_id": 4, "dif": 0.6, "fpts": 8.6, "name": "Rachaad White", "note": "", "position": "RB", "sort_order": 2, "team": "WAS", "tier": 8, "xfp": 9.1}, {"bye": 6, "column_id": 2, "dif": 1, "fpts": 10, "name": "Aaron Jones Sr.", "note": "", "position": "RB", "sort_order": 2, "team": "MIN", "tier": 8, "xfp": 10.9}, {"bye": 11, "column_id": 0, "dif": 0, "fpts": 0, "name": "Tua Tagovailoa", "note": "", "position": "QB", "sort_order": 2, "team": "ATL", "tier": 8, "xfp": 0}, {"bye": 7, "column_id": 8, "dif": 3.3, "fpts": 10.8, "name": "Dalton Kincaid", "note": "", "position": "TE", "sort_order": 3, "team": "BUF", "tier": 8, "xfp": 7.5}, {"bye": 8, "column_id": 6, "dif": 0, "fpts": 0, "name": "Jordyn Tyson", "note": "", "position": "WR", "sort_order": 3, "team": "NO", "tier": 8, "xfp": 0}, {"bye": 9, "column_id": 7, "dif": 1.1, "fpts": 12.3, "name": "Michael Pittman Jr.", "note": "", "position": "WR", "sort_order": 3, "team": "PIT", "tier": 8, "xfp": 11.2}, {"bye": 14, "column_id": 5, "dif": -1, "fpts": 12.5, "name": "Michael Wilson", "note": "", "position": "WR", "sort_order": 3, "team": "ARI", "tier": 8, "xfp": 13.5}, {"bye": 5, "column_id": 3, "dif": 0, "fpts": 0, "name": "Jonathon Brooks", "note": "", "position": "RB", "sort_order": 3, "team": "CAR", "tier": 8, "xfp": 0}, {"bye": 7, "column_id": 4, "dif": 1.2, "fpts": 8.7, "name": "Jacory Croskey-Merritt", "note": "", "position": "RB", "sort_order": 3, "team": "WAS", "tier": 8, "xfp": 7.5}, {"bye": 6, "column_id": 2, "dif": 0.6, "fpts": 8, "name": "Jordan Mason", "note": "", "position": "RB", "sort_order": 3, "team": "MIN", "tier": 8, "xfp": 7.4}, {"bye": 8, "column_id": 8, "dif": 0.3, "fpts": 4.4, "name": "Isaiah Likely", "note": "", "position": "TE", "sort_order": 4, "team": "NYG", "tier": 8, "xfp": 4.7}, {"bye": 7, "column_id": 6, "dif": 1.9, "fpts": 12.3, "name": "Quentin Johnston", "note": "", "position": "WR", "sort_order": 4, "team": "LAC", "tier": 8, "xfp": 10.4}, {"bye": 8, "column_id": 7, "dif": 3, "fpts": 9.8, "name": "Ricky Pearsall", "note": "", "position": "WR", "sort_order": 4, "team": "SF", "tier": 8, "xfp": 12.9}, {"bye": 10, "column_id": 5, "dif": 0, "fpts": 0, "name": "Makai Lemon", "note": "", "position": "WR", "sort_order": 4, "team": "PHI", "tier": 8, "xfp": 0}, {"bye": 8, "column_id": 3, "dif": 0, "fpts": 9.5, "name": "Tyrone Tracy Jr.", "note": "", "position": "RB", "sort_order": 4, "team": "NYG", "tier": 8, "xfp": 9.5}, {"bye": 7, "column_id": 4, "dif": 0.6, "fpts": 6.4, "name": "Chris Rodriguez Jr.", "note": "", "position": "RB", "sort_order": 4, "team": "JAC", "tier": 8, "xfp": 5.8}, {"bye": 14, "column_id": 2, "dif": 0.4, "fpts": 7.5, "name": "Tyler Allgeier", "note": "", "position": "RB", "sort_order": 4, "team": "ARI", "tier": 8, "xfp": 7.1}, {"bye": 13, "column_id": 8, "dif": 0.5, "fpts": 8, "name": "Mark Andrews", "note": "", "position": "TE", "sort_order": 5, "team": "BAL", "tier": 8, "xfp": 8.5}, {"bye": 7, "column_id": 6, "dif": 0.4, "fpts": 11.2, "name": "Jakobi Meyers", "note": "", "position": "WR", "sort_order": 5, "team": "JAC", "tier": 8, "xfp": 11.5}, {"bye": 6, "column_id": 7, "dif": 0.6, "fpts": 10.3, "name": "Jordan Addison", "note": "", "position": "WR", "sort_order": 5, "team": "MIN", "tier": 8, "xfp": 9.7}, {"bye": 9, "column_id": 5, "dif": -0.8, "fpts": 13.6, "name": "WanDale Robinson", "note": "", "position": "WR", "sort_order": 5, "team": "TEN", "tier": 8, "xfp": 14.4}, {"bye": 8, "column_id": 3, "dif": -2.1, "fpts": 9.2, "name": "Woody Marks", "note": "", "position": "RB", "sort_order": 5, "team": "HOU", "tier": 8, "xfp": 11.4}, {"bye": 11, "column_id": 4, "dif": 0.4, "fpts": 10.7, "name": "Zach Charbonnet", "note": "", "position": "RB", "sort_order": 5, "team": "SEA", "tier": 8, "xfp": 10.3}, {"bye": 11, "column_id": 2, "dif": 0.3, "fpts": 5.9, "name": "Dylan Sampson", "note": "", "position": "RB", "sort_order": 5, "team": "CLE", "tier": 8, "xfp": 5.5}, {"bye": 7, "column_id": 8, "dif": 0.1, "fpts": 7.6, "name": "Chig Okonkwo", "note": "", "position": "TE", "sort_order": 6, "team": "WAS", "tier": 8, "xfp": 7.7}, {"bye": 13, "column_id": 6, "dif": 0.8, "fpts": 8.5, "name": "Josh Downs", "note": "", "position": "WR", "sort_order": 6, "team": "IND", "tier": 8, "xfp": 9.3}, {"bye": 11, "column_id": 7, "dif": 1.7, "fpts": 8.1, "name": "Jayden Reed", "note": "", "position": "WR", "sort_order": 6, "team": "GB", "tier": 8, "xfp": 6.3}, {"bye": 5, "column_id": 5, "dif": 2.8, "fpts": 7.9, "name": "Xavier Worthy", "note": "", "position": "WR", "sort_order": 6, "team": "KC", "tier": 8, "xfp": 10.7}, {"bye": 9, "column_id": 3, "dif": 0.3, "fpts": 8.5, "name": "Tyjae Spears", "note": "", "position": "RB", "sort_order": 6, "team": "TEN", "tier": 8, "xfp": 8.8}, {"bye": 14, "column_id": 4, "dif": -1.9, "fpts": 11.1, "name": "James Conner", "note": "", "position": "RB", "sort_order": 6, "team": "ARI", "tier": 8, "xfp": 13}, {"bye": 8, "column_id": 8, "dif": 0.3, "fpts": 10.4, "name": "Dalton Schultz", "note": "", "position": "TE", "sort_order": 7, "team": "HOU", "tier": 8, "xfp": 10.7}, {"bye": 8, "column_id": 4, "dif": -2.6, "fpts": 9.3, "name": "Alvin Kamara", "note": "", "position": "RB", "sort_order": 7, "team": "NO", "tier": 8, "xfp": 12}, {"bye": 8, "column_id": 6, "dif": 0.4, "fpts": 7.5, "name": "Jayden Higgins", "note": "", "position": "WR", "sort_order": 7, "team": "HOU", "tier": 8, "xfp": 7.1}, {"bye": 7, "column_id": 7, "dif": 1.1, "fpts": 10.5, "name": "Khalil Shakir", "note": "", "position": "WR", "sort_order": 7, "team": "BUF", "tier": 8, "xfp": 9.3}, {"bye": 11, "column_id": 5, "dif": 0.7, "fpts": 10.2, "name": "Romeo Doubs", "note": "", "position": "WR", "sort_order": 7, "team": "NE", "tier": 8, "xfp": 10.9}, {"bye": 7, "column_id": 3, "dif": 0.5, "fpts": 4.6, "name": "Keaton Mitchell", "note": "", "position": "RB", "sort_order": 7, "team": "LAC", "tier": 8, "xfp": 4.1}, {"bye": 10, "column_id": 3, "dif": 0, "fpts": 0, "name": "Jonathan Coleman", "note": "", "position": "RB", "sort_order": 8, "team": "DEN", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 6, "dif": 1.8, "fpts": 7.3, "name": "Jalen Coker", "note": "", "position": "WR", "sort_order": 8, "team": "CAR", "tier": 8, "xfp": 5.5}, {"bye": 11, "column_id": 7, "dif": 0.4, "fpts": 5.2, "name": "Matthew Golden", "note": "", "position": "WR", "sort_order": 8, "team": "GB", "tier": 8, "xfp": 5.7}, {"bye": 11, "column_id": 5, "dif": 0, "fpts": 0, "name": "KC Concepcion", "note": "", "position": "WR", "sort_order": 8, "team": "CLE", "tier": 8, "xfp": 0}, {"bye": 11, "column_id": 6, "dif": 0.9, "fpts": 8.5, "name": "Rashid Shaheed", "note": "", "position": "WR", "sort_order": 9, "team": "SEA", "tier": 8, "xfp": 9.3}];
+        const originalPlayers = [{"bye": 11, "column_id": 2, "dif": 3.8, "fpts": 22.8, "name": "Bijan Robinson", "note": "TE", "position": "RB", "sort_order": 0, "team": "ATL", "tier": 1, "xfp": 19}, {"bye": 6, "column_id": 3, "dif": 4.9, "fpts": 21.7, "name": "Jahmyr Gibbs", "note": "WR", "position": "RB", "sort_order": 0, "team": "DET", "tier": 1, "xfp": 16.9}, {"bye": 6, "column_id": 5, "dif": -0.9, "fpts": 19.4, "name": "JaMarr Chase", "note": "", "position": "WR", "sort_order": 0, "team": "CIN", "tier": 1, "xfp": 20.3}, {"bye": 11, "column_id": 6, "dif": 5.6, "fpts": 23.3, "name": "Puka Nacua", "note": "", "position": "WR", "sort_order": 0, "team": "LAR", "tier": 1, "xfp": 17.8}, {"bye": 11, "column_id": 7, "dif": 3.9, "fpts": 21.7, "name": "Jaxon Smith-Njigba", "note": "RB", "position": "WR", "sort_order": 0, "team": "SEA", "tier": 1, "xfp": 17.7}, {"bye": 8, "column_id": 4, "dif": 0.9, "fpts": 25.3, "name": "Christian McCaffrey", "note": "", "position": "RB", "sort_order": 0, "team": "SF", "tier": 1, "xfp": 24.4}, {"bye": 6, "column_id": 5, "dif": 0.3, "fpts": 18.7, "name": "Amon-Ra St. Brown", "note": "OWNED", "position": "WR", "sort_order": 1, "team": "DET", "tier": 1, "xfp": 18.3}, {"bye": 13, "column_id": 2, "dif": 3.9, "fpts": 22.2, "name": "Jonathan Taylor", "note": "TE", "position": "RB", "sort_order": 1, "team": "IND", "tier": 1, "xfp": 18.4}, {"bye": 14, "column_id": 6, "dif": -2.8, "fpts": 15.3, "name": "CeeDee Lamb", "note": "", "position": "WR", "sort_order": 1, "team": "DAL", "tier": 1, "xfp": 18.1}, {"bye": 6, "column_id": 7, "dif": 3.5, "fpts": 11.4, "name": "Justin Jefferson", "note": "", "position": "WR", "sort_order": 1, "team": "MIN", "tier": 1, "xfp": 15}, {"bye": 7, "column_id": 4, "dif": 3.3, "fpts": 19, "name": "James Cook III", "note": "", "position": "RB", "sort_order": 0, "team": "BUF", "tier": 2, "xfp": 15.7}, {"bye": 13, "column_id": 8, "dif": 1.4, "fpts": 14.5, "name": "Brock Bowers", "note": "", "position": "TE", "sort_order": 0, "team": "LV", "tier": 2, "xfp": 13.1}, {"bye": 7, "column_id": 0, "dif": 0, "fpts": 0, "name": "Josh Allen", "note": "", "position": "QB", "sort_order": 0, "team": "BUF", "tier": 2, "xfp": 0}, {"bye": 13, "column_id": 1, "dif": 0, "fpts": 0, "name": "Lamar Jackson", "note": "WR", "position": "QB", "sort_order": 0, "team": "BAL", "tier": 2, "xfp": 0}, {"bye": 11, "column_id": 5, "dif": 0.1, "fpts": 16.6, "name": "Drake London", "note": "TE", "position": "WR", "sort_order": 0, "team": "ATL", "tier": 2, "xfp": 16.6}, {"bye": 6, "column_id": 2, "dif": 3.5, "fpts": 20.2, "name": "DeVon Achane", "note": "QB", "position": "RB", "sort_order": 0, "team": "MIA", "tier": 2, "xfp": 16.7}, {"bye": 6, "column_id": 3, "dif": -0.3, "fpts": 16.4, "name": "Chase Brown", "note": "", "position": "RB", "sort_order": 0, "team": "CIN", "tier": 2, "xfp": 16.6}, {"bye": 11, "column_id": 6, "dif": -0.1, "fpts": 14.7, "name": "A.J. Brown", "note": "", "position": "WR", "sort_order": 0, "team": "NE", "tier": 2, "xfp": 14.8}, {"bye": 8, "column_id": 7, "dif": -0.8, "fpts": 15, "name": "Nico Collins", "note": "", "position": "WR", "sort_order": 0, "team": "HOU", "tier": 2, "xfp": 15.8}, {"bye": 13, "column_id": 3, "dif": -0.5, "fpts": 14.6, "name": "Ashton Jeanty", "note": "", "position": "RB", "sort_order": 1, "team": "LV", "tier": 2, "xfp": 15.1}, {"bye": 14, "column_id": 8, "dif": 0.9, "fpts": 18.9, "name": "Trey McBride", "note": "WR", "position": "TE", "sort_order": 1, "team": "ARI", "tier": 2, "xfp": 18}, {"bye": 14, "column_id": 5, "dif": 1.7, "fpts": 18, "name": "George Pickens", "note": "", "position": "WR", "sort_order": 1, "team": "DAL", "tier": 2, "xfp": 16.3}, {"bye": 7, "column_id": 0, "dif": 0, "fpts": 0, "name": "Jayden Daniels", "note": "", "position": "QB", "sort_order": 0, "team": "WAS", "tier": 3, "xfp": 0}, {"bye": 10, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jalen Hurts", "note": "", "position": "QB", "sort_order": 0, "team": "PHI", "tier": 3, "xfp": 0}, {"bye": 7, "column_id": 4, "dif": 0.8, "fpts": 14.9, "name": "Omarion Hampton", "note": "", "position": "RB", "sort_order": 0, "team": "LAC", "tier": 3, "xfp": 14.1}, {"bye": 13, "column_id": 2, "dif": 2.9, "fpts": 16.9, "name": "Derrick Henry", "note": "WR", "position": "RB", "sort_order": 0, "team": "BAL", "tier": 3, "xfp": 14}, {"bye": 5, "column_id": 3, "dif": 0.2, "fpts": 10.9, "name": "Kenneth Walker III", "note": "", "position": "RB", "sort_order": 0, "team": "KC", "tier": 3, "xfp": 10.6}, {"bye": 5, "column_id": 6, "dif": 0.1, "fpts": 18.5, "name": "Rashee Rice", "note": "", "position": "WR", "sort_order": 0, "team": "KC", "tier": 3, "xfp": 18.4}, {"bye": 8, "column_id": 5, "dif": -1, "fpts": 16.9, "name": "Chris Olave", "note": "RB", "position": "WR", "sort_order": 0, "team": "NO", "tier": 3, "xfp": 17.8}, {"bye": 11, "column_id": 0, "dif": 0, "fpts": 0, "name": "Drake Maye", "note": "", "position": "QB", "sort_order": 1, "team": "NE", "tier": 3, "xfp": 0}, {"bye": 6, "column_id": 1, "dif": 0, "fpts": 0, "name": "Joe Burrow", "note": "", "position": "QB", "sort_order": 1, "team": "CIN", "tier": 3, "xfp": 0}, {"bye": 14, "column_id": 4, "dif": 0, "fpts": 0, "name": "Jeremiyah Love", "note": "WR", "position": "RB", "sort_order": 1, "team": "ARI", "tier": 3, "xfp": 0}, {"bye": 10, "column_id": 3, "dif": -0.7, "fpts": 14.5, "name": "Saquon Barkley", "note": "", "position": "RB", "sort_order": 1, "team": "PHI", "tier": 3, "xfp": 15.2}, {"bye": 7, "column_id": 1, "dif": 0, "fpts": 0, "name": "Justin Herbert", "note": "", "position": "QB", "sort_order": 0, "team": "LAC", "tier": 4, "xfp": 0}, {"bye": 10, "column_id": 5, "dif": 1.1, "fpts": 12.1, "name": "DeVonta Smith", "note": "", "position": "WR", "sort_order": 0, "team": "PHI", "tier": 4, "xfp": 13.2}, {"bye": 13, "column_id": 6, "dif": 0.9, "fpts": 13.5, "name": "Zay Flowers", "note": "OWNED", "position": "WR", "sort_order": 0, "team": "BAL", "tier": 4, "xfp": 12.7}, {"bye": 6, "column_id": 7, "dif": 1.8, "fpts": 13.6, "name": "Tee Higgins", "note": "", "position": "WR", "sort_order": 0, "team": "CIN", "tier": 4, "xfp": 11.9}, {"bye": 11, "column_id": 2, "dif": 1.7, "fpts": 15.9, "name": "Kyren Williams", "note": "", "position": "RB", "sort_order": 0, "team": "LAR", "tier": 4, "xfp": 14.2}, {"bye": 11, "column_id": 3, "dif": 1.1, "fpts": 15.9, "name": "Josh Jacobs", "note": "QB", "position": "RB", "sort_order": 0, "team": "GB", "tier": 4, "xfp": 14.8}, {"bye": 13, "column_id": 4, "dif": 1, "fpts": 12.8, "name": "Breece Hall", "note": "", "position": "RB", "sort_order": 0, "team": "NYJ", "tier": 4, "xfp": 11.8}, {"bye": 5, "column_id": 0, "dif": 0, "fpts": 0, "name": "Patrick Mahomes II", "note": "", "position": "QB", "sort_order": 0, "team": "KC", "tier": 4, "xfp": 0}, {"bye": 14, "column_id": 1, "dif": 0, "fpts": 0, "name": "Dak Prescott", "note": "", "position": "QB", "sort_order": 1, "team": "DAL", "tier": 4, "xfp": 0}, {"bye": 8, "column_id": 0, "dif": 0, "fpts": 0, "name": "Jaxson Dart", "note": "", "position": "QB", "sort_order": 1, "team": "NYG", "tier": 4, "xfp": 0}, {"bye": 5, "column_id": 5, "dif": -0.2, "fpts": 12.6, "name": "Tetairoa McMillan", "note": "", "position": "WR", "sort_order": 1, "team": "CAR", "tier": 4, "xfp": 12.8}, {"bye": 14, "column_id": 2, "dif": -0.5, "fpts": 15.3, "name": "Javonte Williams", "note": "", "position": "RB", "sort_order": 1, "team": "DAL", "tier": 4, "xfp": 15.8}, {"bye": 11, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jordan Love", "note": "OWNED", "position": "QB", "sort_order": 2, "team": "GB", "tier": 4, "xfp": 0}, {"bye": 13, "column_id": 8, "dif": 0, "fpts": 11.3, "name": "Tyler Warren", "note": "OWNED", "position": "TE", "sort_order": 0, "team": "IND", "tier": 5, "xfp": 11.3}, {"bye": 13, "column_id": 6, "dif": -0.1, "fpts": 14.2, "name": "Garrett Wilson", "note": "", "position": "WR", "sort_order": 0, "team": "NYJ", "tier": 5, "xfp": 14.3}, {"bye": 10, "column_id": 7, "dif": -2.7, "fpts": 12, "name": "Emeka Egbuka", "note": "QB", "position": "WR", "sort_order": 0, "team": "TB", "tier": 5, "xfp": 14.7}, {"bye": 7, "column_id": 5, "dif": 0.9, "fpts": 11.3, "name": "Ladd McConkey", "note": "", "position": "WR", "sort_order": 0, "team": "LAC", "tier": 5, "xfp": 12.2}, {"bye": 8, "column_id": 3, "dif": 1.3, "fpts": 15.6, "name": "Travis Etienne Jr.", "note": "RB", "position": "RB", "sort_order": 0, "team": "NO", "tier": 5, "xfp": 14.3}, {"bye": 8, "column_id": 4, "dif": 0.9, "fpts": 15.8, "name": "Cam Skattebo", "note": "", "position": "RB", "sort_order": 0, "team": "NYG", "tier": 5, "xfp": 14.9}, {"bye": 10, "column_id": 2, "dif": -0.5, "fpts": 14.3, "name": "Bucky Irving", "note": "QB", "position": "RB", "sort_order": 0, "team": "TB", "tier": 5, "xfp": 14.8}, {"bye": 6, "column_id": 0, "dif": 0, "fpts": 0, "name": "Kyler Murray", "note": "", "position": "QB", "sort_order": 0, "team": "MIN", "tier": 5, "xfp": 0}, {"bye": 6, "column_id": 1, "dif": 0, "fpts": 0, "name": "Malik Willis", "note": "OWNED", "position": "QB", "sort_order": 0, "team": "MIA", "tier": 5, "xfp": 0}, {"bye": 10, "column_id": 8, "dif": 1.6, "fpts": 9.3, "name": "Colston Loveland", "note": "", "position": "TE", "sort_order": 1, "team": "CHI", "tier": 5, "xfp": 7.8}, {"bye": 10, "column_id": 0, "dif": 0, "fpts": 0, "name": "Caleb Williams", "note": "", "position": "QB", "sort_order": 1, "team": "CHI", "tier": 5, "xfp": 0}, {"bye": 10, "column_id": 1, "dif": 0, "fpts": 0, "name": "Baker Mayfield", "note": "OWNED", "position": "QB", "sort_order": 1, "team": "TB", "tier": 5, "xfp": 0}, {"bye": 10, "column_id": 6, "dif": 0.8, "fpts": 12.1, "name": "Jaylen Waddle", "note": "", "position": "WR", "sort_order": 1, "team": "DEN", "tier": 5, "xfp": 11.4}, {"bye": 11, "column_id": 3, "dif": -1.8, "fpts": 12, "name": "Quinshon Judkins", "note": "OWNED", "position": "RB", "sort_order": 1, "team": "CLE", "tier": 5, "xfp": 13.8}, {"bye": 11, "column_id": 8, "dif": 1, "fpts": 12.4, "name": "Kyle Pitts Sr.", "note": "OWNED", "position": "TE", "sort_order": 2, "team": "ATL", "tier": 5, "xfp": 11.5}, {"bye": 7, "column_id": 0, "dif": 0, "fpts": 0, "name": "Trevor Lawrence", "note": "", "position": "QB", "sort_order": 2, "team": "JAC", "tier": 5, "xfp": 0}, {"bye": 11, "column_id": 8, "dif": 5.3, "fpts": 14.7, "name": "Tucker Kraft", "note": "QB", "position": "TE", "sort_order": 3, "team": "GB", "tier": 5, "xfp": 9.4}, {"bye": 6, "column_id": 8, "dif": 3.5, "fpts": 11.9, "name": "Sam LaPorta", "note": "WR", "position": "TE", "sort_order": 0, "team": "DET", "tier": 6, "xfp": 8.4}, {"bye": 11, "column_id": 0, "dif": 0, "fpts": 0, "name": "Matthew Stafford", "note": "", "position": "QB", "sort_order": 0, "team": "LAR", "tier": 6, "xfp": 0}, {"bye": 6, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jared Goff", "note": "WR", "position": "QB", "sort_order": 0, "team": "DET", "tier": 6, "xfp": 0}, {"bye": 8, "column_id": 7, "dif": -3.3, "fpts": 14.3, "name": "Malik Nabers", "note": "", "position": "WR", "sort_order": 0, "team": "NYG", "tier": 6, "xfp": 17.6}, {"bye": 7, "column_id": 5, "dif": 0.2, "fpts": 11.6, "name": "Terry McLaurin", "note": "", "position": "WR", "sort_order": 0, "team": "WAS", "tier": 6, "xfp": 11.4}, {"bye": 11, "column_id": 6, "dif": -1.8, "fpts": 15.9, "name": "Davante Adams", "note": "", "position": "WR", "sort_order": 0, "team": "LAR", "tier": 6, "xfp": 17.7}, {"bye": 10, "column_id": 4, "dif": 1.6, "fpts": 15, "name": "DAndre Swift", "note": "", "position": "RB", "sort_order": 0, "team": "CHI", "tier": 6, "xfp": 13.4}, {"bye": 11, "column_id": 2, "dif": 1.5, "fpts": 11.9, "name": "TreVeyon Henderson", "note": "", "position": "RB", "sort_order": 0, "team": "NE", "tier": 6, "xfp": 10.3}, {"bye": 8, "column_id": 3, "dif": 0.4, "fpts": 9.7, "name": "David Montgomery", "note": "", "position": "RB", "sort_order": 0, "team": "HOU", "tier": 6, "xfp": 9.3}, {"bye": 11, "column_id": 8, "dif": 0.4, "fpts": 11.7, "name": "Harold Fannin Jr.", "note": "RB", "position": "TE", "sort_order": 1, "team": "CLE", "tier": 6, "xfp": 11.3}, {"bye": 8, "column_id": 1, "dif": 0, "fpts": 0, "name": "Brock Purdy", "note": "", "position": "QB", "sort_order": 1, "team": "SF", "tier": 6, "xfp": 0}, {"bye": 10, "column_id": 0, "dif": 0, "fpts": 0, "name": "Bo Nix", "note": "", "position": "QB", "sort_order": 1, "team": "DEN", "tier": 6, "xfp": 0}, {"bye": 10, "column_id": 7, "dif": 2.1, "fpts": 8.6, "name": "Luther Burden III", "note": "", "position": "WR", "sort_order": 1, "team": "CHI", "tier": 6, "xfp": 6.5}, {"bye": 7, "column_id": 4, "dif": 0.6, "fpts": 5.8, "name": "Bhayshul Tuten", "note": "", "position": "RB", "sort_order": 1, "team": "JAC", "tier": 6, "xfp": 5.2}, {"bye": 8, "column_id": 5, "dif": -6.4, "fpts": 11.3, "name": "Mike Evans", "note": "", "position": "WR", "sort_order": 0, "team": "SF", "tier": 7, "xfp": 17.8}, {"bye": 6, "column_id": 6, "dif": 2.5, "fpts": 12.9, "name": "Jameson Williams", "note": "WR", "position": "WR", "sort_order": 0, "team": "DET", "tier": 7, "xfp": 10.4}, {"bye": 11, "column_id": 7, "dif": 2.6, "fpts": 13.2, "name": "Christian Watson", "note": "QB", "position": "WR", "sort_order": 0, "team": "GB", "tier": 7, "xfp": 10.6}, {"bye": 11, "column_id": 2, "dif": 0, "fpts": 0, "name": "Jadarian Price", "note": "OWNED", "position": "RB", "sort_order": 0, "team": "SEA", "tier": 7, "xfp": 0}, {"bye": 9, "column_id": 3, "dif": 1.2, "fpts": 13.5, "name": "Jaylen Warren", "note": "", "position": "RB", "sort_order": 0, "team": "PIT", "tier": 7, "xfp": 12.3}, {"bye": 9, "column_id": 4, "dif": -0.7, "fpts": 11.2, "name": "Tony Pollard", "note": "OWNED", "position": "RB", "sort_order": 0, "team": "TEN", "tier": 7, "xfp": 11.9}, {"bye": 9, "column_id": 1, "dif": 0, "fpts": 0, "name": "Aaron Rodgers", "note": "", "position": "QB", "sort_order": 0, "team": "PIT", "tier": 7, "xfp": 0}, {"bye": 9, "column_id": 0, "dif": 0, "fpts": 0, "name": "Cam Ward", "note": "RB", "position": "QB", "sort_order": 0, "team": "TEN", "tier": 7, "xfp": 0}, {"bye": 7, "column_id": 5, "dif": 0.4, "fpts": 10.3, "name": "DJ Moore", "note": "", "position": "WR", "sort_order": 1, "team": "BUF", "tier": 7, "xfp": 9.9}, {"bye": 11, "column_id": 2, "dif": 0.6, "fpts": 11, "name": "Rhamondre Stevenson", "note": "", "position": "RB", "sort_order": 1, "team": "NE", "tier": 7, "xfp": 10.4}, {"bye": 14, "column_id": 1, "dif": 0, "fpts": 0, "name": "Jacoby Brissett", "note": "WR", "position": "QB", "sort_order": 1, "team": "ARI", "tier": 7, "xfp": 0}, {"bye": 8, "column_id": 1, "dif": 0, "fpts": 0, "name": "Tyler Shough", "note": "RB", "position": "QB", "sort_order": 2, "team": "NO", "tier": 7, "xfp": 0}, {"bye": 14, "column_id": 8, "dif": 0, "fpts": 11.7, "name": "Jake Ferguson", "note": "", "position": "TE", "sort_order": 0, "team": "DAL", "tier": 8, "xfp": 11.7}, {"bye": 11, "column_id": 1, "dif": 0, "fpts": 0, "name": "Sam Darnold", "note": "RB", "position": "QB", "sort_order": 0, "team": "SEA", "tier": 8, "xfp": 0}, {"bye": 10, "column_id": 6, "dif": 3, "fpts": 12.2, "name": "Rome Odunze", "note": "", "position": "WR", "sort_order": 0, "team": "CHI", "tier": 8, "xfp": 15.1}, {"bye": 14, "column_id": 7, "dif": 1.8, "fpts": 10.5, "name": "Marvin Harrison Jr.", "note": "WR", "position": "WR", "sort_order": 0, "team": "ARI", "tier": 8, "xfp": 12.2}, {"bye": 9, "column_id": 5, "dif": 0, "fpts": 0, "name": "Carnell Tate", "note": "RB", "position": "WR", "sort_order": 0, "team": "TEN", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 3, "dif": 1, "fpts": 8.8, "name": "Chuba Hubbard", "note": "", "position": "RB", "sort_order": 0, "team": "CAR", "tier": 8, "xfp": 9.7}, {"bye": 9, "column_id": 4, "dif": 0.6, "fpts": 13.3, "name": "Rico Dowdle", "note": "", "position": "RB", "sort_order": 0, "team": "PIT", "tier": 8, "xfp": 12.7}, {"bye": 10, "column_id": 2, "dif": 1.9, "fpts": 12.7, "name": "RJ Harvey", "note": "", "position": "RB", "sort_order": 0, "team": "DEN", "tier": 8, "xfp": 10.8}, {"bye": 13, "column_id": 0, "dif": 0, "fpts": 0, "name": "Geno Smith", "note": "", "position": "QB", "sort_order": 0, "team": "NYJ", "tier": 8, "xfp": 0}, {"bye": 8, "column_id": 8, "dif": 4.2, "fpts": 15.4, "name": "George Kittle", "note": "", "position": "TE", "sort_order": 1, "team": "SF", "tier": 8, "xfp": 11.2}, {"bye": 13, "column_id": 6, "dif": 0.7, "fpts": 11, "name": "Alec Pierce", "note": "TE", "position": "WR", "sort_order": 1, "team": "IND", "tier": 8, "xfp": 11.7}, {"bye": 9, "column_id": 7, "dif": -0.2, "fpts": 12.5, "name": "DK Metcalf", "note": "", "position": "WR", "sort_order": 1, "team": "PIT", "tier": 8, "xfp": 12.7}, {"bye": 7, "column_id": 5, "dif": 2.1, "fpts": 10.1, "name": "Brian Thomas Jr.", "note": "", "position": "WR", "sort_order": 1, "team": "JAC", "tier": 8, "xfp": 12.1}, {"bye": 10, "column_id": 3, "dif": 0.3, "fpts": 8.7, "name": "Kyle Monangai", "note": "", "position": "RB", "sort_order": 1, "team": "CHI", "tier": 8, "xfp": 9}, {"bye": 10, "column_id": 4, "dif": 0.6, "fpts": 11.6, "name": "J.K. Dobbins", "note": "", "position": "RB", "sort_order": 1, "team": "DEN", "tier": 8, "xfp": 11}, {"bye": 11, "column_id": 2, "dif": 0.1, "fpts": 7.1, "name": "Blake Corum", "note": "", "position": "RB", "sort_order": 1, "team": "LAR", "tier": 8, "xfp": 7}, {"bye": 13, "column_id": 1, "dif": 0, "fpts": 0, "name": "Daniel Jones", "note": "TE", "position": "QB", "sort_order": 1, "team": "IND", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 0, "dif": 0, "fpts": 0, "name": "Bryce Young", "note": "", "position": "QB", "sort_order": 1, "team": "CAR", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 8, "dif": 1.1, "fpts": 11.7, "name": "Travis Kelce", "note": "", "position": "TE", "sort_order": 2, "team": "KC", "tier": 8, "xfp": 10.6}, {"bye": 8, "column_id": 1, "dif": 0, "fpts": 0, "name": "C.J. Stroud", "note": "", "position": "QB", "sort_order": 2, "team": "HOU", "tier": 8, "xfp": 0}, {"bye": 10, "column_id": 6, "dif": -0.9, "fpts": 13.5, "name": "Courtland Sutton", "note": "", "position": "WR", "sort_order": 2, "team": "DEN", "tier": 8, "xfp": 14.4}, {"bye": 10, "column_id": 7, "dif": 0.1, "fpts": 9.9, "name": "Chris Godwin Jr.", "note": "QB", "position": "WR", "sort_order": 2, "team": "TB", "tier": 8, "xfp": 9.8}, {"bye": 7, "column_id": 5, "dif": 0.7, "fpts": 10.2, "name": "Parker Washington", "note": "", "position": "WR", "sort_order": 2, "team": "JAC", "tier": 8, "xfp": 10.9}, {"bye": 10, "column_id": 3, "dif": 0.7, "fpts": 12.6, "name": "Kenny Gainwell", "note": "QB", "position": "RB", "sort_order": 2, "team": "TB", "tier": 8, "xfp": 11.8}, {"bye": 7, "column_id": 4, "dif": 0.6, "fpts": 8.6, "name": "Rachaad White", "note": "", "position": "RB", "sort_order": 2, "team": "WAS", "tier": 8, "xfp": 9.1}, {"bye": 6, "column_id": 2, "dif": 1, "fpts": 10, "name": "Aaron Jones Sr.", "note": "", "position": "RB", "sort_order": 2, "team": "MIN", "tier": 8, "xfp": 10.9}, {"bye": 11, "column_id": 0, "dif": 0, "fpts": 0, "name": "Tua Tagovailoa", "note": "TE", "position": "QB", "sort_order": 2, "team": "ATL", "tier": 8, "xfp": 0}, {"bye": 7, "column_id": 8, "dif": 3.3, "fpts": 10.8, "name": "Dalton Kincaid", "note": "", "position": "TE", "sort_order": 3, "team": "BUF", "tier": 8, "xfp": 7.5}, {"bye": 8, "column_id": 6, "dif": 0, "fpts": 0, "name": "Jordyn Tyson", "note": "RB", "position": "WR", "sort_order": 3, "team": "NO", "tier": 8, "xfp": 0}, {"bye": 9, "column_id": 7, "dif": 1.1, "fpts": 12.3, "name": "Michael Pittman Jr.", "note": "", "position": "WR", "sort_order": 3, "team": "PIT", "tier": 8, "xfp": 11.2}, {"bye": 14, "column_id": 5, "dif": -1, "fpts": 12.5, "name": "Michael Wilson", "note": "WR", "position": "WR", "sort_order": 3, "team": "ARI", "tier": 8, "xfp": 13.5}, {"bye": 5, "column_id": 3, "dif": 0, "fpts": 0, "name": "Jonathon Brooks", "note": "", "position": "RB", "sort_order": 3, "team": "CAR", "tier": 8, "xfp": 0}, {"bye": 7, "column_id": 4, "dif": 1.2, "fpts": 8.7, "name": "Jacory Croskey-Merritt", "note": "", "position": "RB", "sort_order": 3, "team": "WAS", "tier": 8, "xfp": 7.5}, {"bye": 6, "column_id": 2, "dif": 0.6, "fpts": 8, "name": "Jordan Mason", "note": "", "position": "RB", "sort_order": 3, "team": "MIN", "tier": 8, "xfp": 7.4}, {"bye": 8, "column_id": 8, "dif": 0.3, "fpts": 4.4, "name": "Isaiah Likely", "note": "", "position": "TE", "sort_order": 4, "team": "NYG", "tier": 8, "xfp": 4.7}, {"bye": 7, "column_id": 6, "dif": 1.9, "fpts": 12.3, "name": "Quentin Johnston", "note": "", "position": "WR", "sort_order": 4, "team": "LAC", "tier": 8, "xfp": 10.4}, {"bye": 8, "column_id": 7, "dif": 3, "fpts": 9.8, "name": "Ricky Pearsall", "note": "", "position": "WR", "sort_order": 4, "team": "SF", "tier": 8, "xfp": 12.9}, {"bye": 10, "column_id": 5, "dif": 0, "fpts": 0, "name": "Makai Lemon", "note": "", "position": "WR", "sort_order": 4, "team": "PHI", "tier": 8, "xfp": 0}, {"bye": 8, "column_id": 3, "dif": 0, "fpts": 9.5, "name": "Tyrone Tracy Jr.", "note": "", "position": "RB", "sort_order": 4, "team": "NYG", "tier": 8, "xfp": 9.5}, {"bye": 7, "column_id": 4, "dif": 0.6, "fpts": 6.4, "name": "Chris Rodriguez Jr.", "note": "", "position": "RB", "sort_order": 4, "team": "JAC", "tier": 8, "xfp": 5.8}, {"bye": 14, "column_id": 2, "dif": 0.4, "fpts": 7.5, "name": "Tyler Allgeier", "note": "WR", "position": "RB", "sort_order": 4, "team": "ARI", "tier": 8, "xfp": 7.1}, {"bye": 13, "column_id": 8, "dif": 0.5, "fpts": 8, "name": "Mark Andrews", "note": "WR", "position": "TE", "sort_order": 5, "team": "BAL", "tier": 8, "xfp": 8.5}, {"bye": 7, "column_id": 6, "dif": 0.4, "fpts": 11.2, "name": "Jakobi Meyers", "note": "", "position": "WR", "sort_order": 5, "team": "JAC", "tier": 8, "xfp": 11.5}, {"bye": 6, "column_id": 7, "dif": 0.6, "fpts": 10.3, "name": "Jordan Addison", "note": "", "position": "WR", "sort_order": 5, "team": "MIN", "tier": 8, "xfp": 9.7}, {"bye": 9, "column_id": 5, "dif": -0.8, "fpts": 13.6, "name": "WanDale Robinson", "note": "RB", "position": "WR", "sort_order": 5, "team": "TEN", "tier": 8, "xfp": 14.4}, {"bye": 8, "column_id": 3, "dif": -2.1, "fpts": 9.2, "name": "Woody Marks", "note": "", "position": "RB", "sort_order": 5, "team": "HOU", "tier": 8, "xfp": 11.4}, {"bye": 11, "column_id": 4, "dif": 0.4, "fpts": 10.7, "name": "Zach Charbonnet", "note": "RB", "position": "RB", "sort_order": 5, "team": "SEA", "tier": 8, "xfp": 10.3}, {"bye": 11, "column_id": 2, "dif": 0.3, "fpts": 5.9, "name": "Dylan Sampson", "note": "RB", "position": "RB", "sort_order": 5, "team": "CLE", "tier": 8, "xfp": 5.5}, {"bye": 7, "column_id": 8, "dif": 0.1, "fpts": 7.6, "name": "Chig Okonkwo", "note": "", "position": "TE", "sort_order": 6, "team": "WAS", "tier": 8, "xfp": 7.7}, {"bye": 13, "column_id": 6, "dif": 0.8, "fpts": 8.5, "name": "Josh Downs", "note": "TE", "position": "WR", "sort_order": 6, "team": "IND", "tier": 8, "xfp": 9.3}, {"bye": 11, "column_id": 7, "dif": 1.7, "fpts": 8.1, "name": "Jayden Reed", "note": "QB", "position": "WR", "sort_order": 6, "team": "GB", "tier": 8, "xfp": 6.3}, {"bye": 5, "column_id": 5, "dif": 2.8, "fpts": 7.9, "name": "Xavier Worthy", "note": "", "position": "WR", "sort_order": 6, "team": "KC", "tier": 8, "xfp": 10.7}, {"bye": 9, "column_id": 3, "dif": 0.3, "fpts": 8.5, "name": "Tyjae Spears", "note": "OWNED", "position": "RB", "sort_order": 6, "team": "TEN", "tier": 8, "xfp": 8.8}, {"bye": 14, "column_id": 4, "dif": -1.9, "fpts": 11.1, "name": "James Conner", "note": "WR", "position": "RB", "sort_order": 6, "team": "ARI", "tier": 8, "xfp": 13}, {"bye": 8, "column_id": 8, "dif": 0.3, "fpts": 10.4, "name": "Dalton Schultz", "note": "", "position": "TE", "sort_order": 7, "team": "HOU", "tier": 8, "xfp": 10.7}, {"bye": 8, "column_id": 4, "dif": -2.6, "fpts": 9.3, "name": "Alvin Kamara", "note": "RB", "position": "RB", "sort_order": 7, "team": "NO", "tier": 8, "xfp": 12}, {"bye": 8, "column_id": 6, "dif": 0.4, "fpts": 7.5, "name": "Jayden Higgins", "note": "", "position": "WR", "sort_order": 7, "team": "HOU", "tier": 8, "xfp": 7.1}, {"bye": 7, "column_id": 7, "dif": 1.1, "fpts": 10.5, "name": "Khalil Shakir", "note": "", "position": "WR", "sort_order": 7, "team": "BUF", "tier": 8, "xfp": 9.3}, {"bye": 11, "column_id": 5, "dif": 0.7, "fpts": 10.2, "name": "Romeo Doubs", "note": "", "position": "WR", "sort_order": 7, "team": "NE", "tier": 8, "xfp": 10.9}, {"bye": 7, "column_id": 3, "dif": 0.5, "fpts": 4.6, "name": "Keaton Mitchell", "note": "", "position": "RB", "sort_order": 7, "team": "LAC", "tier": 8, "xfp": 4.1}, {"bye": 10, "column_id": 3, "dif": 0, "fpts": 0, "name": "Jonathan Coleman", "note": "", "position": "RB", "sort_order": 8, "team": "DEN", "tier": 8, "xfp": 0}, {"bye": 5, "column_id": 6, "dif": 1.8, "fpts": 7.3, "name": "Jalen Coker", "note": "", "position": "WR", "sort_order": 8, "team": "CAR", "tier": 8, "xfp": 5.5}, {"bye": 11, "column_id": 7, "dif": 0.4, "fpts": 5.2, "name": "Matthew Golden", "note": "QB", "position": "WR", "sort_order": 8, "team": "GB", "tier": 8, "xfp": 5.7}, {"bye": 11, "column_id": 5, "dif": 0, "fpts": 0, "name": "KC Concepcion", "note": "RB", "position": "WR", "sort_order": 8, "team": "CLE", "tier": 8, "xfp": 0}, {"bye": 11, "column_id": 6, "dif": 0.9, "fpts": 8.5, "name": "Rashid Shaheed", "note": "RB", "position": "WR", "sort_order": 9, "team": "SEA", "tier": 8, "xfp": 9.3}];
         let selectedComparePlayers = [];
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -7822,15 +8001,15 @@
                 return;
             }
             
-            // Logik für ROT
-            if (pos === 'RB' && (value === 'QB' || value === 'WR/TE')) {
+            // Logik für ROT: Wenn gegnerischer Spielertyp vorhanden
+            if (pos === 'RB' && (value === 'QB' || value === 'WR' || value === 'TE')) {
                 card.classList.add('status-red');
             } else if ((pos === 'QB' || pos === 'WR' || pos === 'TE') && value === 'RB') {
                 card.classList.add('status-red');
             }
             
             // Logik für GRÜN
-            if (pos === 'QB' && value === 'WR/TE') {
+            if (pos === 'QB' && (value === 'WR' || value === 'TE')) {
                 card.classList.add('status-green');
             } else if ((pos === 'WR' || pos === 'TE') && value === 'QB') {
                 card.classList.add('status-green');
@@ -7840,12 +8019,31 @@
         function toggleDrafted(checkbox) {
             const card = checkbox.closest('.player-card');
             if (card) {
+                const noteSelect = card.querySelector('.note-select');
                 if (checkbox.checked) {
                     card.classList.add('drafted');
+                    card.setAttribute('draggable', 'false');
+                    if (noteSelect) noteSelect.disabled = true; // Nicht mehr beschreibbar
                 } else {
                     card.classList.remove('drafted');
+                    card.setAttribute('draggable', 'true');
+                    if (noteSelect) noteSelect.disabled = false; // Wieder beschreibbar
                 }
             }
+        }
+
+        function filterPlayers(query) {
+            const cleanQuery = query.toLowerCase().trim();
+            const cards = document.querySelectorAll('.player-card');
+            
+            cards.forEach(card => {
+                const pName = card.getAttribute('data-id').toLowerCase();
+                if (cleanQuery === "" || pName.includes(cleanQuery)) {
+                    card.classList.remove('search-hidden');
+                } else {
+                    card.classList.add('search-hidden');
+                }
+            });
         }
 
         function toggleCompare(checkbox, cardId) {
@@ -7909,9 +8107,11 @@
             const grid = document.querySelector('.board-grid');
 
             grid.addEventListener('dragstart', (e) => {
-                if (e.target.classList.contains('player-card')) {
+                if (e.target.classList.contains('player-card') && e.target.getAttribute('draggable') !== 'false') {
                     e.target.classList.add('dragging');
                     e.dataTransfer.setData('text/plain', '');
+                } else if (e.target.getAttribute('draggable') === 'false') {
+                    e.preventDefault(); // Verhindert Dragging, wenn gedraftet
                 }
             });
 
