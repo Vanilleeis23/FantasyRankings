@@ -130,6 +130,19 @@
     "xfp": 15
   },
   {
+    "bye": 7,
+    "column_id": 4,
+    "dif": 3.3,
+    "fpts": 19,
+    "name": "James Cook",
+    "note": "",
+    "position": "RB",
+    "sort_order": 0,
+    "team": "BUF",
+    "tier": 2,
+    "xfp": 15.7
+  },
+  {
     "bye": 13,
     "column_id": 8,
     "dif": 1.4,
@@ -182,6 +195,32 @@
     "xfp": 16.6
   },
   {
+    "bye": 6,
+    "column_id": 2,
+    "dif": 3.5,
+    "fpts": 20.2,
+    "name": "DeVon Achane",
+    "note": "QB",
+    "position": "RB",
+    "sort_order": 0,
+    "team": "MIA",
+    "tier": 2,
+    "xfp": 16.7
+  },
+  {
+    "bye": 6,
+    "column_id": 3,
+    "dif": -0.3,
+    "fpts": 16.4,
+    "name": "Chase Brown",
+    "note": "",
+    "position": "RB",
+    "sort_order": 0,
+    "team": "CIN",
+    "tier": 2,
+    "xfp": 16.6
+  },
+  {
     "bye": 11,
     "column_id": 6,
     "dif": -0.1,
@@ -208,73 +247,8 @@
     "xfp": 15.8
   },
   {
-    "bye": 7,
-    "column_id": 3,
-    "dif": 0.8,
-    "fpts": 14.9,
-    "name": "Omarion Hampton",
-    "note": "",
-    "position": "RB",
-    "sort_order": 0,
-    "team": "LAC",
-    "tier": 2,
-    "xfp": 14.1
-  },
-  {
-    "bye": 5,
-    "column_id": 2,
-    "dif": 0.2,
-    "fpts": 10.9,
-    "name": "Kenneth Walker",
-    "note": "",
-    "position": "RB",
-    "sort_order": 0,
-    "team": "KC",
-    "tier": 2,
-    "xfp": 10.6
-  },
-  {
-    "bye": 10,
-    "column_id": 4,
-    "dif": -0.7,
-    "fpts": 14.5,
-    "name": "Saquon Barkley",
-    "note": "",
-    "position": "RB",
-    "sort_order": 0,
-    "team": "PHI",
-    "tier": 2,
-    "xfp": 15.2
-  },
-  {
-    "bye": 7,
-    "column_id": 3,
-    "dif": 3.3,
-    "fpts": 19,
-    "name": "James Cook",
-    "note": "",
-    "position": "RB",
-    "sort_order": 1,
-    "team": "BUF",
-    "tier": 2,
-    "xfp": 15.7
-  },
-  {
-    "bye": 6,
-    "column_id": 2,
-    "dif": 3.5,
-    "fpts": 20.2,
-    "name": "DeVon Achane",
-    "note": "QB",
-    "position": "RB",
-    "sort_order": 1,
-    "team": "MIA",
-    "tier": 2,
-    "xfp": 16.7
-  },
-  {
     "bye": 13,
-    "column_id": 4,
+    "column_id": 3,
     "dif": -0.5,
     "fpts": 14.6,
     "name": "Ashton Jeanty",
@@ -312,19 +286,6 @@
     "xfp": 16.3
   },
   {
-    "bye": 6,
-    "column_id": 2,
-    "dif": -0.3,
-    "fpts": 16.4,
-    "name": "Chase Brown",
-    "note": "",
-    "position": "RB",
-    "sort_order": 2,
-    "team": "CIN",
-    "tier": 2,
-    "xfp": 16.6
-  },
-  {
     "bye": 7,
     "column_id": 0,
     "dif": 0,
@@ -351,6 +312,19 @@
     "xfp": 0
   },
   {
+    "bye": 7,
+    "column_id": 4,
+    "dif": 0.8,
+    "fpts": 14.9,
+    "name": "Omarion Hampton",
+    "note": "",
+    "position": "RB",
+    "sort_order": 0,
+    "team": "LAC",
+    "tier": 3,
+    "xfp": 14.1
+  },
+  {
     "bye": 13,
     "column_id": 2,
     "dif": 2.9,
@@ -362,6 +336,19 @@
     "team": "BAL",
     "tier": 3,
     "xfp": 14
+  },
+  {
+    "bye": 5,
+    "column_id": 3,
+    "dif": 0.2,
+    "fpts": 10.9,
+    "name": "Kenneth Walker",
+    "note": "",
+    "position": "RB",
+    "sort_order": 0,
+    "team": "KC",
+    "tier": 3,
+    "xfp": 10.6
   },
   {
     "bye": 5,
@@ -390,19 +377,6 @@
     "xfp": 17.8
   },
   {
-    "bye": 14,
-    "column_id": 4,
-    "dif": 0,
-    "fpts": 0,
-    "name": "Jeremiyah Love",
-    "note": "WR",
-    "position": "RB",
-    "sort_order": 0,
-    "team": "ARI",
-    "tier": 3,
-    "xfp": 0
-  },
-  {
     "bye": 11,
     "column_id": 0,
     "dif": 0,
@@ -427,6 +401,32 @@
     "team": "CIN",
     "tier": 3,
     "xfp": 0
+  },
+  {
+    "bye": 14,
+    "column_id": 4,
+    "dif": 0,
+    "fpts": 0,
+    "name": "Jeremiyah Love",
+    "note": "WR",
+    "position": "RB",
+    "sort_order": 1,
+    "team": "ARI",
+    "tier": 3,
+    "xfp": 0
+  },
+  {
+    "bye": 10,
+    "column_id": 3,
+    "dif": -0.7,
+    "fpts": 14.5,
+    "name": "Saquon Barkley",
+    "note": "",
+    "position": "RB",
+    "sort_order": 1,
+    "team": "PHI",
+    "tier": 3,
+    "xfp": 15.2
   },
   {
     "bye": 7,
