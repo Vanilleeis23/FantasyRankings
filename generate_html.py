@@ -1,16 +1,42 @@
 import json
 import os
 
-def extract_last_name(full_name):
+def extract_last_name(full_name, all_players=None):
     if not full_name:
         return ""
+    
     parts = full_name.strip().split()
     if len(parts) <= 1:
         return full_name
+        
     suffixes = {'jr.', 'sr.', 'ii', 'iii', 'iv', 'v'}
+    
+    # Basis-Nachnamen bestimmen
     if parts[-1].lower() in suffixes and len(parts) > 2:
-        return f"{parts[-2]} {parts[-1]}"
-    return parts[-1]
+        last_name = f"{parts[-2]} {parts[-1]}"
+        base_last = parts[-2]
+    else:
+        last_name = parts[-1]
+        base_last = parts[-1]
+        
+    # Wenn die Spielerliste übergeben wurde, prüfen wir auf Duplikate
+    if all_players:
+        same_last_count = 0
+        for p in all_players:
+            p_name = p.get('name', '')
+            p_parts = p_name.strip().split()
+            if len(p_parts) > 1:
+                # Prüfen, ob der Nachname übereinstimmt (Suffix ignoriert)
+                p_last = p_parts[-2] if p_parts[-1].lower() in suffixes and len(p_parts) > 2 else p_parts[-1]
+                if p_last.lower() == base_last.lower():
+                    same_last_count += 1
+        
+        # Falls es mehr als einen Spieler mit diesem Nachnamen gibt, Vorinitial hinzufügen
+        if same_last_count > 1 and len(parts) > 1:
+            first_initial = parts[0][0].upper()
+            return f"{first_initial}. {last_name}"
+            
+    return last_name
 
 def generate_html():
     if not os.path.exists('players.json') or not os.path.exists('teams.json'):
@@ -50,7 +76,7 @@ def generate_html():
             # Setzt die Note auf z.B. 'RB', 'WR', 'TE' oder 'QB'
             # Prüfen, ob das Team in den erlaubten Teams ist UND die Kombi (Team, Position) existiert
             # Setze die Note auf die Position, die für dieses TEAM in Dynasty existiert
-            player['note'] = dict_team_positions_owned [p_team]
+            player['note'] = dict_team_positions_owned[p_team]
 
     print("---------------------------------------")
 
@@ -62,15 +88,15 @@ def generate_html():
     tiers_data = {t: {c: [] for c in range(9)} for t in range(1, 9)}
 
     columns_config = [
-        (0, 'QB', 0, '#f1c40f', '#fef9e7'), 
-        (1, 'QB', 1, '#f1c40f', '#fef9e7'),
-        (2, 'RB', 0, '#2ecc71', '#e8f8f5'), 
-        (3, 'RB', 1, '#2ecc71', '#e8f8f5'), 
-        (4, 'RB', 2, '#2ecc71', '#e8f8f5'),
-        (5, 'WR', 0, '#e67e22', '#fdf2e9'), 
-        (6, 'WR', 1, '#e67e22', '#fdf2e9'), 
-        (7, 'WR', 2, '#e67e22', '#fdf2e9'),
-        (8, 'TE', 0, '#e74c3c', '#fce4d6')
+        (0, 'QB', 0, '#ffffff', "#ffffff"), 
+        (1, 'QB', 1, '#ffffff', '#ffffff'),
+        (2, 'RB', 0, '#ffffff', '#ffffff'), 
+        (3, 'RB', 1, '#ffffff', '#ffffff'), 
+        (4, 'RB', 2, '#ffffff', '#ffffff'),
+        (5, 'WR', 0, '#ffffff', '#ffffff'), 
+        (6, 'WR', 1, '#ffffff', '#ffffff'), 
+        (7, 'WR', 2, '#ffffff', '#ffffff'),
+        (8, 'TE', 0, '#ffffff', '#ffffff')
     ]
     
     def get_column_id(pos, current_count):
@@ -108,7 +134,7 @@ def generate_html():
     <style>
         body {{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            background-color: #000000;
             margin: 0;
             padding: 10px;
             color: #333;
@@ -118,10 +144,10 @@ def generate_html():
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
-            background: #fff;
+            background: #000000;
             padding: 10px 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }}
         .search-container {{
             flex-grow: 1;
@@ -133,10 +159,15 @@ def generate_html():
             width: 100%;
             padding: 8px 12px;
             font-size: 0.9em;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #444;
             border-radius: 6px;
             outline: none;
+            background-color: #222;
+            color: #fff;
             transition: border-color 0.2s;
+        }}
+        .search-input::placeholder {{
+            color: #aaa;
         }}
         .search-input:focus {{
             border-color: #2563eb;
@@ -145,7 +176,7 @@ def generate_html():
             display: flex;
             gap: 10px;
         }}
-        h1 {{ margin: 0; font-size: 1.6em; color: #2c3e50; }}
+        h1 {{ margin: 0; font-size: 1.6em; color: #ffffff; }}
         
         .save-btn {{
             background-color: #2563eb;
@@ -195,7 +226,7 @@ def generate_html():
         .player-list-box.drag-over {{ background-color: #cbd5e1; border: 1px dashed #94a3b8; }}
         
         .player-card {{ 
-            background: #fff; 
+            background: #d1d5db; 
             border-radius: 4px; 
             margin-bottom: 4px; 
             box-shadow: 0 1px 2px rgba(0,0,0,0.04); 
@@ -292,15 +323,6 @@ def generate_html():
             font-size: 10px;
             color: #475569;
         }}
-        .note-select {{
-            width: 110px;
-            font-size: 10px;
-            padding: 2px;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
-            color: #334155;
-            background-color: #fff;
-        }}
 
         /* Compare Popup Styles */
         .compare-popup-overlay {{
@@ -387,7 +409,7 @@ def generate_html():
             tier_players = tiers_data[tier_num][col_id]
             for player in tier_players:
                 full_name = player['name']
-                last_name = extract_last_name(full_name)
+                last_name = extract_last_name(full_name, players)
                 t_code = player.get('team')
                 team_info = teams_dict.get(t_code, {})
                 current_note = player.get('note', '')
@@ -403,7 +425,7 @@ def generate_html():
                 dif_prefix = "+" if dif > 0 else ""
 
                 html_content += f"""
-            <li class="player-card" draggable="true" style="border-left-color: {color};" data-id="{player['name']}" data-pos="{player['position']}" id="player-card-{player['name'].replace(' ', '_').replace('.', '_')}">
+                <li class="player-card" draggable="true" style="border-left-color: {color};" data-id="{player['name']}" data-pos="{player['position']}" data-note="{current_note}" id="player-card-{player['name'].replace(' ', '_').replace('.', '_')}">
                 <div class="card-summary">
                     <div class="player-name">{last_name}</div>
                     <div class="bye-tag">{player['bye']}</div>
@@ -427,7 +449,7 @@ def generate_html():
                     
                     <div class="centered-section">
                         <strong>Slots</strong>
-                        <span>19h ({team_info.get('slots_1900', '-')}) • 22h ({team_info.get('slots_2200', '-')}) • Prime ({team_info.get('primetime', '-')})</span>
+                        <span>19: ({team_info.get('slots_1900', '-')}) • 22: ({team_info.get('slots_2200', '-')}) • PT: ({team_info.get('primetime', '-')})</span>
                     </div>
                     
                     <hr class="card-divider">
@@ -441,14 +463,9 @@ def generate_html():
                         <label onclick="event.stopPropagation();">
                             <input type="checkbox" class="compare-cb" onchange="toggleCompare(this, '{player['name'].replace(' ', '_').replace('.', '_')}')"> Compare
                         </label>
-                        <select class="note-select" onclick="event.stopPropagation();" onchange="updateCardColor(this.closest('.player-card'))" title="Dynasty Kader-Status">
-                            <option value="" {"selected" if current_note == "" else ""}>Free</option>
-                            <option value="OWNED" {"selected" if current_note == "OWNED" else ""}>OWNED</option>
-                            <option value="QB" {"selected" if current_note == "QB" else ""}>QB vorhanden</option>
-                            <option value="RB" {"selected" if current_note == "RB" else ""}>RB vorhanden</option>
-                            <option value="WR" {"selected" if current_note == "WR" else ""}>WR vorhanden</option>
-                            <option value="TE" {"selected" if current_note == "TE" else ""}>TE vorhanden</option>
-                        </select>
+                        <span class="note-display" style="font-size: 10px; font-weight: bold; color: #111827;">
+                            {current_note if current_note else "Free"}
+                        </span>
                     </div>
                 </div>
             </li>
@@ -470,10 +487,7 @@ def generate_html():
 
         function updateCardColor(card) {{
             const pos = card.getAttribute('data-pos');
-            const noteSelect = card.querySelector('.note-select');
-            if (!noteSelect) return;
-            
-            const value = noteSelect.value;
+            const value = card.getAttribute('data-note') || ""; // Liest die Note direkt aus dem data-note Attribut
             
             // Erst alle alten Statusklassen entfernen
             card.classList.remove('status-blue', 'status-red', 'status-green');
@@ -501,15 +515,12 @@ def generate_html():
         function toggleDrafted(checkbox) {{
             const card = checkbox.closest('.player-card');
             if (card) {{
-                const noteSelect = card.querySelector('.note-select');
                 if (checkbox.checked) {{
                     card.classList.add('drafted');
                     card.setAttribute('draggable', 'false');
-                    if (noteSelect) noteSelect.disabled = true; // Nicht mehr beschreibbar
                 }} else {{
                     card.classList.remove('drafted');
                     card.setAttribute('draggable', 'true');
-                    if (noteSelect) noteSelect.disabled = false; // Wieder beschreibbar
                 }}
             }}
         }}
@@ -541,7 +552,7 @@ def generate_html():
 
         function openComparePopup() {{
             if (selectedComparePlayers.length === 0) {{
-                alert('Bitte wähle zuerst mindestens einen Spieler über die \"Compare\"-Checkbox aus.');
+                alert('Bitte wähle zuerst mindestens einen Spieler über die "Compare"-Checkbox aus.');
                 return;
             }}
 
@@ -650,8 +661,7 @@ def generate_html():
 
                 cards.forEach((card, index) => {{
                     const pName = card.getAttribute('data-id');
-                    const noteSelect = card.querySelector('.note-select');
-                    const noteVal = noteSelect ? noteSelect.value : "";
+                    const noteVal = card.getAttribute('data-note') || ""; // Holt den Wert direkt aus dem Attribut
                     
                     currentLayout[pName] = {{
                         tier: tier,
