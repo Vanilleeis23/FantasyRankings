@@ -206,5 +206,18 @@
     "column_id": null,
     "sort_order": null,
     "note": "OWNED"
+  },
+  {
+    "bye": 10,
+    "column_id": null,
+    "dif": 0,
+    "fpts": 0,
+    "name": "Jonathan Coleman",
+    "note": "OWNED",
+    "position": "RB",
+    "sort_order": null,
+    "team": "DEN",
+    "tier": null,
+    "xfp": 0
   }
 ]
