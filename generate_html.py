@@ -238,9 +238,10 @@ def generate_html():
         }}
 
         /* Dynamische Statusfarben */
-        .player-card.status-blue {{ background-color: #dbeafe !important; }}
-        .player-card.status-red {{ background-color: #fee2e2 !important; }}
-        .player-card.status-green {{ background-color: #dcfce7 !important; }}
+        .player-card.status-blue {{ background-color: #00d4ff !important; }}
+        .player-card.status-red {{ background-color: #FF0000 !important; }}
+        .player-card.status-green {{ background-color: #008000 !important; }}
+        .player-card.status-orange {{ background-color: #ffa500 !important; }}
 
         .player-card.drafted {{
             opacity: 0.25;
@@ -490,7 +491,7 @@ def generate_html():
             const value = card.getAttribute('data-note') || ""; // Liest die Note direkt aus dem data-note Attribut
             
             // Erst alle alten Statusklassen entfernen
-            card.classList.remove('status-blue', 'status-red', 'status-green');
+            card.classList.remove('status-blue', 'status-red', 'status-green', 'status-orange');
             
             if (value === 'OWNED') {{
                 card.classList.add('status-blue');
@@ -509,6 +510,15 @@ def generate_html():
                 card.classList.add('status-green');
             }} else if ((pos === 'WR' || pos === 'TE') && value === 'QB') {{
                 card.classList.add('status-green');
+            }}
+
+            // Logik für ORANGE: TE mit WR-Note, WR mit TE-Note, WR mit WR-Note und TE mit TE-Note
+            if ((pos === 'TE' || pos === 'WR') && (value === 'WR' || value === 'TE')) {{
+                card.classList.add('status-orange');
+            }}
+            // Logik für ORANGE: RB mit RB-Note, WR mit TE-Note, WR mit WR-Note und TE mit TE-Note
+            if ((pos === 'RB') && (value === 'RB' )) {{
+                card.classList.add('status-orange');
             }}
         }}
 
