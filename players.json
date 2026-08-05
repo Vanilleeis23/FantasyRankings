@@ -681,7 +681,7 @@
     "dif": 0.8,
     "fpts": 12.1,
     "name": "Jaylen Waddle",
-    "note": "",
+    "note": "RB",
     "position": "WR",
     "sort_order": 1,
     "team": "DEN",
@@ -928,7 +928,7 @@
     "dif": 0,
     "fpts": 0,
     "name": "Bo Nix",
-    "note": "",
+    "note": "RB",
     "position": "QB",
     "sort_order": 2,
     "team": "DEN",
@@ -1235,6 +1235,19 @@
     "xfp": 10.3
   },
   {
+    "bye": 5,
+    "column_id": 8,
+    "dif": 1.1,
+    "fpts": 11.7,
+    "name": "Travis Kelce",
+    "note": "",
+    "position": "TE",
+    "sort_order": 0,
+    "team": "KC",
+    "tier": 7,
+    "xfp": 10.6
+  },
+  {
     "bye": 14,
     "column_id": 1,
     "dif": 0,
@@ -1266,7 +1279,7 @@
     "dif": 1.9,
     "fpts": 12.7,
     "name": "RJ Harvey",
-    "note": "",
+    "note": "RB",
     "position": "RB",
     "sort_order": 1,
     "team": "DEN",
@@ -1339,6 +1352,19 @@
     "xfp": 8.8
   },
   {
+    "bye": 8,
+    "column_id": 8,
+    "dif": 4.2,
+    "fpts": 15.4,
+    "name": "George Kittle",
+    "note": "",
+    "position": "TE",
+    "sort_order": 1,
+    "team": "SF",
+    "tier": 7,
+    "xfp": 11.2
+  },
+  {
     "bye": 6,
     "column_id": 2,
     "dif": 1,
@@ -1376,6 +1402,19 @@
     "team": "MIN",
     "tier": 7,
     "xfp": 7.4
+  },
+  {
+    "bye": 11,
+    "column_id": 7,
+    "dif": 0.4,
+    "fpts": 5.2,
+    "name": "Matthew Golden",
+    "note": "QB",
+    "position": "WR",
+    "sort_order": 2,
+    "team": "GB",
+    "tier": 7,
+    "xfp": 5.7
   },
   {
     "bye": 9,
@@ -1435,7 +1474,7 @@
     "dif": 0.6,
     "fpts": 11.6,
     "name": "J.K. Dobbins",
-    "note": "",
+    "note": "RB",
     "position": "RB",
     "sort_order": 0,
     "team": "DEN",
@@ -1461,7 +1500,7 @@
     "dif": -0.9,
     "fpts": 13.5,
     "name": "Courtland Sutton",
-    "note": "",
+    "note": "RB",
     "position": "WR",
     "sort_order": 0,
     "team": "DEN",
@@ -1519,19 +1558,6 @@
     "team": "NYJ",
     "tier": 8,
     "xfp": 0
-  },
-  {
-    "bye": 8,
-    "column_id": 8,
-    "dif": 4.2,
-    "fpts": 15.4,
-    "name": "George Kittle",
-    "note": "",
-    "position": "TE",
-    "sort_order": 1,
-    "team": "SF",
-    "tier": 8,
-    "xfp": 11.2
   },
   {
     "bye": 10,
@@ -1612,6 +1638,19 @@
     "xfp": 14.4
   },
   {
+    "bye": 7,
+    "column_id": 8,
+    "dif": 3.3,
+    "fpts": 10.8,
+    "name": "Dalton Kincaid",
+    "note": "",
+    "position": "TE",
+    "sort_order": 1,
+    "team": "BUF",
+    "tier": 8,
+    "xfp": 7.5
+  },
+  {
     "bye": 13,
     "column_id": 1,
     "dif": 0,
@@ -1623,19 +1662,6 @@
     "team": "IND",
     "tier": 8,
     "xfp": 0
-  },
-  {
-    "bye": 5,
-    "column_id": 8,
-    "dif": 1.1,
-    "fpts": 11.7,
-    "name": "Travis Kelce",
-    "note": "",
-    "position": "TE",
-    "sort_order": 2,
-    "team": "KC",
-    "tier": 8,
-    "xfp": 10.6
   },
   {
     "bye": 11,
@@ -1729,17 +1755,17 @@
     "xfp": 10.7
   },
   {
-    "bye": 7,
+    "bye": 8,
     "column_id": 8,
-    "dif": 3.3,
-    "fpts": 10.8,
-    "name": "Dalton Kincaid",
+    "dif": 0.3,
+    "fpts": 4.4,
+    "name": "Isaiah Likely",
     "note": "",
     "position": "TE",
-    "sort_order": 3,
-    "team": "BUF",
+    "sort_order": 2,
+    "team": "NYG",
     "tier": 8,
-    "xfp": 7.5
+    "xfp": 4.7
   },
   {
     "bye": 7,
@@ -1820,17 +1846,17 @@
     "xfp": 4.1
   },
   {
-    "bye": 8,
+    "bye": 13,
     "column_id": 8,
-    "dif": 0.3,
-    "fpts": 4.4,
-    "name": "Isaiah Likely",
-    "note": "",
+    "dif": 0.5,
+    "fpts": 8,
+    "name": "Mark Andrews",
+    "note": "WR",
     "position": "TE",
-    "sort_order": 4,
-    "team": "NYG",
+    "sort_order": 3,
+    "team": "BAL",
     "tier": 8,
-    "xfp": 4.7
+    "xfp": 8.5
   },
   {
     "bye": 6,
@@ -1877,7 +1903,7 @@
     "dif": 0,
     "fpts": 0,
     "name": "Jonathan Coleman",
-    "note": "",
+    "note": "OWNED",
     "position": "RB",
     "sort_order": 4,
     "team": "DEN",
@@ -1911,17 +1937,17 @@
     "xfp": 9.3
   },
   {
-    "bye": 13,
+    "bye": 7,
     "column_id": 8,
-    "dif": 0.5,
-    "fpts": 8,
-    "name": "Mark Andrews",
-    "note": "WR",
+    "dif": 0.1,
+    "fpts": 7.6,
+    "name": "Chig Okonkwo",
+    "note": "",
     "position": "TE",
-    "sort_order": 5,
-    "team": "BAL",
+    "sort_order": 4,
+    "team": "WAS",
     "tier": 8,
-    "xfp": 8.5
+    "xfp": 7.7
   },
   {
     "bye": 11,
@@ -1951,29 +1977,29 @@
   },
   {
     "bye": 7,
-    "column_id": 8,
-    "dif": 0.1,
-    "fpts": 7.6,
-    "name": "Chig Okonkwo",
-    "note": "",
-    "position": "TE",
-    "sort_order": 6,
-    "team": "WAS",
-    "tier": 8,
-    "xfp": 7.7
-  },
-  {
-    "bye": 7,
-    "column_id": 7,
+    "column_id": 5,
     "dif": 1.1,
     "fpts": 10.5,
     "name": "Khalil Shakir",
     "note": "",
     "position": "WR",
-    "sort_order": 6,
+    "sort_order": 5,
     "team": "BUF",
     "tier": 8,
     "xfp": 9.3
+  },
+  {
+    "bye": 8,
+    "column_id": 8,
+    "dif": 0.3,
+    "fpts": 10.4,
+    "name": "Dalton Schultz",
+    "note": "",
+    "position": "TE",
+    "sort_order": 5,
+    "team": "HOU",
+    "tier": 8,
+    "xfp": 10.7
   },
   {
     "bye": 11,
@@ -1987,31 +2013,5 @@
     "team": "SEA",
     "tier": 8,
     "xfp": 9.3
-  },
-  {
-    "bye": 8,
-    "column_id": 8,
-    "dif": 0.3,
-    "fpts": 10.4,
-    "name": "Dalton Schultz",
-    "note": "",
-    "position": "TE",
-    "sort_order": 7,
-    "team": "HOU",
-    "tier": 8,
-    "xfp": 10.7
-  },
-  {
-    "bye": 11,
-    "column_id": 7,
-    "dif": 0.4,
-    "fpts": 5.2,
-    "name": "Matthew Golden",
-    "note": "QB",
-    "position": "WR",
-    "sort_order": 7,
-    "team": "GB",
-    "tier": 8,
-    "xfp": 5.7
   }
 ]
