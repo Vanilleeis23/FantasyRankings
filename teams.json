@@ -246,5 +246,13 @@
     "slots_2200": 2,
     "primetime": 0,
     "playoffs_schedule": "IND  •  @LV  •  PIT"
+  },
+  {
+    "team_name": "Washington Commanders",
+    "team_code": "WAS",
+    "slots_1900": 6,
+    "slots_2200": 3,
+    "primetime": 5,
+    "playoffs_schedule": "ATL  •  @MIN  •  @JAX"
   }
 ]
