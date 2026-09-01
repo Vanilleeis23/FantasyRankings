@@ -676,6 +676,19 @@
     "xfp": 11.4
   },
   {
+    "bye": 11,
+    "column_id": 4,
+    "dif": -1.8,
+    "fpts": 12,
+    "name": "Quinshon Judkins",
+    "note": "OWNED",
+    "position": "RB",
+    "sort_order": 1,
+    "team": "CLE",
+    "tier": 4,
+    "xfp": 13.8
+  },
+  {
     "bye": 10,
     "column_id": 3,
     "dif": 1.6,
@@ -700,19 +713,6 @@
     "team": "CHI",
     "tier": 4,
     "xfp": 7.8
-  },
-  {
-    "bye": 11,
-    "column_id": 2,
-    "dif": -1.8,
-    "fpts": 12,
-    "name": "Quinshon Judkins",
-    "note": "OWNED",
-    "position": "RB",
-    "sort_order": 2,
-    "team": "CLE",
-    "tier": 4,
-    "xfp": 13.8
   },
   {
     "bye": 6,
@@ -936,19 +936,6 @@
     "xfp": 15.1
   },
   {
-    "bye": 11,
-    "column_id": 5,
-    "dif": 2.6,
-    "fpts": 13.2,
-    "name": "Christian Watson",
-    "note": "QB",
-    "position": "WR",
-    "sort_order": 2,
-    "team": "GB",
-    "tier": 5,
-    "xfp": 10.6
-  },
-  {
     "bye": 7,
     "column_id": 0,
     "dif": 0,
@@ -975,17 +962,17 @@
     "xfp": 0
   },
   {
-    "bye": 6,
-    "column_id": 8,
-    "dif": 3.5,
-    "fpts": 11.9,
-    "name": "Sam LaPorta",
-    "note": "WR",
-    "position": "TE",
+    "bye": 11,
+    "column_id": 6,
+    "dif": 2.6,
+    "fpts": 13.2,
+    "name": "Christian Watson",
+    "note": "QB",
+    "position": "WR",
     "sort_order": 0,
-    "team": "DET",
+    "team": "GB",
     "tier": 6,
-    "xfp": 8.4
+    "xfp": 10.6
   },
   {
     "bye": 11,
@@ -1079,17 +1066,17 @@
     "xfp": 10.9
   },
   {
-    "bye": 11,
-    "column_id": 6,
-    "dif": 0.4,
-    "fpts": 5.2,
-    "name": "Matthew Golden",
-    "note": "QB",
-    "position": "WR",
+    "bye": 8,
+    "column_id": 8,
+    "dif": 4.2,
+    "fpts": 15.4,
+    "name": "George Kittle",
+    "note": "",
+    "position": "TE",
     "sort_order": 0,
-    "team": "GB",
+    "team": "SF",
     "tier": 6,
-    "xfp": 5.7
+    "xfp": 11.2
   },
   {
     "bye": 11,
@@ -1118,19 +1105,6 @@
     "xfp": 0
   },
   {
-    "bye": 11,
-    "column_id": 8,
-    "dif": 0.4,
-    "fpts": 11.7,
-    "name": "Harold Fannin",
-    "note": "RB",
-    "position": "TE",
-    "sort_order": 1,
-    "team": "CLE",
-    "tier": 6,
-    "xfp": 11.3
-  },
-  {
     "bye": 8,
     "column_id": 1,
     "dif": 0,
@@ -1155,6 +1129,32 @@
     "team": "LAC",
     "tier": 6,
     "xfp": 10.4
+  },
+  {
+    "bye": 11,
+    "column_id": 6,
+    "dif": 0.4,
+    "fpts": 5.2,
+    "name": "Matthew Golden",
+    "note": "QB",
+    "position": "WR",
+    "sort_order": 1,
+    "team": "GB",
+    "tier": 6,
+    "xfp": 5.7
+  },
+  {
+    "bye": 11,
+    "column_id": 8,
+    "dif": 0.4,
+    "fpts": 11.7,
+    "name": "Harold Fannin",
+    "note": "RB",
+    "position": "TE",
+    "sort_order": 0,
+    "team": "CLE",
+    "tier": 7,
+    "xfp": 11.3
   },
   {
     "bye": 8,
@@ -1261,17 +1261,17 @@
     "xfp": 10.3
   },
   {
-    "bye": 5,
+    "bye": 6,
     "column_id": 8,
-    "dif": 1.1,
-    "fpts": 11.7,
-    "name": "Travis Kelce",
-    "note": "",
+    "dif": 3.5,
+    "fpts": 11.9,
+    "name": "Sam LaPorta",
+    "note": "WR",
     "position": "TE",
-    "sort_order": 0,
-    "team": "KC",
+    "sort_order": 1,
+    "team": "DET",
     "tier": 7,
-    "xfp": 10.6
+    "xfp": 8.4
   },
   {
     "bye": 14,
@@ -1352,19 +1352,6 @@
     "xfp": 8.8
   },
   {
-    "bye": 8,
-    "column_id": 8,
-    "dif": 4.2,
-    "fpts": 15.4,
-    "name": "George Kittle",
-    "note": "",
-    "position": "TE",
-    "sort_order": 1,
-    "team": "SF",
-    "tier": 7,
-    "xfp": 11.2
-  },
-  {
     "bye": 14,
     "column_id": 6,
     "dif": -1,
@@ -1376,6 +1363,19 @@
     "team": "ARI",
     "tier": 7,
     "xfp": 13.5
+  },
+  {
+    "bye": 5,
+    "column_id": 8,
+    "dif": 1.1,
+    "fpts": 11.7,
+    "name": "Travis Kelce",
+    "note": "",
+    "position": "TE",
+    "sort_order": 2,
+    "team": "KC",
+    "tier": 7,
+    "xfp": 10.6
   },
   {
     "bye": 6,
