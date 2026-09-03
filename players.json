@@ -1586,32 +1586,6 @@
     "xfp": 0
   },
   {
-    "bye": 8,
-    "column_id": 3,
-    "dif": 0,
-    "fpts": 9.5,
-    "name": "Tyrone Tracy",
-    "note": "",
-    "position": "RB",
-    "sort_order": 1,
-    "team": "NYG",
-    "tier": 8,
-    "xfp": 9.5
-  },
-  {
-    "bye": 14,
-    "column_id": 2,
-    "dif": 0.4,
-    "fpts": 7.5,
-    "name": "Tyler Allgeier",
-    "note": "WR",
-    "position": "RB",
-    "sort_order": 1,
-    "team": "ARI",
-    "tier": 8,
-    "xfp": 7.1
-  },
-  {
     "bye": 9,
     "column_id": 5,
     "dif": -0.8,
@@ -1768,45 +1742,6 @@
     "xfp": 7.5
   },
   {
-    "bye": 8,
-    "column_id": 7,
-    "dif": 3,
-    "fpts": 9.8,
-    "name": "Ricky Pearsall",
-    "note": "",
-    "position": "WR",
-    "sort_order": 3,
-    "team": "SF",
-    "tier": 8,
-    "xfp": 12.9
-  },
-  {
-    "bye": 13,
-    "column_id": 6,
-    "dif": 0.8,
-    "fpts": 8.5,
-    "name": "Josh Downs",
-    "note": "TE",
-    "position": "WR",
-    "sort_order": 3,
-    "team": "IND",
-    "tier": 8,
-    "xfp": 9.3
-  },
-  {
-    "bye": 14,
-    "column_id": 4,
-    "dif": -1.9,
-    "fpts": 11.1,
-    "name": "James Conner",
-    "note": "WR",
-    "position": "RB",
-    "sort_order": 3,
-    "team": "ARI",
-    "tier": 8,
-    "xfp": 13
-  },
-  {
     "bye": 11,
     "column_id": 5,
     "dif": 0.7,
@@ -1872,19 +1807,6 @@
     "xfp": 12
   },
   {
-    "bye": 8,
-    "column_id": 6,
-    "dif": 0.4,
-    "fpts": 7.5,
-    "name": "Jayden Higgins",
-    "note": "",
-    "position": "WR",
-    "sort_order": 4,
-    "team": "HOU",
-    "tier": 8,
-    "xfp": 7.1
-  },
-  {
     "bye": 10,
     "column_id": 3,
     "dif": 0,
@@ -1922,19 +1844,6 @@
     "team": "TEN",
     "tier": 8,
     "xfp": 9.3
-  },
-  {
-    "bye": 7,
-    "column_id": 8,
-    "dif": 0.1,
-    "fpts": 7.6,
-    "name": "Chig Okonkwo",
-    "note": "",
-    "position": "TE",
-    "sort_order": 4,
-    "team": "WAS",
-    "tier": 8,
-    "xfp": 7.7
   },
   {
     "bye": 11,
@@ -2002,16 +1911,43 @@
     "xfp": 10.7
   },
   {
-    "bye": 11,
+    "bye": 8,
     "column_id": 6,
-    "dif": 0.9,
-    "fpts": 8.5,
-    "name": "Rashid Shaheed",
-    "note": "RB",
+    "dif": 0,
+    "fpts": 0,
+    "name": "Dezhaun Stribling",
+    "note": "",
     "position": "WR",
     "sort_order": 6,
-    "team": "SEA",
+    "team": "SF",
     "tier": 8,
-    "xfp": 9.3
+    "xfp": 0
+  }
+  ,
+  {
+    "bye": 13,
+    "column_id": 4,
+    "dif": 0,
+    "fpts": 0,
+    "name": "Mike Washington",
+    "note": "",
+    "position": "RB",
+    "sort_order": 5,
+    "team": "LV",
+    "tier": 8,
+    "xfp": 0
+  },
+  {
+    "bye": 11,
+    "column_id": 4,
+    "dif": 0,
+    "fpts": 0,
+    "name": "Marshawn Lloyd",
+    "note": "QB",
+    "position": "RB",
+    "sort_order": 6,
+    "team": "GB",
+    "tier": 8,
+    "xfp": 0
   }
 ]
