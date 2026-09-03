@@ -442,6 +442,19 @@
     "xfp": 15.8
   },
   {
+    "bye": 14,
+    "column_id": 4,
+    "dif": 0,
+    "fpts": 0,
+    "name": "Jeremiyah Love",
+    "note": "WR",
+    "position": "RB",
+    "sort_order": 0,
+    "team": "ARI",
+    "tier": 3,
+    "xfp": 0
+  },
+  {
     "bye": 10,
     "column_id": 1,
     "dif": 0,
@@ -507,17 +520,17 @@
     "xfp": 12.2
   },
   {
-    "bye": 14,
+    "bye": 8,
     "column_id": 2,
-    "dif": 0,
-    "fpts": 0,
-    "name": "Jeremiyah Love",
-    "note": "WR",
+    "dif": 1.3,
+    "fpts": 15.6,
+    "name": "Travis Etienne",
+    "note": "OWNED",
     "position": "RB",
-    "sort_order": 0,
-    "team": "ARI",
-    "tier": 4,
-    "xfp": 0
+    "sort_order": 1,
+    "team": "NO",
+    "tier": 3,
+    "xfp": 14.3
   },
   {
     "bye": 13,
@@ -598,19 +611,6 @@
     "xfp": 12.8
   },
   {
-    "bye": 8,
-    "column_id": 3,
-    "dif": 1.3,
-    "fpts": 15.6,
-    "name": "Travis Etienne",
-    "note": "OWNED",
-    "position": "RB",
-    "sort_order": 0,
-    "team": "NO",
-    "tier": 4,
-    "xfp": 14.3
-  },
-  {
     "bye": 13,
     "column_id": 8,
     "dif": 0,
@@ -631,10 +631,23 @@
     "name": "Cam Skattebo",
     "note": "",
     "position": "RB",
-    "sort_order": 1,
+    "sort_order": 0,
     "team": "NYG",
     "tier": 4,
     "xfp": 14.9
+  },
+  {
+    "bye": 10,
+    "column_id": 3,
+    "dif": 1.6,
+    "fpts": 15,
+    "name": "DAndre Swift",
+    "note": "",
+    "position": "RB",
+    "sort_order": 0,
+    "team": "CHI",
+    "tier": 4,
+    "xfp": 13.4
   },
   {
     "bye": 14,
@@ -690,19 +703,6 @@
   },
   {
     "bye": 10,
-    "column_id": 3,
-    "dif": 1.6,
-    "fpts": 15,
-    "name": "DAndre Swift",
-    "note": "",
-    "position": "RB",
-    "sort_order": 1,
-    "team": "CHI",
-    "tier": 4,
-    "xfp": 13.4
-  },
-  {
-    "bye": 10,
     "column_id": 8,
     "dif": 1.6,
     "fpts": 9.3,
@@ -713,6 +713,19 @@
     "team": "CHI",
     "tier": 4,
     "xfp": 7.8
+  },
+  {
+    "bye": 11,
+    "column_id": 2,
+    "dif": 0,
+    "fpts": 0,
+    "name": "Jadarian Price",
+    "note": "OWNED",
+    "position": "RB",
+    "sort_order": 1,
+    "team": "SEA",
+    "tier": 4,
+    "xfp": 0
   },
   {
     "bye": 6,
@@ -845,19 +858,6 @@
     "xfp": 14.8
   },
   {
-    "bye": 11,
-    "column_id": 3,
-    "dif": 0,
-    "fpts": 0,
-    "name": "Jadarian Price",
-    "note": "OWNED",
-    "position": "RB",
-    "sort_order": 1,
-    "team": "SEA",
-    "tier": 5,
-    "xfp": 0
-  },
-  {
     "bye": 10,
     "column_id": 0,
     "dif": 0,
@@ -897,19 +897,6 @@
     "xfp": 9.4
   },
   {
-    "bye": 10,
-    "column_id": 6,
-    "dif": 2.1,
-    "fpts": 8.6,
-    "name": "Luther Burden",
-    "note": "",
-    "position": "WR",
-    "sort_order": 1,
-    "team": "CHI",
-    "tier": 5,
-    "xfp": 6.5
-  },
-  {
     "bye": 6,
     "column_id": 7,
     "dif": 2.5,
@@ -934,6 +921,32 @@
     "team": "CHI",
     "tier": 5,
     "xfp": 15.1
+  },
+  {
+    "bye": 9,
+    "column_id": 4,
+    "dif": -0.7,
+    "fpts": 11.2,
+    "name": "Tony Pollard",
+    "note": "OWNED",
+    "position": "RB",
+    "sort_order": 1,
+    "team": "TEN",
+    "tier": 5,
+    "xfp": 11.9
+  },
+  {
+    "bye": 11,
+    "column_id": 6,
+    "dif": 0.4,
+    "fpts": 5.2,
+    "name": "Matthew Golden",
+    "note": "QB",
+    "position": "WR",
+    "sort_order": 1,
+    "team": "GB",
+    "tier": 5,
+    "xfp": 5.7
   },
   {
     "bye": 7,
@@ -963,16 +976,42 @@
   },
   {
     "bye": 11,
-    "column_id": 6,
+    "column_id": 5,
     "dif": 2.6,
     "fpts": 13.2,
     "name": "Christian Watson",
     "note": "QB",
     "position": "WR",
-    "sort_order": 0,
+    "sort_order": 2,
     "team": "GB",
-    "tier": 6,
+    "tier": 5,
     "xfp": 10.6
+  },
+  {
+    "bye": 14,
+    "column_id": 7,
+    "dif": 1.8,
+    "fpts": 10.5,
+    "name": "Marvin Harrison",
+    "note": "OWNED",
+    "position": "WR",
+    "sort_order": 2,
+    "team": "ARI",
+    "tier": 5,
+    "xfp": 12.2
+  },
+  {
+    "bye": 10,
+    "column_id": 6,
+    "dif": 2.1,
+    "fpts": 8.6,
+    "name": "Luther Burden",
+    "note": "",
+    "position": "WR",
+    "sort_order": 0,
+    "team": "CHI",
+    "tier": 6,
+    "xfp": 6.5
   },
   {
     "bye": 11,
@@ -1002,19 +1041,6 @@
   },
   {
     "bye": 9,
-    "column_id": 2,
-    "dif": -0.7,
-    "fpts": 11.2,
-    "name": "Tony Pollard",
-    "note": "OWNED",
-    "position": "RB",
-    "sort_order": 0,
-    "team": "TEN",
-    "tier": 6,
-    "xfp": 11.9
-  },
-  {
-    "bye": 9,
     "column_id": 3,
     "dif": 0.6,
     "fpts": 13.3,
@@ -1038,19 +1064,6 @@
     "team": "CAR",
     "tier": 6,
     "xfp": 0
-  },
-  {
-    "bye": 14,
-    "column_id": 7,
-    "dif": 1.8,
-    "fpts": 10.5,
-    "name": "Marvin Harrison",
-    "note": "OWNED",
-    "position": "WR",
-    "sort_order": 0,
-    "team": "ARI",
-    "tier": 6,
-    "xfp": 12.2
   },
   {
     "bye": 7,
@@ -1086,10 +1099,23 @@
     "name": "TreVeyon Henderson",
     "note": "",
     "position": "RB",
-    "sort_order": 1,
+    "sort_order": 0,
     "team": "NE",
     "tier": 6,
     "xfp": 10.3
+  },
+  {
+    "bye": 7,
+    "column_id": 7,
+    "dif": 1.9,
+    "fpts": 12.3,
+    "name": "Quentin Johnston",
+    "note": "",
+    "position": "WR",
+    "sort_order": 0,
+    "team": "LAC",
+    "tier": 6,
+    "xfp": 10.4
   },
   {
     "bye": 10,
@@ -1118,30 +1144,30 @@
     "xfp": 0
   },
   {
-    "bye": 7,
+    "bye": 8,
     "column_id": 5,
-    "dif": 1.9,
-    "fpts": 12.3,
-    "name": "Quentin Johnston",
+    "dif": -6.4,
+    "fpts": 11.3,
+    "name": "Mike Evans",
     "note": "",
     "position": "WR",
     "sort_order": 1,
-    "team": "LAC",
+    "team": "SF",
     "tier": 6,
-    "xfp": 10.4
+    "xfp": 17.8
   },
   {
-    "bye": 11,
+    "bye": 9,
     "column_id": 6,
-    "dif": 0.4,
-    "fpts": 5.2,
-    "name": "Matthew Golden",
-    "note": "QB",
+    "dif": -0.2,
+    "fpts": 12.5,
+    "name": "DK Metcalf",
+    "note": "",
     "position": "WR",
     "sort_order": 1,
-    "team": "GB",
+    "team": "PIT",
     "tier": 6,
-    "xfp": 5.7
+    "xfp": 12.7
   },
   {
     "bye": 11,
@@ -1155,19 +1181,6 @@
     "team": "CLE",
     "tier": 7,
     "xfp": 11.3
-  },
-  {
-    "bye": 8,
-    "column_id": 5,
-    "dif": -6.4,
-    "fpts": 11.3,
-    "name": "Mike Evans",
-    "note": "",
-    "position": "WR",
-    "sort_order": 0,
-    "team": "SF",
-    "tier": 7,
-    "xfp": 17.8
   },
   {
     "bye": 9,
@@ -1222,19 +1235,6 @@
     "xfp": 11.7
   },
   {
-    "bye": 7,
-    "column_id": 7,
-    "dif": 2.1,
-    "fpts": 10.1,
-    "name": "Brian Thomas",
-    "note": "",
-    "position": "WR",
-    "sort_order": 0,
-    "team": "JAC",
-    "tier": 7,
-    "xfp": 12.1
-  },
-  {
     "bye": 5,
     "column_id": 0,
     "dif": 0,
@@ -1261,6 +1261,45 @@
     "xfp": 10.3
   },
   {
+    "bye": 9,
+    "column_id": 5,
+    "dif": 0,
+    "fpts": 0,
+    "name": "Carnell Tate",
+    "note": "RB",
+    "position": "WR",
+    "sort_order": 0,
+    "team": "TEN",
+    "tier": 7,
+    "xfp": 0
+  },
+  {
+    "bye": 10,
+    "column_id": 7,
+    "dif": 0.1,
+    "fpts": 9.9,
+    "name": "Chris Godwin",
+    "note": "QB",
+    "position": "WR",
+    "sort_order": 0,
+    "team": "TB",
+    "tier": 7,
+    "xfp": 9.8
+  },
+  {
+    "bye": 7,
+    "column_id": 5,
+    "dif": 2.1,
+    "fpts": 10.1,
+    "name": "Brian Thomas",
+    "note": "",
+    "position": "WR",
+    "sort_order": 1,
+    "team": "JAC",
+    "tier": 7,
+    "xfp": 12.1
+  },
+  {
     "bye": 6,
     "column_id": 8,
     "dif": 3.5,
@@ -1283,19 +1322,6 @@
     "position": "QB",
     "sort_order": 1,
     "team": "ARI",
-    "tier": 7,
-    "xfp": 0
-  },
-  {
-    "bye": 9,
-    "column_id": 5,
-    "dif": 0,
-    "fpts": 0,
-    "name": "Carnell Tate",
-    "note": "RB",
-    "position": "WR",
-    "sort_order": 1,
-    "team": "TEN",
     "tier": 7,
     "xfp": 0
   },
@@ -1443,19 +1469,6 @@
     "xfp": 11.7
   },
   {
-    "bye": 9,
-    "column_id": 7,
-    "dif": -0.2,
-    "fpts": 12.5,
-    "name": "DK Metcalf",
-    "note": "",
-    "position": "WR",
-    "sort_order": 0,
-    "team": "PIT",
-    "tier": 8,
-    "xfp": 12.7
-  },
-  {
     "bye": 10,
     "column_id": 4,
     "dif": 0.6,
@@ -1521,6 +1534,19 @@
     "xfp": 0
   },
   {
+    "bye": 9,
+    "column_id": 7,
+    "dif": 1.1,
+    "fpts": 12.3,
+    "name": "Michael Pittman",
+    "note": "",
+    "position": "WR",
+    "sort_order": 0,
+    "team": "PIT",
+    "tier": 8,
+    "xfp": 11.2
+  },
+  {
     "bye": 11,
     "column_id": 1,
     "dif": 0,
@@ -1545,19 +1571,6 @@
     "team": "NYJ",
     "tier": 8,
     "xfp": 0
-  },
-  {
-    "bye": 10,
-    "column_id": 7,
-    "dif": 0.1,
-    "fpts": 9.9,
-    "name": "Chris Godwin",
-    "note": "QB",
-    "position": "WR",
-    "sort_order": 1,
-    "team": "TB",
-    "tier": 8,
-    "xfp": 9.8
   },
   {
     "bye": 7,
@@ -1612,6 +1625,45 @@
     "xfp": 7.5
   },
   {
+    "bye": 8,
+    "column_id": 3,
+    "dif": -2.1,
+    "fpts": 9.2,
+    "name": "Woody Marks",
+    "note": "",
+    "position": "RB",
+    "sort_order": 1,
+    "team": "HOU",
+    "tier": 8,
+    "xfp": 11.4
+  },
+  {
+    "bye": 11,
+    "column_id": 2,
+    "dif": 0.3,
+    "fpts": 5.9,
+    "name": "Dylan Sampson",
+    "note": "RB",
+    "position": "RB",
+    "sort_order": 1,
+    "team": "CLE",
+    "tier": 8,
+    "xfp": 5.5
+  },
+  {
+    "bye": 6,
+    "column_id": 7,
+    "dif": 0.6,
+    "fpts": 10.3,
+    "name": "Jordan Addison",
+    "note": "",
+    "position": "WR",
+    "sort_order": 1,
+    "team": "MIN",
+    "tier": 8,
+    "xfp": 9.7
+  },
+  {
     "bye": 13,
     "column_id": 1,
     "dif": 0,
@@ -1638,19 +1690,6 @@
     "xfp": 0
   },
   {
-    "bye": 9,
-    "column_id": 7,
-    "dif": 1.1,
-    "fpts": 12.3,
-    "name": "Michael Pittman",
-    "note": "",
-    "position": "WR",
-    "sort_order": 2,
-    "team": "PIT",
-    "tier": 8,
-    "xfp": 11.2
-  },
-  {
     "bye": 7,
     "column_id": 4,
     "dif": 0.6,
@@ -1675,32 +1714,6 @@
     "team": "JAC",
     "tier": 8,
     "xfp": 11.5
-  },
-  {
-    "bye": 8,
-    "column_id": 3,
-    "dif": -2.1,
-    "fpts": 9.2,
-    "name": "Woody Marks",
-    "note": "",
-    "position": "RB",
-    "sort_order": 2,
-    "team": "HOU",
-    "tier": 8,
-    "xfp": 11.4
-  },
-  {
-    "bye": 11,
-    "column_id": 2,
-    "dif": 0.3,
-    "fpts": 5.9,
-    "name": "Dylan Sampson",
-    "note": "RB",
-    "position": "RB",
-    "sort_order": 2,
-    "team": "CLE",
-    "tier": 8,
-    "xfp": 5.5
   },
   {
     "bye": 5,
@@ -1736,10 +1749,36 @@
     "name": "Jacory Croskey-Merritt",
     "note": "",
     "position": "RB",
-    "sort_order": 3,
+    "sort_order": 2,
     "team": "WAS",
     "tier": 8,
     "xfp": 7.5
+  },
+  {
+    "bye": 7,
+    "column_id": 3,
+    "dif": 0.5,
+    "fpts": 4.6,
+    "name": "Keaton Mitchell",
+    "note": "",
+    "position": "RB",
+    "sort_order": 2,
+    "team": "LAC",
+    "tier": 8,
+    "xfp": 4.1
+  },
+  {
+    "bye": 11,
+    "column_id": 7,
+    "dif": 1.7,
+    "fpts": 8.1,
+    "name": "Jayden Reed",
+    "note": "QB",
+    "position": "WR",
+    "sort_order": 2,
+    "team": "GB",
+    "tier": 8,
+    "xfp": 6.3
   },
   {
     "bye": 11,
@@ -1755,19 +1794,6 @@
     "xfp": 10.9
   },
   {
-    "bye": 7,
-    "column_id": 3,
-    "dif": 0.5,
-    "fpts": 4.6,
-    "name": "Keaton Mitchell",
-    "note": "",
-    "position": "RB",
-    "sort_order": 3,
-    "team": "LAC",
-    "tier": 8,
-    "xfp": 4.1
-  },
-  {
     "bye": 13,
     "column_id": 8,
     "dif": 0.5,
@@ -1781,19 +1807,6 @@
     "xfp": 8.5
   },
   {
-    "bye": 6,
-    "column_id": 7,
-    "dif": 0.6,
-    "fpts": 10.3,
-    "name": "Jordan Addison",
-    "note": "",
-    "position": "WR",
-    "sort_order": 4,
-    "team": "MIN",
-    "tier": 8,
-    "xfp": 9.7
-  },
-  {
     "bye": 8,
     "column_id": 4,
     "dif": -2.6,
@@ -1801,7 +1814,7 @@
     "name": "Alvin Kamara",
     "note": "RB",
     "position": "RB",
-    "sort_order": 4,
+    "sort_order": 3,
     "team": "NO",
     "tier": 8,
     "xfp": 12
@@ -1814,10 +1827,36 @@
     "name": "Jonathan Coleman",
     "note": "OWNED",
     "position": "RB",
-    "sort_order": 4,
+    "sort_order": 3,
     "team": "DEN",
     "tier": 8,
     "xfp": 0
+  },
+  {
+    "bye": 9,
+    "column_id": 2,
+    "dif": 0,
+    "fpts": 0,
+    "name": "Nic Singleton",
+    "note": "OWNED",
+    "position": "RB",
+    "sort_order": 3,
+    "team": "TEN",
+    "tier": 8,
+    "xfp": 9.3
+  },
+  {
+    "bye": 5,
+    "column_id": 6,
+    "dif": 1.8,
+    "fpts": 7.3,
+    "name": "Jalen Coker",
+    "note": "",
+    "position": "WR",
+    "sort_order": 3,
+    "team": "CAR",
+    "tier": 8,
+    "xfp": 5.5
   },
   {
     "bye": 11,
@@ -1833,19 +1872,6 @@
     "xfp": 0
   },
   {
-    "bye": 9,
-    "column_id": 2,
-    "dif": 0,
-    "fpts": 0,
-    "name": "Nic Singleton",
-    "note": "OWNED",
-    "position": "RB",
-    "sort_order": 4,
-    "team": "TEN",
-    "tier": 8,
-    "xfp": 9.3
-  },
-  {
     "bye": 11,
     "column_id": 3,
     "dif": 1.1,
@@ -1853,36 +1879,62 @@
     "name": "Josh Jacobs",
     "note": "QB",
     "position": "RB",
-    "sort_order": 5,
+    "sort_order": 4,
     "team": "GB",
     "tier": 8,
     "xfp": 14.8
   },
   {
-    "bye": 11,
-    "column_id": 7,
-    "dif": 1.7,
-    "fpts": 8.1,
-    "name": "Jayden Reed",
-    "note": "QB",
-    "position": "WR",
-    "sort_order": 5,
-    "team": "GB",
+    "bye": 8,
+    "column_id": 8,
+    "dif": 0.3,
+    "fpts": 10.4,
+    "name": "Dalton Schultz",
+    "note": "",
+    "position": "TE",
+    "sort_order": 4,
+    "team": "HOU",
     "tier": 8,
-    "xfp": 6.3
+    "xfp": 10.7
   },
   {
-    "bye": 5,
+    "bye": 8,
     "column_id": 6,
-    "dif": 1.8,
-    "fpts": 7.3,
-    "name": "Jalen Coker",
+    "dif": 0,
+    "fpts": 0,
+    "name": "Dezhaun Stribling",
     "note": "",
     "position": "WR",
-    "sort_order": 5,
-    "team": "CAR",
+    "sort_order": 4,
+    "team": "SF",
     "tier": 8,
-    "xfp": 5.5
+    "xfp": 0
+  },
+  {
+    "bye": 13,
+    "column_id": 4,
+    "dif": 0,
+    "fpts": 0,
+    "name": "Mike Washington",
+    "note": "",
+    "position": "RB",
+    "sort_order": 4,
+    "team": "LV",
+    "tier": 8,
+    "xfp": 0
+  },
+  {
+    "bye": 11,
+    "column_id": 2,
+    "dif": 0,
+    "fpts": 0,
+    "name": "Marshawn Lloyd",
+    "note": "QB",
+    "position": "RB",
+    "sort_order": 4,
+    "team": "GB",
+    "tier": 8,
+    "xfp": 0
   },
   {
     "bye": 7,
@@ -1896,58 +1948,5 @@
     "team": "BUF",
     "tier": 8,
     "xfp": 9.3
-  },
-  {
-    "bye": 8,
-    "column_id": 8,
-    "dif": 0.3,
-    "fpts": 10.4,
-    "name": "Dalton Schultz",
-    "note": "",
-    "position": "TE",
-    "sort_order": 5,
-    "team": "HOU",
-    "tier": 8,
-    "xfp": 10.7
-  },
-  {
-    "bye": 8,
-    "column_id": 6,
-    "dif": 0,
-    "fpts": 0,
-    "name": "Dezhaun Stribling",
-    "note": "",
-    "position": "WR",
-    "sort_order": 6,
-    "team": "SF",
-    "tier": 8,
-    "xfp": 0
-  }
-  ,
-  {
-    "bye": 13,
-    "column_id": 4,
-    "dif": 0,
-    "fpts": 0,
-    "name": "Mike Washington",
-    "note": "",
-    "position": "RB",
-    "sort_order": 5,
-    "team": "LV",
-    "tier": 8,
-    "xfp": 0
-  },
-  {
-    "bye": 11,
-    "column_id": 4,
-    "dif": 0,
-    "fpts": 0,
-    "name": "Marshawn Lloyd",
-    "note": "QB",
-    "position": "RB",
-    "sort_order": 6,
-    "team": "GB",
-    "tier": 8,
-    "xfp": 0
   }
 ]
