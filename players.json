@@ -482,6 +482,19 @@
   },
   {
     "bye": 10,
+    "column_id": 8,
+    "dif": 1.6,
+    "fpts": 9.3,
+    "name": "Colston Loveland",
+    "note": "",
+    "position": "TE",
+    "sort_order": 0,
+    "team": "CHI",
+    "tier": 3,
+    "xfp": 7.8
+  },
+  {
+    "bye": 10,
     "column_id": 1,
     "dif": 0,
     "fpts": 0,
@@ -715,19 +728,6 @@
     "xfp": 11.4
   },
   {
-    "bye": 10,
-    "column_id": 8,
-    "dif": 1.6,
-    "fpts": 9.3,
-    "name": "Colston Loveland",
-    "note": "",
-    "position": "TE",
-    "sort_order": 1,
-    "team": "CHI",
-    "tier": 4,
-    "xfp": 7.8
-  },
-  {
     "bye": 7,
     "column_id": 4,
     "dif": 0.6,
@@ -845,19 +845,6 @@
     "xfp": 9.7
   },
   {
-    "bye": 11,
-    "column_id": 8,
-    "dif": 1,
-    "fpts": 12.4,
-    "name": "Kyle Pitts Sr.",
-    "note": "OWNED",
-    "position": "TE",
-    "sort_order": 0,
-    "team": "ATL",
-    "tier": 5,
-    "xfp": 11.5
-  },
-  {
     "bye": 7,
     "column_id": 5,
     "dif": 0.4,
@@ -884,6 +871,19 @@
     "xfp": 14.8
   },
   {
+    "bye": 11,
+    "column_id": 8,
+    "dif": 5.3,
+    "fpts": 14.7,
+    "name": "Tucker Kraft",
+    "note": "QB",
+    "position": "TE",
+    "sort_order": 0,
+    "team": "GB",
+    "tier": 5,
+    "xfp": 9.4
+  },
+  {
     "bye": 5,
     "column_id": 3,
     "dif": 0,
@@ -908,19 +908,6 @@
     "team": "TB",
     "tier": 5,
     "xfp": 0
-  },
-  {
-    "bye": 11,
-    "column_id": 8,
-    "dif": 5.3,
-    "fpts": 14.7,
-    "name": "Tucker Kraft",
-    "note": "QB",
-    "position": "TE",
-    "sort_order": 1,
-    "team": "GB",
-    "tier": 5,
-    "xfp": 9.4
   },
   {
     "bye": 6,
@@ -1142,6 +1129,19 @@
     "team": "MIN",
     "tier": 6,
     "xfp": 7.4
+  },
+  {
+    "bye": 11,
+    "column_id": 8,
+    "dif": 1,
+    "fpts": 12.4,
+    "name": "Kyle Pitts Sr.",
+    "note": "OWNED",
+    "position": "TE",
+    "sort_order": 1,
+    "team": "ATL",
+    "tier": 6,
+    "xfp": 11.5
   },
   {
     "bye": 11,
